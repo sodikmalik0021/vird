@@ -1,6 +1,6 @@
 // Service worker: push reminders + offline shell
-const CACHE = 'vird-v4';
-const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const CACHE = 'vird-v5';
+const SHELL = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -33,14 +33,16 @@ self.addEventListener('push', e => {
     badge: 'icon-192.png',
     tag: data.tag || 'vird',
     renotify: true,
-    vibrate: [200, 100, 200]
+    vibrate: [200, 100, 200],
+    data: { url: data.url || './' }
   }));
 });
 
 self.addEventListener('notificationclick', e => {
   e.notification.close();
+  const url = new URL((e.notification.data && e.notification.data.url) || './', self.registration.scope).href;
   e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
-    for (const c of list) { if ('focus' in c) return c.focus(); }
-    return self.clients.openWindow('./');
+    for (const c of list) { if ('navigate' in c) { return c.navigate(url).then(w => (w || c).focus()).catch(() => c.focus()); } }
+    return self.clients.openWindow(url);
   }));
 });

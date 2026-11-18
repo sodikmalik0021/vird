@@ -22,8 +22,8 @@
 })();
 </script>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -234,6 +234,36 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad)
 .pend-ic{width:64px;height:64px;border-radius:50%;margin:4px auto 10px;display:grid;place-items:center;background:var(--grad-soft);color:var(--pink)}
 .pend-ic svg.i{width:30px;height:30px}
 .ttl{display:flex;align-items:center;gap:8px;font-weight:700}
+.medals{display:inline-flex;gap:4px;align-items:center;margin-left:2px}
+.medal{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:1px 6px 1px 3px;border-radius:999px}
+.medal svg.i{width:13px;height:13px;stroke-width:2}
+.medal.w{background:rgba(160,170,190,.16);color:#b8c0d0}
+.medal.m{background:rgba(251,191,36,.16);color:#f5b400}
+:root[data-theme=light] .medal.w{color:#5d6678;background:rgba(93,102,120,.12)}
+:root[data-theme=light] .medal.m{color:#a86b00}
+.mtile{background:var(--surface2);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+.mtile .mi{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+.mtile .mi svg.i{width:24px;height:24px}
+.mtile.w .mi{background:linear-gradient(135deg,#e6e9f0,#9aa3b5);color:#3a4150}
+.mtile.m .mi{background:linear-gradient(135deg,#ffe08a,#f2a900);color:#5a3a00}
+.mtile b{font-size:20px;display:block}
+.pages-edit{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line2);color:var(--text)}
+.pages-edit svg.i{width:12px;height:12px}
+/* chat */
+#v-chat{padding-bottom:70px}
+.msgs{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.msg{max-width:82%;padding:9px 12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);align-self:flex-start;line-height:1.4;word-wrap:break-word;white-space:pre-wrap}
+.msg .who{font-size:12px;font-weight:700;margin-bottom:2px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.msg .tm{font-size:10px;color:var(--muted);margin-top:3px;text-align:right}
+.msg.me{align-self:flex-end;background:var(--grad);color:#fff;border:0;border-bottom-right-radius:6px}
+.msg.me .tm{color:rgba(255,255,255,.75)}
+.msg:not(.me){border-bottom-left-radius:6px}
+.dayhdr{align-self:center;font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin:8px 0 2px}
+.chatbar{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 68px);z-index:9;display:flex;justify-content:center;padding:8px 12px;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line)}
+.chatbar .in2{display:flex;gap:8px;max-width:560px;width:100%;align-items:flex-end}
+.chatbar textarea{min-height:44px;max-height:120px;height:44px;padding:11px 14px;border-radius:22px;resize:none}
+.chatbar button{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;flex:none}
+nav .dot{position:absolute;top:2px;right:calc(50% - 16px);width:9px;height:9px;border-radius:50%;background:#e1306c;box-shadow:0 0 0 2px var(--bg)}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin-top:12px}
 .seg button{padding:9px 6px;border-radius:9px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
 .seg button svg.i{width:16px;height:16px}
@@ -306,10 +336,12 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad)
   </div>
   <section id="v-today"></section>
   <section id="v-group" class="hidden"></section>
+  <section id="v-chat" class="hidden"></section>
   <section id="v-fines" class="hidden"></section>
   <section id="v-admin" class="hidden"></section>
 </div>
 
+<div class="chatbar hidden" id="chatbar"><div class="in2"><textarea id="chatIn" rows="1" maxlength="1000" placeholder="Хабар ёзинг…"></textarea><button id="chatSend" aria-label="Юбориш"></button></div></div>
 <nav id="nav" class="hidden"><div class="in" id="navIn"></div></nav>
 
 <div id="boot" class="loading">Юкланмоқда…</div>
@@ -362,6 +394,10 @@ const IC = {
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
   moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
   auto:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>',
+  medal:'<path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2M13 12l5.88-9.8M8 7h8"/><circle cx="12" cy="17" r="5"/>',
+  chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  coins:'<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/>',
   chevL:'<path d="m15 18-6-6 6-6"/>', chevR:'<path d="m9 18 6-6-6-6"/>'
 };
 const ic = (n, cls='') => `<svg class="i ${cls}" viewBox="0 0 24 24">${IC[n]||''}</svg>`;
@@ -411,12 +447,13 @@ $('#pRefresh').innerHTML = ic('refresh') + 'Текшириш';
 $('#pendIc').innerHTML = ic('hourglass');
 $('#btnSettings').innerHTML = ic('settings');
 $('#navIn').innerHTML = [
-  ['today','today','Бугун'],['group','users','Гуруҳ'],['fines','wallet','Жамғарма'],['admin','shield','Админ']
-].map(([v,i,t]) => `<button data-v="${v}" ${v==='admin'?'id="navAdmin" class="hidden"':''}>${ic(i)}${t}${v==='admin'?'<span class="badge hidden" id="admBadge"></span>':''}</button>`).join('');
+  ['today','today','Бугун'],['group','users','Гуруҳ'],['chat','chat','Чат'],['fines','wallet','Жамғарма'],['admin','shield','Админ']
+].map(([v,i,t]) => `<button data-v="${v}" ${v==='admin'?'id="navAdmin" class="hidden"':''}>${ic(i)}${t}${v==='admin'?'<span class="badge hidden" id="admBadge"></span>':''}${v==='chat'?'<span class="dot hidden" id="chatDot"></span>':''}</button>`).join('');
+$('#chatSend').innerHTML = ic('send');
 
 // ================== STATE ==================
 let session = store.get('vird_session'); // {id, pin, name}
-let S = null, clockSkew = 0, view = 'today', month = null;
+let S = null, clockSkew = 0, view = ['chat','group','fines','admin'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'today', month = null;
 let zk = { server: 0, pending: 0, timer: null, inflight: false };
 let myDays = [];
 const goal = () => (S && S.rules ? S.rules.zikr_goal : 1000);
@@ -424,6 +461,7 @@ const goal = () => (S && S.rules ? S.rules.zikr_goal : 1000);
 function show(id){
   ['login','pending','app','boot'].forEach(x => $('#'+x).classList.toggle('hidden', x !== id));
   $('#nav').classList.toggle('hidden', id !== 'app');
+  $('#chatbar').classList.toggle('hidden', !(id === 'app' && view === 'chat'));
 }
 
 // ================== LOGIN ==================
@@ -509,6 +547,7 @@ function logout(){
   flushZikr(true);
   store.del('vird_session'); session = null; S = null; month = null; view = 'today';
   zk = { server:0, pending:0, timer:null, inflight:false };
+  chat = { msgs: [], last: 0, timer: null, loading: false }; clearInterval(chat.timer);
   showLogin();
 }
 async function loadState(){
@@ -533,7 +572,7 @@ async function refresh(){
     if (S.pending) return showPending();
     if ($('#app').classList.contains('hidden')) show('app');
     $('#navAdmin').classList.toggle('hidden', !S.me.is_admin);
-    if (!document.querySelector('.modal')) render();
+    if (!document.querySelector('.modal')) { if (view === 'chat') { updateChatDot(); } else render(); }
     loadMyDays();
   } catch(_) {}
 }
@@ -545,13 +584,17 @@ function render(){
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === view));
   const pend = (S.pending_members || []).length;
   $('#admBadge').textContent = pend; $('#admBadge').classList.toggle('hidden', !pend);
-  ['today','group','fines','admin'].forEach(v => $('#v-'+v).classList.toggle('hidden', v !== view));
-  ({ today: renderToday, group: renderGroup, fines: renderFines, admin: renderAdmin })[view]();
+  if (view === 'admin' && !S.me.is_admin) view = 'today';
+  ['today','group','chat','fines','admin'].forEach(v => $('#v-'+v).classList.toggle('hidden', v !== view));
+  $('#chatbar').classList.toggle('hidden', view !== 'chat');
+  updateChatDot();
+  ({ today: renderToday, group: renderGroup, chat: renderChat, fines: renderFines, admin: renderAdmin })[view]();
 }
 $('#nav').addEventListener('click', e => {
   const b = e.target.closest('button[data-v]'); if (!b) return;
-  view = b.dataset.v; render(); window.scrollTo(0,0);
+  view = b.dataset.v; render(); if (view !== 'chat') window.scrollTo(0,0);
   if (view === 'admin') loadAdminDays();
+  try { history.replaceState(null, '', view === 'today' ? location.pathname : '#' + view); } catch(_) {}
 });
 
 // ---------- countdown ----------
@@ -581,7 +624,8 @@ function renderToday(){
     ${showAnn ? `<div class="banner ann"><div class="row between"><div class="bt">${ic('megaphone')}Эълон${lastAnn.author ? ' · ' + esc(lastAnn.author) : ''}</div><button class="muted" id="annHide">${ic('x')}</button></div><div style="margin-top:6px;white-space:pre-wrap;color:var(--muted2)">${esc(lastAnn.text)}</div></div>` : ''}
     <h2>Бугунги вазифалар</h2>
     <div class="card task ${m.book?'done':''}" data-task="book">
-      <div class="ic">${ic('book')}</div><div class="grow"><div class="t1">Китоб</div><div class="muted small">${R.book_pages} бет ўқиш${S.me.book_title ? ' · ' + esc(S.me.book_title) : ''}</div></div><div class="check">${ic('check')}</div>
+      <div class="ic">${ic('book')}</div><div class="grow"><div class="t1">Китоб</div><div class="muted small">Камида ${R.book_pages} бет${S.me.book_title ? ' · ' + esc(S.me.book_title) : ''}</div>
+        ${m.book ? `<button class="pages-edit" data-editpages>${ic('pen')}Бугун ${m.book_pages_read || R.book_pages} бет ўқидим</button>` : ''}</div><div class="check">${ic('check')}</div>
     </div>
     <div class="card task ${m.quran?'done':''}" data-task="quran">
       <div class="ic">${ic('quran')}</div><div class="grow"><div class="t1">Қуръон</div><div class="muted small">${R.quran_pages} бет ўқиш</div></div><div class="check">${ic('check')}</div>
@@ -599,11 +643,20 @@ function renderToday(){
       <div class="sync" id="zSync"></div>
     </div>
 
+    ${myDebt() > 0 ? `<div class="card row" style="margin-top:12px;border-color:rgba(251,90,122,.3)"><div class="grow"><div class="muted small">Сизнинг жаримангиз</div><div style="font-weight:800;font-size:20px;color:var(--bad)">${money(myDebt())}</div></div><button class="btn sm" data-payself>${ic('coins')}Тўладим</button></div>` : ''}
     <h2>Менинг натижаларим</h2>
     <div class="card">
       <div class="row between"><span class="muted small">Охирги 14 кун · бугун чапда</span><span class="chip grad">${ic('flame')}${m.streak||0} кун кетма-кет</span></div>
       <div class="strip" id="strip"></div>
       <div class="legend"><span style="--c:#c13584">Бажарилди</span><span style="--c:var(--bad)">Жарима</span><span style="--c:var(--blue)">Узрли</span><span style="--c:var(--pink)">Байрам</span></div>
+    </div>
+    <div class="card">
+      <div class="muted small" style="margin-bottom:10px">Медалларим</div>
+      <div class="kv" style="margin-top:0">
+        <div class="mtile w"><div class="mi">${ic('medal')}</div><div><b>${(m.medals||{}).weeks||0}</b>Ҳафта медали</div></div>
+        <div class="mtile m"><div class="mi">${ic('medal')}</div><div><b>${(m.medals||{}).months||0}</b>Ой медали</div></div>
+      </div>
+      <p class="muted small" style="margin:10px 0 0;line-height:1.5">Ҳафта (душанба–якшанба) ёки ой давомида бирорта ҳам кун қолдирмасангиз медаль оласиз. Узрли ва байрам кунлари ҳам ҳисобланади.</p>
     </div>
     <div class="card">
       <div class="row between"><div class="grow"><div class="muted small">Ҳозир ўқиётган китобим</div>
@@ -641,13 +694,13 @@ function renderStrip(){
   el.innerHTML = html;
 }
 $('#v-today').addEventListener('click', async e => {
+  if (e.target.closest('[data-editpages]')) { e.stopPropagation(); const n = await askPages(); if (n) saveTasks({ book: true, pages: n }); return; }
+  if (e.target.closest('[data-payself]')) return paySelf();
   const t = e.target.closest('.task');
   if (t){
-    const m = me(); const key = t.dataset.task; const was = isDoneToday();
-    m[key] = !m[key]; t.classList.toggle('done', m[key]); vibrate(15); tickCountdown(); renderStrip();
-    try { await rpc('zk_set_today', { p_id: session.id, p_pin: session.pin, p_book: m.book, p_quran: m.quran }); if (!was && isDoneToday()) celebrate(); }
-    catch(err){ m[key] = !m[key]; t.classList.toggle('done', m[key]); toast(err.message, true); }
-    return;
+    const m = me(); const key = t.dataset.task;
+    if (key === 'book' && !m.book){ const n = await askPages(); if (!n) return; return saveTasks({ book: true, pages: n }); }
+    return saveTasks({ [key]: !m[key] });
   }
   if (e.target.closest('#zMinus')) return addZikr(-1);
   if (e.target.closest('#zPlus10')) return addZikr(10);
@@ -661,6 +714,38 @@ $('#v-today').addEventListener('click', async e => {
     catch(err){ toast(err.message, true); }
   }
 });
+async function askPages(){
+  const R = S.rules; const m = me();
+  const r = await formBox('Бугун китобдан нечта бет ўқидингиз?', [{ k:'pages', label:`Камида ${R.book_pages} бет`, type:'number', val: m.book_pages_read || R.book_pages }], 'Сақлаш');
+  if (!r) return null;
+  const n = parseInt(r.pages, 10);
+  if (!(n >= R.book_pages)) { toast(`Камида ${R.book_pages} бет бўлиши керак`, true); return null; }
+  if (n > 2000) { toast('Жуда катта сон', true); return null; }
+  return n;
+}
+async function saveTasks(ch){
+  const m = me(); const was = isDoneToday(); const old = { book: m.book, quran: m.quran, book_pages_read: m.book_pages_read };
+  if ('book' in ch) m.book = ch.book; if ('quran' in ch) m.quran = ch.quran; if (ch.pages) m.book_pages_read = ch.pages;
+  if (!m.book) m.book_pages_read = null;
+  vibrate(15); renderToday();
+  try {
+    await rpc('zk_set_today2', { p_id: session.id, p_pin: session.pin, p_book: m.book, p_quran: m.quran, p_book_pages: m.book ? (m.book_pages_read || S.rules.book_pages) : null });
+    if (!was && isDoneToday()) celebrate();
+  } catch(err){ Object.assign(m, old); renderToday(); toast(err.message, true); }
+}
+function myDebt(){ const m = me(); return (m.fines_total||0) - (m.fines_paid||0); }
+async function paySelf(){
+  const d = myDebt(); if (d <= 0) return;
+  if (!await confirmBox(`${money(d)} жаримани тўладингизми?`, 'Тўланган деб белгиланади ва жамғармага қўшилади.')) return;
+  try { await rpc('zk_pay_self', { p_id: session.id, p_pin: session.pin }); toast('Раҳмат! Тўланди деб белгиланди'); await loadState(); render(); }
+  catch(err){ toast(err.message, true); }
+}
+function medalsHtml(m){
+  const md = m.medals || {}; let h = '';
+  if (md.months) h += `<span class="medal m" title="Ой медали">${ic('medal')}${md.months}</span>`;
+  if (md.weeks) h += `<span class="medal w" title="Ҳафта медали">${ic('medal')}${md.weeks}</span>`;
+  return h ? `<span class="medals">${h}</span>` : '';
+}
 document.addEventListener('pointerdown', e => {
   const tap = e.target.closest('#tap'); if (!tap) return;
   e.preventDefault(); tap.classList.add('press'); addZikr(1);
@@ -715,7 +800,8 @@ function celebrate(){
 
 // ---------- GROUP ----------
 function marks(m, G){
-  return `<div class="marks">${ic('book', m.book?'on':'')}${ic('quran', m.quran?'on':'')}${ic('zikr', m.zikr>=G?'on':'')}<span>${m.zikr}/${num(G)}</span></div>`;
+  const bp = m.book ? (m.book_pages_read || m.book_read || (S && S.rules ? S.rules.book_pages : 0)) : 0;
+  return `<div class="marks">${ic('book', m.book?'on':'')}${ic('quran', m.quran?'on':'')}${ic('zikr', m.zikr>=G?'on':'')}<span>${m.zikr}/${num(G)}${bp ? ' · китоб ' + bp + ' бет' : ''}</span></div>`;
 }
 function renderGroup(){
   const list = S.members; const G = goal();
@@ -739,7 +825,7 @@ function renderGroup(){
       ${list.map(m => `
         <div class="item">
           <div class="av ${m.done_today?'ok':''}">${m.done_today?ic('check'):esc(initials(m.name))}</div>
-          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}${m.id===S.me.id?' <span class="muted small" style="font-weight:500">(сиз)</span>':''}</div>
+          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}${medalsHtml(m)}${m.id===S.me.id?' <span class="muted small" style="font-weight:500">(сиз)</span>':''}</div>
             ${marks(m, G)}
             ${m.book_title ? `<div class="small muted" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.book_title)}</div>` : ''}</div>
           ${S.holiday_today ? '<span class="chip pink">Байрам</span>' : m.excused ? '<span class="chip blue">Узрли</span>' : m.done_today ? '<span class="chip ok">Бажарди</span>' : '<span class="chip">Кутилмоқда</span>'}
@@ -757,9 +843,9 @@ function renderGroup(){
         const total = m.m_done + m.m_missed + m.m_excused; const pct = total ? Math.round(m.m_done / total * 100) : 0;
         return `<div class="item">
           <div class="rank ${i<3 && m.m_done>0 ? 'gtext' : ''}">${i+1}</div>
-          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}</span><span class="small muted" style="display:inline-flex;align-items:center;gap:4px">${ic('flame')}${m.streak}</span></div>
+          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}${medalsHtml(m)}</span><span class="small muted" style="display:inline-flex;align-items:center;gap:4px">${ic('flame')}${m.streak}</span></div>
             <div class="bar"><i style="width:${pct}%"></i></div>
-            <div class="small muted" style="margin-top:6px">Бажарилди ${m.m_done} · Жарима ${m.m_missed} · Узрли ${m.m_excused} · Қуръон ${num(m.quran_pages_total||0)} бет</div></div>
+            <div class="small muted" style="margin-top:6px">Бажарилди ${m.m_done} · Жарима ${m.m_missed} · Узрли ${m.m_excused} · Китоб ${num(m.m_book_pages||0)} бет</div></div>
         </div>`; }).join('')}
     </div>
     <p class="muted small">Бугунги кун 00:00 дан кейин ҳисобланади.</p>
@@ -792,14 +878,14 @@ function renderFines(){
       <div class="stat"><div class="muted small">Жами жарималар</div><div class="v">${money(total)}</div></div>
       <div class="stat"><div class="muted small">Садақага берилган</div><div class="v gtext">${money(S.sadaqa_total)}</div></div>
     </div>
-    <p class="muted small" style="line-height:1.5">Қоида: кун давомида (00:00 гача) 3 вазифадан бирортаси бажарилмаса — ${money(S.rules.fine)} жарима. Жарималар жамғармада йиғилади ва вақти-вақти билан садақа қилинади.</p>
+    <p class="muted small" style="line-height:1.5">Жаримангизни тўлаганингиздан кейин «Тўладим» тугмасини босинг. Қоида: кун давомида (00:00 гача) 3 вазифадан бирортаси бажарилмаса — ${money(S.rules.fine)} жарима. Жарималар жамғармада йиғилади ва вақти-вақти билан садақа қилинади.</p>
     <h2>Ким қанча қарз</h2>
     <div class="card list">
       ${debtors.map(m => { const d = m.fines_total - m.fines_paid; return `
         <div class="item">
           <div class="av">${esc(initials(m.name))}</div>
           <div class="grow"><div class="nm">${esc(m.name)}</div><div class="small muted">Жами ${money(m.fines_total)} · Тўланган ${money(m.fines_paid)}</div></div>
-          ${d > 0 ? `<div style="text-align:right"><span class="chip bad">${money(d)}</span>${admin ? `<div style="margin-top:6px"><button class="btn sm" data-payall="${m.id}" data-name="${esc(m.name)}" data-sum="${d}">Тўланди</button></div>` : ''}</div>`
+          ${d > 0 ? `<div style="text-align:right"><span class="chip bad">${money(d)}</span>${m.id === S.me.id ? `<div style="margin-top:6px"><button class="btn sm" data-payself>Тўладим</button></div>` : admin ? `<div style="margin-top:6px"><button class="btn sec sm" data-payall="${m.id}" data-name="${esc(m.name)}" data-sum="${d}">Тўланди</button></div>` : ''}</div>`
                   : '<span class="chip ok">Қарзи йўқ</span>'}
         </div>`; }).join('')}
     </div>
@@ -813,6 +899,7 @@ function renderFines(){
   `;
 }
 $('#v-fines').addEventListener('click', async e => {
+  if (e.target.closest('[data-payself]')) return paySelf();
   const pa = e.target.closest('[data-payall]');
   if (pa){
     if (!await confirmBox(`${pa.dataset.name} ${money(pa.dataset.sum)} тўладими?`, 'Барча қарзи тўланган деб белгиланади.')) return;
@@ -1002,12 +1089,69 @@ $('#v-admin').addEventListener('click', async e => {
   }
 });
 
+// ---------- CHAT ----------
+let chat = { msgs: [], last: 0, timer: null, loading: false };
+function seenId(){ return store.get('vird_chat_seen_' + session.id) || 0; }
+function updateChatDot(){
+  if (!S || S.pending) return;
+  if (view === 'chat' && S.chat_last_id) store.set('vird_chat_seen_' + session.id, Math.max(seenId(), S.chat_last_id, chat.last));
+  const unread = S.chat_last_id > seenId() && S.chat_last_from !== S.me.id;
+  $('#chatDot').classList.toggle('hidden', !unread);
+}
+function fmtTime(ts){ const d = new Date(new Date(ts).getTime() + TZ_OFFSET); return d.toISOString().slice(11,16); }
+function msgDay(ts){ return new Date(new Date(ts).getTime() + TZ_OFFSET).toISOString().slice(0,10); }
+function renderChat(){
+  const el = $('#v-chat');
+  if (!el.querySelector('.msgs')) el.innerHTML = `<h2>Гуруҳ чати</h2><div class="msgs" id="msgs"><div class="empty">Юкланмоқда…</div></div>`;
+  drawMsgs(true); loadChat(); clearInterval(chat.timer); chat.timer = setInterval(() => { if (view === 'chat' && document.visibilityState === 'visible') loadChat(); }, 4000);
+}
+async function loadChat(){
+  if (chat.loading || !session) return; chat.loading = true;
+  try {
+    const list = await rpc('zk_chat_list', { p_id: session.id, p_pin: session.pin, p_after: chat.last });
+    if (list.length) { chat.msgs = chat.msgs.concat(list).slice(-300); chat.last = list[list.length-1].id; drawMsgs(true); }
+    else if (!chat.msgs.length) drawMsgs(false);
+    store.set('vird_chat_seen_' + session.id, Math.max(seenId(), chat.last)); if (S) { S.chat_last_id = Math.max(S.chat_last_id||0, chat.last); } updateChatDot();
+  } catch(_) {} finally { chat.loading = false; }
+}
+function drawMsgs(scroll){
+  const el = $('#msgs'); if (!el) return;
+  if (!chat.msgs.length) { el.innerHTML = '<div class="empty">Ҳали хабар йўқ. Биринчи бўлиб ёзинг!</div>'; return; }
+  const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 160;
+  let html = '', lastDay = '';
+  for (const m of chat.msgs){
+    const dday = msgDay(m.created_at);
+    if (dday !== lastDay){ html += `<div class="dayhdr">${dday === S.today ? 'Бугун' : fmtLong(dday)}</div>`; lastDay = dday; }
+    const mine = m.member_id === S.me.id;
+    html += `<div class="msg ${mine?'me':''}" data-mid="${m.id}" data-mine="${mine?1:0}">${mine ? '' : `<div class="who">${esc(m.name)}</div>`}${esc(m.text)}<div class="tm">${fmtTime(m.created_at)}</div></div>`;
+  }
+  el.innerHTML = html;
+  if (scroll && (nearBottom || !chat.scrolled)) { window.scrollTo(0, document.body.scrollHeight); chat.scrolled = true; }
+}
+async function sendChat(){
+  const t = $('#chatIn'); const text = t.value.trim(); if (!text) return;
+  t.value = ''; t.style.height = '44px'; $('#chatSend').disabled = true;
+  try { await rpc('zk_chat_send', { p_id: session.id, p_pin: session.pin, p_text: text }); await loadChat(); window.scrollTo(0, document.body.scrollHeight); }
+  catch(err){ t.value = text; toast(err.message, true); }
+  finally { $('#chatSend').disabled = false; }
+}
+$('#chatSend').addEventListener('click', sendChat);
+$('#chatIn').addEventListener('input', e => { const t = e.target; t.style.height = '44px'; t.style.height = Math.min(120, t.scrollHeight) + 'px'; });
+$('#v-chat').addEventListener('click', async e => {
+  const b = e.target.closest('.msg'); if (!b) return;
+  const mine = b.dataset.mine === '1';
+  if (!mine && !S.me.is_admin) return;
+  if (!await confirmBox('Хабарни ўчирасизми?')) return;
+  try { await rpc('zk_chat_delete', { p_id: session.id, p_pin: session.pin, p_cid: +b.dataset.mid }); chat.msgs = chat.msgs.filter(x => x.id !== +b.dataset.mid); drawMsgs(false); }
+  catch(err){ toast(err.message, true); }
+});
+
 // ---------- SETTINGS ----------
 $('#btnSettings').addEventListener('click', () => {
   const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
   const box = modal(`
     <h3>Созламалар</h3>
-    <div class="card row"><div class="av ring2"><span>${esc(initials(S.me.name))}</span></div><div><div style="font-weight:700;font-size:16px">${esc(S.me.name)}</div><div class="muted small">${S.me.is_admin?'Админ':'Аъзо'}</div></div></div>
+    <div class="card row"><div class="av ring2"><span>${esc(initials(S.me.name))}</span></div><div><div style="font-weight:700;font-size:16px;display:flex;align-items:center;gap:4px">${esc(S.me.name)}${medalsHtml(me())}</div><div class="muted small">${S.me.is_admin?'Админ':'Аъзо'}</div></div></div>
     <div class="card">
       <div class="ttl">${ic('sun')}Кўриниш</div>
       <div class="seg" id="themeSeg">
@@ -1017,7 +1161,7 @@ $('#btnSettings').addEventListener('click', () => {
     </div>
     <div class="card">
       <div class="ttl">${ic('bell')}Билдиришномалар</div>
-      <p class="muted small" style="margin:8px 0 12px;line-height:1.5">21:00 ва 23:00 да эслатма (агар бажармаган бўлсангиз), 00:00 да кун якуни ва админ эълонлари.</p>
+      <p class="muted small" style="margin:8px 0 12px;line-height:1.5">21:00 ва 23:00 да эслатма (агар бажармаган бўлсангиз), 00:00 да кун якуни, жума куни ҳафта якуни, чат хабарлари ва эълонлар.</p>
       ${pushStatusHtml(perm)}
     </div>
     <div class="card"><div class="ttl">${ic('phone')}Телефон экранига қўшиш</div>${installHelp()}</div>
@@ -1126,6 +1270,10 @@ function formBox(title, fields, okText){
   });
 }
 
+window.addEventListener('hashchange', () => {
+  const v = location.hash.slice(1);
+  if (S && !S.pending && ['today','chat','group','fines','admin'].includes(v) && v !== view) { view = v; render(); if (v === 'admin') loadAdminDays(); }
+});
 // ================== BOOT ==================
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 setInterval(() => { if (session && S && document.visibilityState === 'visible' && !zk.pending && !document.querySelector('.modal')) refresh(); }, 60000);
