@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Кунлик вирд</title>
-<meta name="theme-color" content="#2a1d7a">
+<meta name="theme-color" content="#0b0b10">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -12,182 +12,209 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Кунлик вирд">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#1a1446; --bg2:#241c5e; --card:#2c2373; --card2:#3a2e92; --line:rgba(255,255,255,.14);
-  --gold:#ffc94d; --gold2:#ffe08f; --text:#ffffff; --muted:#bdb6ee; --ok:#4ee6a6; --bad:#ff7d8f; --warn:#ffb547; --blue:#7cc8ff;
-  --violet:#7b4dff; --r:20px;
+  --bg:#0b0b10; --surface:#14141c; --surface2:#1c1c27; --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
+  --text:#f7f7fa; --muted:#8e8e9e; --muted2:#b4b4c2;
+  --grad:linear-gradient(120deg,#6a2cf5 0%,#a62fd8 35%,#e1306c 70%,#f77737 100%);
+  --grad-soft:linear-gradient(120deg,rgba(106,44,245,.18),rgba(225,48,108,.14) 60%,rgba(247,119,55,.12));
+  --ok:#34d399; --bad:#fb5a7a; --warn:#fbbf24; --blue:#7aa7ff; --pink:#f472b6;
+  --r:18px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",Arial,sans-serif;font-size:16px;-webkit-font-smoothing:antialiased}
-html{background:#141040}
-body{min-height:100vh;min-height:100dvh;background:linear-gradient(170deg,#5a33d6 0%,#2f1f8c 38%,#17113f 100%) fixed}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
-input,select,textarea{font:inherit;color:var(--text);background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:14px;padding:13px 14px;width:100%;outline:none}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;min-height:100dvh;background:radial-gradient(90% 45% at 85% -8%,rgba(166,47,216,.20),transparent 60%),radial-gradient(70% 35% at 0% 0%,rgba(106,44,245,.18),transparent 60%),var(--bg) fixed}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;letter-spacing:inherit}
+input,select,textarea{font:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--line2);border-radius:12px;padding:13px 14px;width:100%;outline:none;letter-spacing:inherit}
 textarea{min-height:110px;resize:vertical}
 select option{color:#111}
-input::placeholder,textarea::placeholder{color:rgba(255,255,255,.45)}
-input:focus,select:focus,textarea:focus{border-color:var(--gold)}
-input[type=date]{min-height:48px}
+input::placeholder,textarea::placeholder{color:#6b6b7b}
+input:focus,select:focus,textarea:focus{border-color:#a62fd8;box-shadow:0 0 0 3px rgba(166,47,216,.2)}
+input[type=date]{min-height:48px;color-scheme:dark}
+svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-4px}
 .hidden{display:none!important}
-.wrap{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 100px)}
-h1{font-size:25px;margin:4px 0 2px;line-height:1.2}
-h2{font-size:18px;margin:24px 0 10px}
+.wrap{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 18px calc(env(safe-area-inset-bottom) + 100px)}
+h1{font-size:26px;font-weight:800;margin:2px 0 0;line-height:1.15;letter-spacing:-.03em}
+h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .muted{color:var(--muted)}
 .small{font-size:13px}
-.card{background:rgba(255,255,255,.10);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.gtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:10px}
 .row{display:flex;align-items:center;gap:12px}
 .between{justify-content:space-between}
 .grow{flex:1;min-width:0}
-.btn{background:linear-gradient(135deg,#ffd666,#ffb931);color:#2a1a00;font-weight:800;border-radius:16px;padding:14px 18px;width:100%;font-size:16px;box-shadow:0 6px 18px rgba(255,185,49,.25)}
-.btn.sec{background:rgba(255,255,255,.14);color:var(--text);font-weight:650;box-shadow:none}
-.btn.violet{background:linear-gradient(135deg,#8f6bff,#5a33d6);color:#fff;box-shadow:0 6px 18px rgba(123,77,255,.35)}
-.btn.danger{background:rgba(255,125,143,.18);color:#ffc2cb;box-shadow:none}
-.btn.sm{width:auto;padding:8px 13px;font-size:14px;border-radius:11px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--grad);color:#fff;font-weight:700;border-radius:14px;padding:14px 18px;width:100%;font-size:15px;box-shadow:0 8px 24px rgba(193,53,132,.28)}
+.btn.sec{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:none;border:1px solid var(--line2)}
+.btn.danger{background:rgba(251,90,122,.1);color:var(--bad);box-shadow:none;border:1px solid rgba(251,90,122,.25)}
+.btn.sm{width:auto;padding:8px 13px;font-size:13px;border-radius:10px;box-shadow:none}
+.btn.icon{width:36px;height:36px;padding:0;border-radius:10px}
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.5}
-.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);color:var(--muted);white-space:nowrap}
-.chip.ok{background:rgba(78,230,166,.18);color:var(--ok)}
-.chip.bad{background:rgba(255,125,143,.18);color:var(--bad)}
-.chip.warn{background:rgba(255,181,71,.18);color:var(--warn)}
-.chip.blue{background:rgba(124,200,255,.18);color:var(--blue)}
-.chip.gold{background:rgba(255,201,77,.2);color:var(--gold)}
-.chip.pink{background:rgba(255,120,200,.18);color:#ff9fd9}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--surface2);color:var(--muted2);white-space:nowrap;border:1px solid var(--line)}
+.chip svg.i{width:13px;height:13px;vertical-align:-2px}
+.chip.ok{background:rgba(52,211,153,.1);color:var(--ok);border-color:rgba(52,211,153,.2)}
+.chip.bad{background:rgba(251,90,122,.1);color:var(--bad);border-color:rgba(251,90,122,.22)}
+.chip.warn{background:rgba(251,191,36,.1);color:var(--warn);border-color:rgba(251,191,36,.22)}
+.chip.blue{background:rgba(122,167,255,.1);color:var(--blue);border-color:rgba(122,167,255,.22)}
+.chip.pink{background:rgba(244,114,182,.1);color:var(--pink);border-color:rgba(244,114,182,.22)}
+.chip.grad{background:var(--grad-soft);color:#ffd2e4;border-color:rgba(225,48,108,.3)}
+.gborder{border:1.5px solid transparent!important;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box!important}
 
 /* login */
-.logo{width:88px;height:88px;border-radius:24px;display:block;margin:30px auto 14px;box-shadow:0 14px 36px rgba(0,0,0,.4)}
+.logo{width:84px;height:84px;border-radius:22px;display:block;margin:34px auto 16px;box-shadow:0 18px 40px rgba(166,47,216,.35)}
 .center{text-align:center}
-.names{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.names button{background:rgba(255,255,255,.1);border:1px solid var(--line);border-radius:16px;padding:16px 10px;font-weight:650;font-size:16px}
-.names button small{display:block;font-size:11px;color:var(--warn);font-weight:600;margin-top:3px}
-.names button:active{background:rgba(255,255,255,.18)}
-.pin-dots{display:flex;gap:16px;justify-content:center;margin:24px 0}
-.pin-dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--gold);display:block}
-.pin-dots i.on{background:var(--gold)}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.names button{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 10px;font-weight:600;font-size:15px}
+.names button small{display:block;font-size:11px;color:var(--warn);font-weight:500;margin-top:3px}
+.names button:active{background:var(--surface2)}
+.pin-dots{display:flex;gap:18px;justify-content:center;margin:26px 0}
+.pin-dots i{width:14px;height:14px;border-radius:50%;border:1.5px solid #6b6b7b;display:block}
+.pin-dots i.on{background:var(--grad);border-color:transparent}
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.pad{display:grid;grid-template-columns:repeat(3,76px);gap:14px;justify-content:center}
-.pad button{height:76px;border-radius:50%;background:rgba(255,255,255,.1);font-size:28px;font-weight:500;border:1px solid var(--line)}
-.pad button:active{background:rgba(255,255,255,.22)}
-.pad button.txt{font-size:14px;background:none;border:0;color:var(--muted)}
-.divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;margin:22px 0 12px}
+.pad{display:grid;grid-template-columns:repeat(3,74px);gap:16px;justify-content:center}
+.pad button{height:74px;border-radius:50%;background:var(--surface);font-size:26px;font-weight:500;border:1px solid var(--line)}
+.pad button:active{background:var(--surface2)}
+.pad button.txt{font-size:13px;background:none;border:0;color:var(--muted)}
+.divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;margin:22px 0 14px}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
 
 /* header */
 .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.iconbtn{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.12);border:1px solid var(--line);display:grid;place-items:center;font-size:20px;flex:none}
-.countdown{margin-top:12px;display:flex;align-items:center;gap:10px;background:rgba(255,201,77,.14);border:1px solid rgba(255,201,77,.35);color:var(--gold2);border-radius:16px;padding:11px 14px;font-size:14px}
-.countdown b{font-variant-numeric:tabular-nums}
-.countdown.urgent{background:rgba(255,125,143,.16);border-color:rgba(255,125,143,.4);color:#ffc2cb}
-.countdown.okk{background:rgba(78,230,166,.14);border-color:rgba(78,230,166,.35);color:#b9ffe0}
-.banner{border-radius:18px;padding:14px 16px;margin-top:12px;font-size:14px;line-height:1.45}
-.banner.holiday{background:linear-gradient(135deg,rgba(255,120,200,.25),rgba(123,77,255,.25));border:1px solid rgba(255,159,217,.4)}
-.banner.ann{background:linear-gradient(135deg,rgba(255,201,77,.22),rgba(255,140,60,.14));border:1px solid rgba(255,201,77,.4)}
-.banner.excused{background:rgba(124,200,255,.16);border:1px solid rgba(124,200,255,.4)}
+.iconbtn{width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--muted2)}
+.countdown{margin-top:16px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);color:var(--muted2);border-radius:14px;padding:12px 14px;font-size:14px}
+.countdown b{font-variant-numeric:tabular-nums;color:var(--text);font-weight:700}
+.countdown.urgent{border-color:rgba(251,90,122,.35);color:#ffb3c3}
+.countdown.urgent b{color:#ffd0da}
+.countdown.okk{border-color:rgba(52,211,153,.3);color:#a7f3d0}
+.banner{border-radius:16px;padding:14px 16px;margin-top:10px;font-size:14px;line-height:1.5;background:var(--surface);border:1px solid var(--line)}
+.banner .bt{display:flex;align-items:center;gap:8px;font-weight:700}
+.banner.ann{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
 
 /* tasks */
-.task{display:flex;align-items:center;gap:14px;padding:16px;cursor:pointer;user-select:none;transition:background .2s}
-.task .ic{width:50px;height:50px;border-radius:15px;background:rgba(0,0,0,.2);display:grid;place-items:center;font-size:25px;flex:none}
-.t1{font-weight:750;font-size:17px}
-.check{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:grid;place-items:center;flex:none;transition:.2s}
-.task.done{background:linear-gradient(135deg,#8a5cff,#5530d8);border-color:rgba(190,170,255,.7)}
-.task.done .check{background:var(--gold);border-color:var(--gold)}
-.task.done .check::after{content:"";width:10px;height:17px;border:solid #2a1a00;border-width:0 3.5px 3.5px 0;transform:rotate(45deg) translate(-1px,-2px)}
-.task.done .muted{color:#e2d9ff}
+.task{display:flex;align-items:center;gap:14px;padding:15px 16px;cursor:pointer;user-select:none;transition:background .2s,border-color .2s}
+.task .ic{width:46px;height:46px;border-radius:13px;background:var(--surface2);display:grid;place-items:center;flex:none;color:var(--muted2)}
+.task .ic svg.i{width:22px;height:22px}
+.t1{font-weight:700;font-size:16px}
+.check{width:30px;height:30px;border-radius:50%;border:1.5px solid #4a4a5a;display:grid;place-items:center;flex:none;transition:.2s;color:#fff}
+.check svg.i{width:16px;height:16px;stroke-width:3;opacity:0}
+.task.done{border:1.5px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box}
+.task.done .ic{background:var(--grad);color:#fff}
+.task.done .check{background:var(--grad);border-color:transparent}
+.task.done .check svg.i{opacity:1}
 
 /* zikr */
 .zikr{text-align:center;padding:18px 16px 16px}
-.ring{position:relative;width:250px;height:250px;margin:6px auto 8px;border-radius:50%;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
-.ring .tap{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at 50% 30%,#8f6bff,#4424b8);border:2px solid rgba(255,201,77,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 -12px 30px rgba(0,0,0,.25),0 14px 34px rgba(60,20,160,.5);transition:transform .06s}
-.ring .tap.press{transform:scale(.95)}
-.ring .num{font-size:60px;font-weight:850;font-variant-numeric:tabular-nums;line-height:1}
-.ring .of{color:#d9d0ff;font-size:15px;margin-top:4px}
-.ring .hint{color:var(--gold);font-size:13px;margin-top:10px;font-weight:700}
-.ring.full .tap{background:radial-gradient(circle at 50% 30%,#3fe0a0,#139b6c);border-color:var(--gold)}
+.zic{width:40px;height:40px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;color:var(--muted2);flex:none}
+.ring{position:relative;width:244px;height:244px;margin:10px auto 10px;border-radius:50%;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.ring svg.r{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring .tap{position:absolute;inset:20px;border-radius:50%;background:radial-gradient(circle at 50% 28%,#262633,#15151d 70%);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px rgba(0,0,0,.45);transition:transform .06s}
+.ring .tap.press{transform:scale(.96)}
+.ring .num{font-size:58px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.04em}
+.ring .of{color:var(--muted);font-size:14px;margin-top:6px}
+.ring .hint{font-size:11px;margin-top:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.ring.full .tap{background:var(--grad);border-color:transparent}
+.ring.full .of{color:rgba(255,255,255,.8)}
 .zrow{display:flex;gap:8px;justify-content:center}
 .sync{font-size:12px;color:var(--muted);margin-top:8px;min-height:16px}
 
 /* strip */
-.strip{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:10px}
-.strip i{aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,.1);display:block}
-.strip i.done{background:var(--ok)}
+.strip{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:12px}
+.strip i{aspect-ratio:1;border-radius:5px;background:var(--surface2);display:block}
+.strip i.done{background:var(--grad)}
 .strip i.missed{background:var(--bad)}
 .strip i.excused{background:var(--blue)}
-.strip i.holiday{background:#ff9fd9}
-.strip i.today{outline:2px solid var(--gold);outline-offset:-2px}
-.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
-.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+.strip i.holiday{background:var(--pink)}
+.strip i.today{box-shadow:0 0 0 1.5px var(--text) inset}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:0;background:var(--c)}
 
 /* lists */
 .list .item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.list .item:last-child{border-bottom:0}
-.av{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-weight:800;flex:none;color:var(--gold2)}
-.av.ok{background:rgba(78,230,166,.22);color:var(--ok)}
-.marks{display:flex;gap:5px;font-size:15px;align-items:center}
-.marks span{opacity:.25}
-.marks span.on{opacity:1}
-.nm{font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rank{width:24px;text-align:center;color:var(--muted);font-weight:800;flex:none}
-.bar{height:7px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--ok));border-radius:4px}
+.list .item:first-child{padding-top:2px}
+.list .item:last-child{border-bottom:0;padding-bottom:2px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-weight:700;flex:none;color:var(--muted2);font-size:15px}
+.av.ok{background:var(--grad);color:#fff}
+.av.ring2{padding:2px;background:var(--grad)}
+.av.ring2 span{width:100%;height:100%;border-radius:50%;background:var(--surface);display:grid;place-items:center}
+.marks{display:flex;gap:6px;align-items:center;margin-top:3px;color:var(--muted)}
+.marks svg.i{width:15px;height:15px;opacity:.3}
+.marks svg.i.on{opacity:1;color:#e98ab8}
+.marks span{font-size:12px}
+.nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
+.nm svg.i{width:14px;height:14px;color:var(--warn)}
+.rank{width:26px;text-align:center;color:var(--muted);font-weight:800;flex:none;font-size:15px}
+.bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden;margin-top:7px}
+.bar i{display:block;height:100%;background:var(--grad);border-radius:3px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:rgba(255,255,255,.1);border:1px solid var(--line);border-radius:16px;padding:14px}
-.stat .v{font-size:23px;font-weight:850;margin-top:4px}
-.stat.big{grid-column:1/-1;background:linear-gradient(135deg,#ffcf5a,#ff9f2e);border:0;color:#2a1a00}
-.stat.big .muted{color:#5a3a00}
-.stat.big .v{font-size:34px}
-.khatm{background:linear-gradient(135deg,#1fbf86,#0f7f6a);border:0}
-.khatm .muted{color:#d2ffee}
-.monthsw{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
-.monthsw h2{margin:0;font-size:17px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat .v{font-size:21px;font-weight:800;margin-top:6px;letter-spacing:-.02em}
+.stat.big{grid-column:1/-1;background:var(--grad);border:0;padding:18px}
+.stat.big .muted{color:rgba(255,255,255,.8)}
+.stat.big .v{font-size:34px;color:#fff}
+.hero{background:var(--grad);border:0;color:#fff;padding:18px}
+.hero .muted{color:rgba(255,255,255,.8)}
+.hero .bar{background:rgba(0,0,0,.22)}
+.hero .bar i{background:#fff}
+.monthsw{display:flex;align-items:center;justify-content:space-between;margin:28px 0 12px}
+.monthsw h2{margin:0}
 .ann-item{padding:12px 0;border-bottom:1px solid var(--line)}
 .ann-item:last-child{border-bottom:0}
-.ann-item p{margin:4px 0 0;white-space:pre-wrap;line-height:1.45}
+.ann-item p{margin:6px 0 0;white-space:pre-wrap;line-height:1.5;color:var(--muted2)}
+.sec-title{display:flex;align-items:center;justify-content:space-between;margin:28px 0 12px;gap:10px}
+.sec-title h2{margin:0}
 
 /* nav */
-nav{position:fixed;left:0;right:0;bottom:0;background:rgba(26,20,70,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:10}
+nav{position:fixed;left:0;right:0;bottom:0;background:rgba(11,11,16,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:10}
 nav .in{display:flex;max-width:560px;width:100%}
-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--muted);padding:6px 0;font-weight:650;position:relative}
-nav button .e{font-size:22px;filter:grayscale(1);opacity:.55}
-nav button.on{color:var(--gold)}
-nav button.on .e{filter:none;opacity:1}
-nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--bad);color:#fff;font-size:11px;font-weight:800;border-radius:9px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 5px}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--muted);padding:6px 0;font-weight:600;position:relative}
+nav button svg.i{width:23px;height:23px}
+nav button.on{color:var(--text)}
+nav button.on svg.i{stroke:url(#navgrad)}
+nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad);color:#fff;font-size:10px;font-weight:800;border-radius:9px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 5px}
 
 /* modal */
-.modal{position:fixed;inset:0;background:rgba(10,6,30,.6);display:flex;align-items:flex-end;justify-content:center;z-index:50;animation:fade .15s}
-.sheet{background:#2a2170;width:100%;max-width:560px;border-radius:26px 26px 0 0;padding:20px 18px calc(env(safe-area-inset-bottom) + 20px);max-height:90vh;overflow:auto;animation:up .2s;border-top:1px solid var(--line)}
-.sheet h3{margin:0 0 14px;font-size:19px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:50;animation:fade .15s}
+.sheet{background:#15151d;width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom) + 20px);max-height:90vh;overflow:auto;animation:up .2s;border-top:1px solid var(--line2)}
+.sheet h3{margin:0 0 16px;font-size:18px;font-weight:700}
+.sheet .card{background:var(--surface2)}
 @keyframes fade{from{opacity:0}}
 @keyframes up{from{transform:translateY(40px);opacity:.5}}
 .field{margin-bottom:12px}
-.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
-.sw{width:52px;height:32px;border-radius:16px;background:rgba(255,255,255,.2);position:relative;transition:.2s;flex:none;cursor:pointer}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:.2s}
-.sw.on{background:var(--ok)}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}
+.sw{width:50px;height:30px;border-radius:15px;background:#33333f;position:relative;transition:.2s;flex:none;cursor:pointer}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--grad)}
 .sw.on::after{left:23px}
-.btns{display:flex;gap:10px;margin-top:16px}
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);background:#fff;color:#1d1450;padding:11px 16px;border-radius:14px;font-weight:700;font-size:14px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.35);max-width:90vw;text-align:center;animation:fade .2s}
-.toast.err{background:#ffe0e5;color:#6a1426}
+.btns{display:flex;gap:10px;margin-top:18px}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);background:#f7f7fa;color:#14141c;padding:11px 16px;border-radius:12px;font-weight:600;font-size:14px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:90vw;text-align:center;animation:fade .2s}
+.toast.err{background:#ffe4ea;color:#7a1430}
 .celebrate{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
-.celebrate i{position:absolute;top:-20px;width:10px;height:14px;border-radius:2px;animation:fall 2.4s linear forwards}
+.celebrate i{position:absolute;top:-20px;width:8px;height:12px;border-radius:2px;animation:fall 2.4s linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
-.empty{text-align:center;color:var(--muted);padding:18px 0}
-.steps{margin:6px 0 0;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.6}
+.empty{text-align:center;color:var(--muted);padding:16px 0;font-size:14px}
+.steps{margin:8px 0 0;padding-left:20px;color:var(--muted2);font-size:14px;line-height:1.7}
 .loading{display:grid;place-items:center;min-height:70vh;color:var(--muted)}
-.rules{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.rules div{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--muted)}
-.rules b{display:block;color:#fff;font-size:17px;margin-top:2px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.kv div{background:var(--surface2);border-radius:12px;padding:11px 12px;font-size:12px;color:var(--muted)}
+.kv b{display:block;color:var(--text);font-size:17px;margin-top:3px;font-weight:700}
+.pend-ic{width:64px;height:64px;border-radius:50%;margin:4px auto 10px;display:grid;place-items:center;background:var(--grad-soft);color:#f0a6c8}
+.pend-ic svg.i{width:30px;height:30px}
+.ttl{display:flex;align-items:center;gap:8px;font-weight:700}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="navgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b2ff7"/><stop offset=".55" stop-color="#e1306c"/><stop offset="1" stop-color="#f77737"/></linearGradient></defs></svg>
 
 <!-- LOGIN / REGISTER -->
 <div id="login" class="wrap hidden">
   <img class="logo" src="icon-192.png" alt="">
   <h1 class="center">Кунлик вирд</h1>
-  <p class="muted center" style="margin:4px 0 0">Китоб · Қуръон · Зикр</p>
+  <p class="muted center" style="margin:6px 0 0">Китоб · Қуръон · Зикр</p>
 
   <div id="pickName">
     <div id="namesBox">
@@ -195,12 +222,12 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--bad);
       <div class="names" id="names"><div class="empty" style="grid-column:1/-1">Юкланмоқда…</div></div>
       <div class="divider">ёки</div>
     </div>
-    <div id="firstNote" class="card hidden" style="margin-top:22px;text-align:center">👋 Гуруҳда ҳали ҳеч ким йўқ.<br><b>Биринчи рўйхатдан ўтган киши админ бўлади.</b></div>
-    <button class="btn violet" id="btnReg">✍️ Рўйхатдан ўтиш</button>
+    <div id="firstNote" class="card hidden" style="margin-top:26px;text-align:center;line-height:1.5">Гуруҳда ҳали ҳеч ким йўқ.<br><b>Биринчи рўйхатдан ўтган киши админ бўлади.</b></div>
+    <button class="btn" id="btnReg"></button>
   </div>
 
   <div id="pickPin" class="hidden">
-    <h2 class="center" id="pinTitle"></h2>
+    <h2 class="center" id="pinTitle" style="text-transform:none;letter-spacing:0;font-size:20px;color:var(--text)"></h2>
     <p class="muted small center" style="margin:0">PIN кодни киритинг</p>
     <div class="pin-dots" id="dots"><i></i><i></i><i></i><i></i></div>
     <div class="pad" id="pad"></div>
@@ -212,10 +239,10 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--bad);
       <div class="field"><label>Исмингиз</label><input id="rName" maxlength="40" placeholder="Масалан: Абдулазиз" autocomplete="off"></div>
       <div class="field"><label>PIN код ўйлаб топинг (4 рақам)</label><input id="rPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••"></div>
       <div class="field"><label>PIN ни қайта киритинг</label><input id="rPin2" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••"></div>
-      <p class="muted small" style="margin:4px 0 14px">PIN кодни эсда сақланг — ҳар сафар кириш учун керак бўлади.</p>
+      <p class="muted small" style="margin:4px 0 16px">PIN кодни эсда сақланг — ҳар сафар кириш учун керак бўлади.</p>
       <button class="btn" id="rGo">Рўйхатдан ўтиш</button>
       <div style="height:10px"></div>
-      <button class="btn sec" id="rBack">← Орқага</button>
+      <button class="btn sec" id="rBack">Орқага</button>
     </div>
   </div>
 </div>
@@ -224,12 +251,12 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--bad);
 <div id="pending" class="wrap hidden">
   <img class="logo" src="icon-192.png" alt="">
   <h1 class="center" id="pendName"></h1>
-  <div class="card" style="margin-top:18px;text-align:center">
-    <div style="font-size:44px">⏳</div>
-    <h2 style="margin:8px 0 6px">Админ тасдиқлашини кутинг</h2>
-    <p class="muted" style="margin:0">Сўровингиз админга юборилди. Тасдиқлангандан кейин шу ердан кирасиз.</p>
+  <div class="card" style="margin-top:20px;text-align:center;padding:22px 18px">
+    <div class="pend-ic" id="pendIc"></div>
+    <div style="font-weight:700;font-size:17px">Админ тасдиқлашини кутинг</div>
+    <p class="muted" style="margin:8px 0 0;line-height:1.5">Сўровингиз админга юборилди. Тасдиқлангандан кейин шу ердан кирасиз.</p>
   </div>
-  <button class="btn" id="pRefresh">🔄 Текшириш</button>
+  <button class="btn" id="pRefresh"></button>
   <div style="height:10px"></div>
   <div id="pPush"></div>
   <button class="btn sec" id="pOut">Чиқиш</button>
@@ -242,7 +269,7 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--bad);
       <div class="muted small" id="hDate"></div>
       <h1 id="hTitle"></h1>
     </div>
-    <button class="iconbtn" id="btnSettings" aria-label="Созламалар">⚙️</button>
+    <button class="iconbtn" id="btnSettings" aria-label="Созламалар"></button>
   </div>
   <section id="v-today"></section>
   <section id="v-group" class="hidden"></section>
@@ -250,12 +277,7 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--bad);
   <section id="v-admin" class="hidden"></section>
 </div>
 
-<nav id="nav" class="hidden"><div class="in">
-  <button data-v="today" class="on"><span class="e">📿</span>Бугун</button>
-  <button data-v="group"><span class="e">👥</span>Гуруҳ</button>
-  <button data-v="fines"><span class="e">💰</span>Жамғарма</button>
-  <button data-v="admin" id="navAdmin" class="hidden"><span class="e">🛠️</span>Админ<span class="badge hidden" id="admBadge"></span></button>
-</div></nav>
+<nav id="nav" class="hidden"><div class="in" id="navIn"></div></nav>
 
 <div id="boot" class="loading">Юкланмоқда…</div>
 
@@ -275,6 +297,38 @@ const ERR = {
   SELF: 'Ўзингизни админликдан ёки гуруҳдан чиқариб бўлмайди', BAD_VALUE: 'Нотўғри қиймат', NAME_TAKEN: 'Бу исм банд. Бошқа исм ёзинг (масалан, фамилия билан)',
   PENDING: 'Админ ҳали тасдиқламаган', TOO_MANY: 'Кутаётган сўровлар жуда кўп', EMPTY: 'Матн бўш'
 };
+
+// ================== ICONS (line) ==================
+const IC = {
+  book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+  quran:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+  zikr:'<circle cx="12" cy="11" r="7" stroke-dasharray="0.01 3.65" stroke-width="3.2"/><path d="M12 18v4M10.5 22h3"/>',
+  today:'<rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 15.5 2 2 4-4"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  wallet:'<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  settings:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
+  flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+  gift:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  key:'<circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/>',
+  logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+  userPlus:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+  medical:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  phone:'<rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/>',
+  refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>',
+  pen:'<path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  crown:'<path d="m2 6 4 11h12l4-11-6 5-4-7-4 7-6-5zM6 21h12"/>',
+  hourglass:'<path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>',
+  chevL:'<path d="m15 18-6-6 6-6"/>', chevR:'<path d="m9 18 6-6-6-6"/>'
+};
+const ic = (n, cls='') => `<svg class="i ${cls}" viewBox="0 0 24 24">${IC[n]||''}</svg>`;
 
 // ================== HELPERS ==================
 const $ = s => document.querySelector(s);
@@ -315,6 +369,15 @@ function ago(ts){
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
+// static icons
+$('#btnReg').innerHTML = ic('userPlus') + 'Рўйхатдан ўтиш';
+$('#pRefresh').innerHTML = ic('refresh') + 'Текшириш';
+$('#pendIc').innerHTML = ic('hourglass');
+$('#btnSettings').innerHTML = ic('settings');
+$('#navIn').innerHTML = [
+  ['today','today','Бугун'],['group','users','Гуруҳ'],['fines','wallet','Жамғарма'],['admin','shield','Админ']
+].map(([v,i,t]) => `<button data-v="${v}" ${v==='admin'?'id="navAdmin" class="hidden"':''}>${ic(i)}${t}${v==='admin'?'<span class="badge hidden" id="admBadge"></span>':''}</button>`).join('');
+
 // ================== STATE ==================
 let session = store.get('vird_session'); // {id, pin, name}
 let S = null, clockSkew = 0, view = 'today', month = null;
@@ -346,7 +409,7 @@ $('#names').addEventListener('click', e => {
   $('#pinTitle').textContent = pinFor.name; drawDots(); setLoginStep('pickPin');
 });
 $('#pad').innerHTML = [1,2,3,4,5,6,7,8,9].map(n=>`<button data-k="${n}">${n}</button>`).join('') +
-  '<button class="txt" data-k="back">← Орқага</button><button data-k="0">0</button><button class="txt" data-k="del">Ўчириш</button>';
+  '<button class="txt" data-k="back">Орқага</button><button data-k="0">0</button><button class="txt" data-k="del">Ўчириш</button>';
 function drawDots(){ [...$('#dots').children].forEach((d,i) => d.classList.toggle('on', i < pinBuf.length)); }
 function shake(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); vibrate([60,40,60]); }
 $('#pad').addEventListener('click', async e => {
@@ -375,7 +438,7 @@ $('#rGo').addEventListener('click', async () => {
     const me = await rpc('zk_register', { p_name: name, p_pin: pin });
     session = { id: me.id, pin, name: me.name }; store.set('vird_session', session);
     $('#rName').value = $('#rPin').value = $('#rPin2').value = '';
-    toast(me.is_admin ? 'Хуш келибсиз! Сиз гуруҳ админисиз 👑' : 'Сўров юборилди ✓');
+    toast(me.is_admin ? 'Хуш келибсиз! Сиз гуруҳ админисиз' : 'Сўров юборилди');
     startApp();
   } catch(err){ toast(err.message, true); }
   finally { b.disabled = false; }
@@ -386,7 +449,7 @@ function showPending(){
   show('pending');
   $('#pendName').textContent = session.name;
   $('#pPush').innerHTML = pushSupported() && !(isIOS && !isStandalone) && Notification.permission !== 'granted'
-    ? '<button class="btn sec" id="pPushBtn">🔔 Эслатмаларни ёқиш</button><div style="height:10px"></div>' : '';
+    ? `<button class="btn sec" id="pPushBtn">${ic('bell')}Билдиришномаларни ёқиш</button><div style="height:10px"></div>` : '';
 }
 $('#pRefresh').addEventListener('click', () => startApp());
 $('#pOut').addEventListener('click', () => logout());
@@ -397,7 +460,7 @@ async function startApp(){
   show('boot');
   try { await loadState(); }
   catch(e){
-    if (e.code === 'BAD_PIN' || e.code === 'NO_USER'){ logout(true); return; }
+    if (e.code === 'BAD_PIN' || e.code === 'NO_USER'){ logout(); return; }
     $('#boot').textContent = 'Интернет йўқ. Саҳифани янгиланг.'; return;
   }
   if (S.pending) return showPending();
@@ -406,7 +469,7 @@ async function startApp(){
   render();
   loadMyDays();
 }
-function logout(silent){
+function logout(){
   flushZikr(true);
   store.del('vird_session'); session = null; S = null; month = null; view = 'today';
   zk = { server:0, pending:0, timer:null, inflight:false };
@@ -432,7 +495,7 @@ async function refresh(){
   try {
     await flushZikr(); await loadState();
     if (S.pending) return showPending();
-    if ($('#app').classList.contains('hidden')) { show('app'); }
+    if ($('#app').classList.contains('hidden')) show('app');
     $('#navAdmin').classList.toggle('hidden', !S.me.is_admin);
     if (!document.querySelector('.modal')) render();
     loadMyDays();
@@ -449,7 +512,7 @@ function render(){
   ['today','group','fines','admin'].forEach(v => $('#v-'+v).classList.toggle('hidden', v !== view));
   ({ today: renderToday, group: renderGroup, fines: renderFines, admin: renderAdmin })[view]();
 }
-document.querySelector('nav').addEventListener('click', e => {
+$('#nav').addEventListener('click', e => {
   const b = e.target.closest('button[data-v]'); if (!b) return;
   view = b.dataset.v; render(); window.scrollTo(0,0);
   if (view === 'admin') loadAdminDays();
@@ -463,8 +526,8 @@ function tickCountdown(){
   const ms = msToMidnight(); const h = Math.floor(ms/3600000), mi = Math.floor(ms%3600000/60000), s = Math.floor(ms%60000/1000);
   const done = isDoneToday();
   el.className = 'countdown' + (done ? ' okk' : ms < 3*3600000 ? ' urgent' : '');
-  el.innerHTML = done ? '✅ <span>Бугунги вазифалар бажарилди. Аллоҳ қабул қилсин!</span>'
-    : `⏳ <span>00:00 гача: <b>${h} соат ${String(mi).padStart(2,'0')} дақиқа ${String(s).padStart(2,'0')}</b></span>`;
+  el.innerHTML = done ? `${ic('check')}<span>Бугунги вазифалар бажарилди. Аллоҳ қабул қилсин!</span>`
+    : `${ic('clock')}<span>00:00 гача <b>${h} соат ${String(mi).padStart(2,'0')} дақиқа ${String(s).padStart(2,'0')}</b></span>`;
   if (ms < 1500) setTimeout(refresh, 3000);
 }
 setInterval(tickCountdown, 1000);
@@ -477,24 +540,24 @@ function renderToday(){
   const qp = m.quran_pages_total || 0;
   $('#v-today').innerHTML = `
     <div class="countdown" id="cd"></div>
-    ${S.holiday_today ? `<div class="banner holiday">🎉 Бугун <b>${esc(S.holiday_today)}</b> — байрам куни. Ҳеч кимга жарима йўқ. Хоҳласангиз, вазифаларни бажаришингиз мумкин.</div>` : ''}
-    ${m.excused && !S.holiday_today ? '<div class="banner excused">🩺 Бугун сиз учун <b>узрли кун</b> белгиланган. Жарима йўқ.</div>' : ''}
-    ${showAnn ? `<div class="banner ann"><div class="row between"><b>📢 Эълон${lastAnn.author ? ' — ' + esc(lastAnn.author) : ''}</b><button class="small muted" id="annHide" style="color:#5a3a00;opacity:.7">✕</button></div><div style="margin-top:6px;white-space:pre-wrap">${esc(lastAnn.text)}</div></div>` : ''}
+    ${S.holiday_today ? `<div class="banner"><div class="bt" style="color:var(--pink)">${ic('gift')}${esc(S.holiday_today)}</div><div class="muted" style="margin-top:4px">Бугун байрам куни — ҳеч кимга жарима йўқ. Хоҳласангиз, вазифаларни бажаришингиз мумкин.</div></div>` : ''}
+    ${m.excused && !S.holiday_today ? `<div class="banner"><div class="bt" style="color:var(--blue)">${ic('medical')}Узрли кун</div><div class="muted" style="margin-top:4px">Бугун сиз учун узрли кун белгиланган. Жарима йўқ.</div></div>` : ''}
+    ${showAnn ? `<div class="banner ann"><div class="row between"><div class="bt">${ic('megaphone')}Эълон${lastAnn.author ? ' · ' + esc(lastAnn.author) : ''}</div><button class="muted" id="annHide">${ic('x')}</button></div><div style="margin-top:6px;white-space:pre-wrap;color:var(--muted2)">${esc(lastAnn.text)}</div></div>` : ''}
     <h2>Бугунги вазифалар</h2>
     <div class="card task ${m.book?'done':''}" data-task="book">
-      <div class="ic">📖</div><div class="grow"><div class="t1">Китоб</div><div class="muted small">${R.book_pages} бет ўқиш${S.me.book_title ? ' · ' + esc(S.me.book_title) : ''}</div></div><div class="check"></div>
+      <div class="ic">${ic('book')}</div><div class="grow"><div class="t1">Китоб</div><div class="muted small">${R.book_pages} бет ўқиш${S.me.book_title ? ' · ' + esc(S.me.book_title) : ''}</div></div><div class="check">${ic('check')}</div>
     </div>
     <div class="card task ${m.quran?'done':''}" data-task="quran">
-      <div class="ic">📗</div><div class="grow"><div class="t1">Қуръон</div><div class="muted small">${R.quran_pages} бет ўқиш</div></div><div class="check"></div>
+      <div class="ic">${ic('quran')}</div><div class="grow"><div class="t1">Қуръон</div><div class="muted small">${R.quran_pages} бет ўқиш</div></div><div class="check">${ic('check')}</div>
     </div>
     <div class="card zikr">
-      <div class="row between"><div style="text-align:left"><div class="t1">📿 Зикр</div><div class="muted small">${num(G)} марта</div></div>
+      <div class="row between"><div class="row" style="gap:10px;text-align:left"><div class="zic">${ic('zikr')}</div><div><div class="t1">Зикр</div><div class="muted small">${num(G)} марта</div></div></div>
       <span class="chip" id="zChip"></span></div>
       <div class="ring" id="ring">
-        <svg viewBox="0 0 250 250"><circle cx="125" cy="125" r="115" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/>
-        <circle id="arc" cx="125" cy="125" r="115" fill="none" stroke="url(#g)" stroke-width="12" stroke-linecap="round" stroke-dasharray="722.6" stroke-dashoffset="722.6"/>
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08f"/><stop offset="1" stop-color="#4ee6a6"/></linearGradient></defs></svg>
-        <div class="tap" id="tap"><div class="num" id="zNum">${z}</div><div class="of">/ ${num(G)}</div><div class="hint">Босинг</div></div>
+        <svg class="r" viewBox="0 0 244 244"><circle cx="122" cy="122" r="113" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/>
+        <circle id="arc" cx="122" cy="122" r="113" fill="none" stroke="url(#zg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="710" stroke-dashoffset="710"/>
+        <defs><linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b2ff7"/><stop offset=".55" stop-color="#e1306c"/><stop offset="1" stop-color="#f77737"/></linearGradient></defs></svg>
+        <div class="tap" id="tap"><div class="num" id="zNum">${z}</div><div class="of">/ ${num(G)}</div><div class="hint gtext" id="zHint">Босинг</div></div>
       </div>
       <div class="zrow"><button class="btn sec sm" id="zMinus">−1</button><button class="btn sec sm" id="zPlus10">+10</button><button class="btn sec sm" id="zPlus100">+100</button></div>
       <div class="sync" id="zSync"></div>
@@ -502,19 +565,19 @@ function renderToday(){
 
     <h2>Менинг натижаларим</h2>
     <div class="card">
-      <div class="row between"><span class="muted small">Охирги 14 кун</span><span class="chip gold">🔥 ${m.streak||0} кун кетма-кет</span></div>
+      <div class="row between"><span class="muted small">Охирги 14 кун · бугун чапда</span><span class="chip grad">${ic('flame')}${m.streak||0} кун кетма-кет</span></div>
       <div class="strip" id="strip"></div>
-      <div class="legend"><span style="--c:var(--ok)">Бажарилди</span><span style="--c:var(--bad)">Жарима</span><span style="--c:var(--blue)">Узрли</span><span style="--c:#ff9fd9">Байрам</span></div>
+      <div class="legend"><span style="--c:#c13584">Бажарилди</span><span style="--c:var(--bad)">Жарима</span><span style="--c:var(--blue)">Узрли</span><span style="--c:var(--pink)">Байрам</span></div>
     </div>
     <div class="card">
-      <div class="row between"><div class="grow"><div class="muted small">📖 Ҳозир ўқиётган китобим</div>
-        <div style="font-weight:750;font-size:17px;margin-top:3px">${S.me.book_title ? esc(S.me.book_title) : '<span class="muted">Ёзилмаган</span>'}</div></div>
-        <button class="btn sec sm" id="editBook">${S.me.book_title ? 'Ўзгартириш' : '+ Қўшиш'}</button></div>
-      <div class="rules" style="grid-template-columns:1fr 1fr">
+      <div class="row between"><div class="grow"><div class="muted small">Ҳозир ўқиётган китобим</div>
+        <div style="font-weight:700;font-size:16px;margin-top:4px">${S.me.book_title ? esc(S.me.book_title) : '<span class="muted">Ёзилмаган</span>'}</div></div>
+        <button class="btn sec sm" id="editBook">${ic('pen')}${S.me.book_title ? 'Ўзгартириш' : 'Қўшиш'}</button></div>
+      <div class="kv">
         <div>Китобдан ўқилган<b>${num(m.book_pages_total||0)} бет</b></div>
         <div>Қуръондан ўқилган<b>${num(qp)} бет</b></div>
       </div>
-      <div class="muted small" style="margin-top:10px">Қуръон: ${Math.floor(qp/KHATM_PAGES)} хатм, кейинги хатмгача ${KHATM_PAGES - qp % KHATM_PAGES} бет</div>
+      <div class="row between small" style="margin-top:12px"><span class="muted">Қуръон хатми</span><span><b>${Math.floor(qp/KHATM_PAGES)}</b> <span class="muted">· кейингисигача ${KHATM_PAGES - qp % KHATM_PAGES} бет</span></span></div>
       <div class="bar"><i style="width:${(qp % KHATM_PAGES)/KHATM_PAGES*100}%"></i></div>
     </div>
     ${pushBanner()}
@@ -523,17 +586,18 @@ function renderToday(){
 }
 function drawRing(){
   const z = zk.server + zk.pending; const arc = $('#arc'); if (!arc) return; const G = goal();
-  arc.style.strokeDashoffset = 722.6 * (1 - Math.min(1, z / G));
+  arc.style.strokeDashoffset = 710 * (1 - Math.min(1, z / G));
   $('#zNum').textContent = z;
   $('#ring').classList.toggle('full', z >= G);
-  const c = $('#zChip'); c.className = 'chip ' + (z>=G?'ok':'gold'); c.textContent = z>=G ? 'Бажарилди ✓' : num(G-z)+' қолди';
+  $('#zHint').className = 'hint' + (z >= G ? '' : ' gtext'); $('#zHint').textContent = z >= G ? 'Бажарилди' : 'Босинг';
+  const c = $('#zChip'); c.className = 'chip ' + (z>=G?'ok':''); c.innerHTML = z>=G ? ic('check') + 'Бажарилди' : num(G-z)+' қолди';
   $('#zSync').textContent = zk.pending ? 'Сақланмоқда…' : '';
 }
 function renderStrip(){
   const el = $('#strip'); if (!el) return;
   const map = {}; myDays.forEach(d => map[d.day] = d);
   let html = '';
-  for (let i = 13; i >= 0; i--){
+  for (let i = 0; i <= 13; i++){            // today first (left), older days to the right
     const day = addDays(S.today, -i); const d = map[day]; let cls = d ? d.status : 'none';
     if (day === S.today) cls = (S.holiday_today ? 'holiday' : me().excused ? 'excused' : isDoneToday() ? 'done' : '') + ' today';
     html += `<i class="${cls}" title="${fmtD(day)}"></i>`;
@@ -557,7 +621,7 @@ $('#v-today').addEventListener('click', async e => {
   if (e.target.closest('#editBook')){
     const r = await formBox('Қайси китобни ўқияпсиз?', [{ k:'title', label:'Китоб номи', val: S.me.book_title || '', ph:'Масалан: Саодат асри қиссалари' }], 'Сақлаш');
     if (!r) return;
-    try { await rpc('zk_set_book', { p_id: session.id, p_pin: session.pin, p_title: r.title }); S.me.book_title = r.title || null; renderToday(); toast('Сақланди ✓'); }
+    try { await rpc('zk_set_book', { p_id: session.id, p_pin: session.pin, p_title: r.title }); S.me.book_title = r.title || null; renderToday(); toast('Сақланди'); }
     catch(err){ toast(err.message, true); }
   }
 });
@@ -574,7 +638,7 @@ function addZikr(n){
   const was = isDoneToday();
   zk.pending += n; vibrate(n === 1 ? 10 : 20);
   const after = zk.server + zk.pending;
-  if (before < G && after >= G){ vibrate([80,60,80]); toast(`Машааллоҳ! ${num(G)} зикр бажарилди 🤲`); }
+  if (before < G && after >= G){ vibrate([80,60,80]); toast(`Машааллоҳ! ${num(G)} зикр бажарилди`); }
   else if (after % 100 === 0 && after < G && n === 1) vibrate(40);
   drawRing(); tickCountdown(); renderStrip();
   if (!was && isDoneToday()) celebrate();
@@ -602,7 +666,7 @@ window.addEventListener('pagehide', () => flushZikr(true));
 
 function celebrate(){
   const box = document.createElement('div'); box.className = 'celebrate';
-  const colors = ['#ffc94d','#4ee6a6','#7cc8ff','#ff9fd9','#ffffff','#8f6bff'];
+  const colors = ['#7b2ff7','#a62fd8','#e1306c','#f77737','#fcaf45','#ffffff'];
   for (let i = 0; i < 80; i++){
     const p = document.createElement('i');
     p.style.left = Math.random()*100 + 'vw'; p.style.background = colors[i % colors.length];
@@ -610,10 +674,13 @@ function celebrate(){
     box.appendChild(p);
   }
   document.body.appendChild(box); setTimeout(() => box.remove(), 4000);
-  toast('Бугунги барча вазифалар бажарилди! 🎉');
+  toast('Бугунги барча вазифалар бажарилди');
 }
 
 // ---------- GROUP ----------
+function marks(m, G){
+  return `<div class="marks">${ic('book', m.book?'on':'')}${ic('quran', m.quran?'on':'')}${ic('zikr', m.zikr>=G?'on':'')}<span>${m.zikr}/${num(G)}</span></div>`;
+}
 function renderGroup(){
   const list = S.members; const G = goal();
   const doneN = list.filter(m => m.done_today).length;
@@ -624,46 +691,45 @@ function renderGroup(){
   const bTotal = list.reduce((a,m) => a + (m.book_pages_total||0), 0);
   const anns = S.announcements || [];
   $('#v-group').innerHTML = `
-    <div class="card khatm" style="margin-top:16px">
-      <div class="muted small">📗 Гуруҳ бўйича Қуръон хатми</div>
-      <div class="row between" style="margin-top:4px"><div style="font-size:34px;font-weight:850">${Math.floor(qTotal/KHATM_PAGES)} хатм</div><div style="text-align:right"><div style="font-weight:750">${num(qTotal)} бет</div><div class="muted small">ўқилди</div></div></div>
-      <div class="bar" style="background:rgba(0,0,0,.2)"><i style="width:${(qTotal % KHATM_PAGES)/KHATM_PAGES*100}%;background:#fff"></i></div>
-      <div class="muted small" style="margin-top:6px">Кейинги хатмгача ${KHATM_PAGES - qTotal % KHATM_PAGES} бет · Китоблардан жами ${num(bTotal)} бет</div>
+    <div class="card hero" style="margin-top:16px">
+      <div class="muted small">Гуруҳ бўйича Қуръон хатми</div>
+      <div class="row between" style="margin-top:6px"><div style="font-size:34px;font-weight:800;letter-spacing:-.03em">${Math.floor(qTotal/KHATM_PAGES)} хатм</div><div style="text-align:right"><div style="font-weight:700">${num(qTotal)} бет</div><div class="muted small">ўқилди</div></div></div>
+      <div class="bar"><i style="width:${(qTotal % KHATM_PAGES)/KHATM_PAGES*100}%"></i></div>
+      <div class="muted small" style="margin-top:8px">Кейинги хатмгача ${KHATM_PAGES - qTotal % KHATM_PAGES} бет · Китоблардан жами ${num(bTotal)} бет</div>
     </div>
 
-    <h2>Бугун: ${doneN} / ${list.length} бажарди</h2>
+    <h2>Бугун · ${doneN} / ${list.length} бажарди</h2>
     <div class="card list">
       ${list.map(m => `
         <div class="item">
-          <div class="av ${m.done_today?'ok':''}">${m.done_today?'✓':esc(initials(m.name))}</div>
-          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?' 👑':''}${m.id===S.me.id?' <span class="muted small">(сиз)</span>':''}</div>
-            <div class="marks small"><span class="${m.book?'on':''}">📖</span><span class="${m.quran?'on':''}">📗</span><span class="${m.zikr>=G?'on':''}">📿</span>
-            <span class="muted" style="opacity:1;font-size:12px">${m.zikr}/${num(G)}</span></div>
-            ${m.book_title ? `<div class="small muted" style="margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📖 ${esc(m.book_title)}</div>` : ''}</div>
+          <div class="av ${m.done_today?'ok':''}">${m.done_today?ic('check'):esc(initials(m.name))}</div>
+          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}${m.id===S.me.id?' <span class="muted small" style="font-weight:500">(сиз)</span>':''}</div>
+            ${marks(m, G)}
+            ${m.book_title ? `<div class="small muted" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.book_title)}</div>` : ''}</div>
           ${S.holiday_today ? '<span class="chip pink">Байрам</span>' : m.excused ? '<span class="chip blue">Узрли</span>' : m.done_today ? '<span class="chip ok">Бажарди</span>' : '<span class="chip">Кутилмоқда</span>'}
         </div>`).join('')}
     </div>
-    ${best && best.streak > 0 ? `<div class="card row"><div style="font-size:30px">🔥</div><div class="grow"><div class="muted small">Энг узун серия</div><div style="font-weight:750">${esc(best.name)} — ${best.streak} кун кетма-кет</div></div></div>` : ''}
+    ${best && best.streak > 0 ? `<div class="card row"><div class="av" style="background:var(--grad);color:#fff">${ic('flame')}</div><div class="grow"><div class="muted small">Энг узун серия</div><div style="font-weight:700">${esc(best.name)} — ${best.streak} кун кетма-кет</div></div></div>` : ''}
 
     <div class="monthsw">
-      <button class="iconbtn" id="mPrev">‹</button>
-      <h2>${MONTHS[ms.getUTCMonth()]} ${ms.getUTCFullYear()} рейтинги</h2>
-      <button class="iconbtn" id="mNext" ${isCur?'disabled style="opacity:.3"':''}>›</button>
+      <button class="iconbtn" id="mPrev">${ic('chevL')}</button>
+      <h2>${MONTHS[ms.getUTCMonth()]} ${ms.getUTCFullYear()} · рейтинг</h2>
+      <button class="iconbtn" id="mNext" ${isCur?'disabled style="opacity:.3"':''}>${ic('chevR')}</button>
     </div>
     <div class="card list">
       ${rating.map((m,i) => {
         const total = m.m_done + m.m_missed + m.m_excused; const pct = total ? Math.round(m.m_done / total * 100) : 0;
         return `<div class="item">
-          <div class="rank">${i<3 && m.m_done>0 ? ['🥇','🥈','🥉'][i] : i+1}</div>
-          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}</span><span class="small muted">🔥 ${m.streak}</span></div>
+          <div class="rank ${i<3 && m.m_done>0 ? 'gtext' : ''}">${i+1}</div>
+          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}</span><span class="small muted" style="display:inline-flex;align-items:center;gap:4px">${ic('flame')}${m.streak}</span></div>
             <div class="bar"><i style="width:${pct}%"></i></div>
-            <div class="small muted" style="margin-top:5px">✅ ${m.m_done} &nbsp; ❌ ${m.m_missed} &nbsp; 🩺 ${m.m_excused} &nbsp; 📗 ${num(m.quran_pages_total||0)} бет</div></div>
+            <div class="small muted" style="margin-top:6px">Бажарилди ${m.m_done} · Жарима ${m.m_missed} · Узрли ${m.m_excused} · Қуръон ${num(m.quran_pages_total||0)} бет</div></div>
         </div>`; }).join('')}
     </div>
-    <p class="muted small">✅ бажарилган · ❌ жарима · 🩺 узрли ёки байрам кунлари. Бугунги кун 00:00 дан кейин ҳисобланади.</p>
+    <p class="muted small">Бугунги кун 00:00 дан кейин ҳисобланади.</p>
 
-    <h2>📢 Эълонлар</h2>
-    <div class="card">${anns.length ? anns.map(a => `<div class="ann-item"><div class="row between"><b class="small">${esc(a.author || 'Админ')}</b><span class="small muted">${ago(a.created_at)}</span></div><p>${esc(a.text)}</p></div>`).join('') : '<div class="empty">Ҳали эълон йўқ</div>'}</div>
+    <h2>Эълонлар</h2>
+    <div class="card">${anns.length ? anns.map(a => `<div class="ann-item"><div class="row between"><b class="small" style="display:inline-flex;align-items:center;gap:6px">${ic('megaphone')}${esc(a.author || 'Админ')}</b><span class="small muted">${ago(a.created_at)}</span></div><p>${esc(a.text)}</p></div>`).join('') : '<div class="empty">Ҳали эълон йўқ</div>'}</div>
   `;
 }
 $('#v-group').addEventListener('click', async e => {
@@ -682,30 +748,30 @@ function renderFines(){
   const balance = paid - S.sadaqa_total; const admin = S.me.is_admin;
   const debtors = [...list].sort((a,b) => (b.fines_total-b.fines_paid) - (a.fines_total-a.fines_paid));
   $('#v-fines').innerHTML = `
-    <h2>Садақа жамғармаси</h2>
+    <h2>Жарималар жамғармаси</h2>
     <div class="stats">
-      <div class="stat big"><div class="muted small">Жамғармада ҳозир</div><div class="v">${money(balance)}</div></div>
+      <div class="stat big"><div class="muted small">Жамғармада ҳозир</div><div class="v">${money(balance)}</div><div class="muted small" style="margin-top:4px">Йиғилган жарималардан садақа қилинади</div></div>
       <div class="stat"><div class="muted small">Тўланган жарималар</div><div class="v" style="color:var(--ok)">${money(paid)}</div></div>
       <div class="stat"><div class="muted small">Ҳали тўланмаган</div><div class="v" style="color:var(--bad)">${money(total - paid)}</div></div>
       <div class="stat"><div class="muted small">Жами жарималар</div><div class="v">${money(total)}</div></div>
-      <div class="stat"><div class="muted small">Садақага берилган</div><div class="v" style="color:var(--gold2)">${money(S.sadaqa_total)}</div></div>
+      <div class="stat"><div class="muted small">Садақага берилган</div><div class="v gtext">${money(S.sadaqa_total)}</div></div>
     </div>
-    <p class="muted small">Қоида: кун давомида (00:00 гача) 3 вазифадан бирортаси бажарилмаса — ${money(S.rules.fine)} жарима.</p>
+    <p class="muted small" style="line-height:1.5">Қоида: кун давомида (00:00 гача) 3 вазифадан бирортаси бажарилмаса — ${money(S.rules.fine)} жарима. Жарималар жамғармада йиғилади ва вақти-вақти билан садақа қилинади.</p>
     <h2>Ким қанча қарз</h2>
     <div class="card list">
       ${debtors.map(m => { const d = m.fines_total - m.fines_paid; return `
         <div class="item">
           <div class="av">${esc(initials(m.name))}</div>
-          <div class="grow"><div class="nm">${esc(m.name)}</div><div class="small muted">Жами: ${money(m.fines_total)} · Тўланган: ${money(m.fines_paid)}</div></div>
+          <div class="grow"><div class="nm">${esc(m.name)}</div><div class="small muted">Жами ${money(m.fines_total)} · Тўланган ${money(m.fines_paid)}</div></div>
           ${d > 0 ? `<div style="text-align:right"><span class="chip bad">${money(d)}</span>${admin ? `<div style="margin-top:6px"><button class="btn sm" data-payall="${m.id}" data-name="${esc(m.name)}" data-sum="${d}">Тўланди</button></div>` : ''}</div>`
                   : '<span class="chip ok">Қарзи йўқ</span>'}
         </div>`; }).join('')}
     </div>
-    <div class="row between" style="margin-top:24px"><h2 style="margin:0">Садақа тарихи</h2>${admin ? '<button class="btn sm" id="addSadaqa">+ Садақа бердик</button>' : ''}</div>
-    <div class="card list" style="margin-top:10px">
+    <div class="sec-title"><h2>Садақа тарихи</h2>${admin ? `<button class="btn sm" id="addSadaqa">${ic('heart')}Жамғармадан садақа бердик</button>` : ''}</div>
+    <div class="card list">
       ${S.sadaqa.length ? S.sadaqa.map(s => `
-        <div class="item"><div class="av">🤲</div><div class="grow"><div class="nm">${money(s.amount)}</div><div class="small muted">${fmtD(s.day)}${s.note ? ' · ' + esc(s.note) : ''}</div></div>
-        ${admin ? `<button class="btn sec sm" data-delsad="${s.id}">✕</button>` : ''}</div>`).join('')
+        <div class="item"><div class="av" style="color:#f0a6c8">${ic('heart')}</div><div class="grow"><div class="nm">${money(s.amount)}</div><div class="small muted">${fmtD(s.day)}${s.note ? ' · ' + esc(s.note) : ''}</div></div>
+        ${admin ? `<button class="btn sec icon" data-delsad="${s.id}">${ic('x')}</button>` : ''}</div>`).join('')
         : '<div class="empty">Ҳали садақа берилмаган</div>'}
     </div>
   `;
@@ -714,18 +780,18 @@ $('#v-fines').addEventListener('click', async e => {
   const pa = e.target.closest('[data-payall]');
   if (pa){
     if (!await confirmBox(`${pa.dataset.name} ${money(pa.dataset.sum)} тўладими?`, 'Барча қарзи тўланган деб белгиланади.')) return;
-    try { await rpc('zk_admin_pay_all', { p_id: session.id, p_pin: session.pin, p_member: +pa.dataset.payall }); toast('Белгиланди ✓'); await loadState(); renderFines(); }
+    try { await rpc('zk_admin_pay_all', { p_id: session.id, p_pin: session.pin, p_member: +pa.dataset.payall }); toast('Белгиланди'); await loadState(); renderFines(); }
     catch(err){ toast(err.message, true); }
     return;
   }
   if (e.target.closest('#addSadaqa')){
-    const r = await formBox('Садақа бердик', [
+    const r = await formBox('Жамғармадан садақа бердик', [
       { k:'amount', label:'Сумма (сом)', type:'number', ph:'Масалан: 500' },
-      { k:'note', label:'Изоҳ (ихтиёрий)', ph:'Масалан: Масжидга' }
+      { k:'note', label:'Кимга / изоҳ (ихтиёрий)', ph:'Масалан: Масжидга' }
     ], 'Сақлаш');
     if (!r) return;
     const amount = parseInt(r.amount, 10); if (!(amount > 0)) return toast('Суммани киритинг', true);
-    try { await rpc('zk_admin_add_sadaqa', { p_id: session.id, p_pin: session.pin, p_amount: amount, p_note: r.note || null }); toast('Сақланди ✓'); await loadState(); renderFines(); }
+    try { await rpc('zk_admin_add_sadaqa', { p_id: session.id, p_pin: session.pin, p_amount: amount, p_note: r.note || null }); toast('Сақланди'); await loadState(); renderFines(); }
     catch(err){ toast(err.message, true); }
     return;
   }
@@ -747,50 +813,50 @@ function renderAdmin(){
   const past = (S.holidays || []).filter(h => h.day < S.today).slice(-5).reverse();
   $('#v-admin').innerHTML = `
     ${pend.length ? `
-    <h2>👤 Янги сўровлар (${pend.length})</h2>
-    <div class="card list" style="border-color:rgba(255,201,77,.5)">
+    <h2>Янги сўровлар · ${pend.length}</h2>
+    <div class="card list gborder">
       ${pend.map(p => `<div class="item"><div class="av">${esc(initials(p.name))}</div>
         <div class="grow"><div class="nm">${esc(p.name)}</div><div class="small muted">${ago(p.created_at)}</div></div>
-        <button class="btn sec sm" data-rej="${p.id}" data-name="${esc(p.name)}">✕</button><button class="btn sm" data-ok="${p.id}">Тасдиқлаш</button></div>`).join('')}
+        <button class="btn sec icon" data-rej="${p.id}" data-name="${esc(p.name)}">${ic('x')}</button><button class="btn sm" data-ok="${p.id}">Тасдиқлаш</button></div>`).join('')}
     </div>` : ''}
 
-    <h2>📢 Эълон юбориш</h2>
+    <h2>Эълон юбориш</h2>
     <div class="card">
       <textarea id="annText" maxlength="1000" placeholder="Гуруҳга хабар ёзинг… Ҳаммага билдиришнома боради."></textarea>
       <div style="height:10px"></div>
-      <button class="btn violet" id="annSend">Юбориш</button>
-      ${(S.announcements||[]).length ? `<div class="list" style="margin-top:10px">${S.announcements.slice(0,5).map(a => `<div class="item"><div class="grow small"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(a.text)}</div><div class="muted">${ago(a.created_at)}</div></div><button class="btn sec sm" data-delann="${a.id}">✕</button></div>`).join('')}</div>` : ''}
+      <button class="btn" id="annSend">${ic('megaphone')}Юбориш</button>
+      ${(S.announcements||[]).length ? `<div class="list" style="margin-top:14px">${S.announcements.slice(0,5).map(a => `<div class="item"><div class="grow small"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(a.text)}</div><div class="muted">${ago(a.created_at)}</div></div><button class="btn sec icon" data-delann="${a.id}">${ic('x')}</button></div>`).join('')}</div>` : ''}
     </div>
 
-    <div class="row between" style="margin-top:24px"><h2 style="margin:0">⚖️ Қоидалар</h2><button class="btn sm" id="editRules">Ўзгартириш</button></div>
-    <div class="card" style="margin-top:10px">
-      <div class="rules">
+    <div class="sec-title"><h2>Қоидалар</h2><button class="btn sec sm" id="editRules">${ic('pen')}Ўзгартириш</button></div>
+    <div class="card">
+      <div class="kv" style="margin-top:0">
         <div>Жарима<b>${money(R.fine)}</b></div>
         <div>Зикр<b>${num(R.zikr_goal)} марта</b></div>
         <div>Китоб<b>${R.book_pages} бет</b></div>
         <div>Қуръон<b>${R.quran_pages} бет</b></div>
       </div>
-      <p class="muted small" style="margin:10px 0 0">Ўзгаришлар бугундан бошлаб амал қилади. Ўтган кунлар эски қоида бўйича қолади.</p>
+      <p class="muted small" style="margin:12px 0 0">Ўзгаришлар бугундан бошлаб амал қилади. Ўтган кунлар эски қоида бўйича қолади.</p>
     </div>
 
-    <div class="row between" style="margin-top:24px"><h2 style="margin:0">🎉 Байрам кунлари</h2><button class="btn sm" id="addHol">+ Қўшиш</button></div>
-    <div class="card list" style="margin-top:10px">
-      ${upcoming.length || past.length ? [...upcoming, ...past].map(h => `<div class="item"><div class="av">🎉</div>
+    <div class="sec-title"><h2>Байрам кунлари</h2><button class="btn sec sm" id="addHol">${ic('gift')}Қўшиш</button></div>
+    <div class="card list">
+      ${upcoming.length || past.length ? [...upcoming, ...past].map(h => `<div class="item"><div class="av" style="color:var(--pink)">${ic('gift')}</div>
         <div class="grow"><div class="nm">${esc(h.title)}</div><div class="small muted">${fmtLong(h.day)}${h.day < S.today ? ' · ўтган' : h.day === S.today ? ' · бугун' : ''}</div></div>
-        <button class="btn sec sm" data-delhol="${h.day}">✕</button></div>`).join('') : '<div class="empty">Байрам кунлари белгиланмаган</div>'}
+        <button class="btn sec icon" data-delhol="${h.day}">${ic('x')}</button></div>`).join('') : '<div class="empty">Байрам кунлари белгиланмаган</div>'}
     </div>
     <p class="muted small">Байрам кунида ҳеч кимга жарима ёзилмайди ва эслатма келмайди.</p>
 
-    <h2>👥 Аъзолар (${S.members.length})</h2>
+    <h2>Аъзолар · ${S.members.length}</h2>
     <div class="card list">
       ${S.members.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(m => `
         <div class="item"><div class="av">${esc(initials(m.name))}</div>
-          <div class="grow"><div class="nm">${esc(m.name)}</div><div class="small muted">${m.is_admin ? '👑 Админ' : 'Аъзо'}</div></div>
+          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}</div><div class="small muted">${m.is_admin ? 'Админ' : 'Аъзо'}</div></div>
           <button class="btn sec sm" data-edit="${m.id}">Таҳрир</button></div>`).join('')}
     </div>
     <p class="muted small">Янги аъзо қўшиш учун унга шу сайт ҳаволасини юборинг — у ўзи рўйхатдан ўтади, сиз тасдиқлайсиз.</p>
 
-    <h2>📅 Кунларни текшириш ва тузатиш</h2>
+    <h2>Кунларни текшириш ва тузатиш</h2>
     <div class="field"><select id="admMember">${S.members.map(m => `<option value="${m.id}" ${m.id===adm.member?'selected':''}>${esc(m.name)}</option>`).join('')}</select></div>
     <div class="card list" id="admDays"><div class="empty">Юкланмоқда…</div></div>
     <p class="muted small">Кунни босинг: вазифаларни тузатиш, «узрли кун» қилиш ёки жаримани «тўланди» деб белгилаш мумкин.</p>
@@ -817,8 +883,7 @@ function drawAdminDays(){
   const days = adm.days.filter(d => d.status !== 'none' && d.status !== 'future');
   el.innerHTML = days.length ? days.map(d => `
     <div class="item" data-day="${d.day}" style="cursor:pointer">
-      <div class="grow"><div class="nm">${fmtLong(d.day)}</div>
-        <div class="marks small"><span class="${d.book?'on':''}">📖</span><span class="${d.quran?'on':''}">📗</span><span class="${d.zikr>=d.zikr_goal?'on':''}">📿</span><span class="muted on" style="font-size:12px">${d.zikr}/${num(d.zikr_goal)}</span></div></div>
+      <div class="grow"><div class="nm">${fmtLong(d.day)}</div>${marks(d, d.zikr_goal)}</div>
       ${statusChip(d)}
     </div>`).join('') : '<div class="empty">Ҳали маълумот йўқ</div>';
 }
@@ -831,13 +896,13 @@ async function admCall(fn, args, okMsg){
 }
 $('#v-admin').addEventListener('click', async e => {
   const ok = e.target.closest('[data-ok]');
-  if (ok) return admCall('zk_admin_approve', { p_member: +ok.dataset.ok, p_ok: true }, 'Тасдиқланди ✓');
+  if (ok) return admCall('zk_admin_approve', { p_member: +ok.dataset.ok, p_ok: true }, 'Тасдиқланди');
   const rej = e.target.closest('[data-rej]');
   if (rej){ if (await confirmBox(`${rej.dataset.name} сўрови рад этилсинми?`)) admCall('zk_admin_approve', { p_member: +rej.dataset.rej, p_ok: false }, 'Рад этилди'); return; }
 
   if (e.target.closest('#annSend')){
     const text = $('#annText').value.trim(); if (!text) return toast('Матн ёзинг', true);
-    if (await admCall('zk_admin_announce', { p_text: text }, 'Эълон юборилди 📢')) { const t = $('#annText'); if (t) t.value = ''; }
+    if (await admCall('zk_admin_announce', { p_text: text }, 'Эълон юборилди')) { const t = $('#annText'); if (t) t.value = ''; }
     return;
   }
   const da = e.target.closest('[data-delann]');
@@ -854,7 +919,7 @@ $('#v-admin').addEventListener('click', async e => {
     if (!r) return;
     const v = { p_fine: parseInt(r.fine,10), p_zikr: parseInt(r.zikr,10), p_book: parseInt(r.book,10), p_quran: parseInt(r.quran,10) };
     if (Object.values(v).some(x => isNaN(x))) return toast('Барча майдонларни тўлдиринг', true);
-    admCall('zk_admin_set_rules', v, 'Қоидалар сақланди ✓'); return;
+    admCall('zk_admin_set_rules', v, 'Қоидалар сақланди'); return;
   }
   if (e.target.closest('#addHol')){
     const r = await formBox('Байрам куни', [
@@ -862,7 +927,7 @@ $('#v-admin').addEventListener('click', async e => {
       { k:'title', label:'Номи', ph:'Масалан: Рамазон ҳайити' }
     ], 'Қўшиш');
     if (!r || !r.day) return;
-    admCall('zk_admin_holiday', { p_day: r.day, p_title: r.title, p_add: true }, 'Қўшилди ✓'); return;
+    admCall('zk_admin_holiday', { p_day: r.day, p_title: r.title, p_add: true }, 'Қўшилди'); return;
   }
   const dh = e.target.closest('[data-delhol]');
   if (dh){ if (await confirmBox('Байрам кунини ўчирасизми?')) admCall('zk_admin_holiday', { p_day: dh.dataset.delhol, p_title: null, p_add: false }); return; }
@@ -873,30 +938,30 @@ $('#v-admin').addEventListener('click', async e => {
     const r = await formBox('Таҳрирлаш: ' + m.name, [
       { k:'name', label:'Исм', val: m.name },
       { k:'pin', label:'Янги PIN (ўзгартирмаслик учун бўш қолдиринг)', type:'tel', max:4, ph:'••••' },
-      { k:'admin', label:'👑 Админ ҳуқуқи', type:'switch', val: m.is_admin },
+      { k:'admin', label:'Админ ҳуқуқи', type:'switch', val: m.is_admin },
       { k:'remove', label:'Гуруҳдан чиқариш', type:'switch', val: false }
     ], 'Сақлаш');
     if (!r) return;
     if (r.pin && !/^\d{4}$/.test(r.pin)) return toast(ERR.PIN_FORMAT, true);
     if (r.remove && !await confirmBox(`${m.name} гуруҳдан чиқарилсинми?`, 'Унинг тарихи сақланиб қолади.')) return;
-    admCall('zk_admin_update_member', { p_member: m.id, p_name: r.name, p_new_pin: r.pin || null, p_admin: !!r.admin, p_active: !r.remove }, r.pin ? `Сақланди. Янги PIN: ${r.pin}` : 'Сақланди ✓');
+    admCall('zk_admin_update_member', { p_member: m.id, p_name: r.name, p_new_pin: r.pin || null, p_admin: !!r.admin, p_active: !r.remove }, r.pin ? `Сақланди. Янги PIN: ${r.pin}` : 'Сақланди');
     return;
   }
   const dd = e.target.closest('[data-day]');
   if (dd){
     const d = adm.days.find(x => x.day === dd.dataset.day); const m = S.members.find(x => x.id === adm.member);
     const r = await formBox(`${m.name} · ${fmtLong(d.day)}`, [
-      { k:'book', label:`📖 Китоб — ${d.book_pages} бет`, type:'switch', val: d.book },
-      { k:'quran', label:`📗 Қуръон — ${d.quran_pages} бет`, type:'switch', val: d.quran },
-      { k:'zikr', label:`📿 Зикр сони (керак: ${num(d.zikr_goal)})`, type:'number', val: d.zikr },
-      { k:'excused', label:'🩺 Узрли кун (жарима йўқ)', type:'switch', val: d.excused },
-      ...(d.day !== S.today && d.status === 'missed' ? [{ k:'paid', label:'💰 Жарима тўланган', type:'switch', val: d.paid }] : [])
+      { k:'book', label:`Китоб — ${d.book_pages} бет`, type:'switch', val: d.book },
+      { k:'quran', label:`Қуръон — ${d.quran_pages} бет`, type:'switch', val: d.quran },
+      { k:'zikr', label:`Зикр сони (керак: ${num(d.zikr_goal)})`, type:'number', val: d.zikr },
+      { k:'excused', label:'Узрли кун (жарима йўқ)', type:'switch', val: d.excused },
+      ...(d.day !== S.today && d.status === 'missed' ? [{ k:'paid', label:'Жарима тўланган', type:'switch', val: d.paid }] : [])
     ], 'Сақлаш');
     if (!r) return;
     try {
       await rpc('zk_admin_set_day', { p_id: session.id, p_pin: session.pin, p_member: m.id, p_day: d.day, p_book: !!r.book, p_quran: !!r.quran, p_zikr: parseInt(r.zikr,10) || 0, p_excused: !!r.excused });
       if ('paid' in r && !!r.paid !== d.paid) await rpc('zk_admin_set_paid', { p_id: session.id, p_pin: session.pin, p_member: m.id, p_day: d.day, p_paid: !!r.paid });
-      toast('Сақланди ✓'); await loadState(); if (m.id === S.me.id) zk.server = me().zikr; await loadAdminDays();
+      toast('Сақланди'); await loadState(); if (m.id === S.me.id) zk.server = me().zikr; await loadAdminDays();
     } catch(err){ toast(err.message, true); }
   }
 });
@@ -906,39 +971,39 @@ $('#btnSettings').addEventListener('click', () => {
   const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
   const box = modal(`
     <h3>Созламалар</h3>
-    <div class="card"><div class="muted small">Сиз</div><div style="font-weight:750;font-size:18px">${esc(S.me.name)}</div><div class="muted small">${S.me.is_admin?'👑 Админ':'Аъзо'}</div></div>
+    <div class="card row"><div class="av ring2"><span>${esc(initials(S.me.name))}</span></div><div><div style="font-weight:700;font-size:16px">${esc(S.me.name)}</div><div class="muted small">${S.me.is_admin?'Админ':'Аъзо'}</div></div></div>
     <div class="card">
-      <div style="font-weight:750">🔔 Билдиришномалар</div>
-      <p class="muted small" style="margin:6px 0 10px">21:00 ва 23:00 да эслатма (агар бажармаган бўлсангиз), 00:00 да кун якуни ва админ эълонлари.</p>
+      <div class="ttl">${ic('bell')}Билдиришномалар</div>
+      <p class="muted small" style="margin:8px 0 12px;line-height:1.5">21:00 ва 23:00 да эслатма (агар бажармаган бўлсангиз), 00:00 да кун якуни ва админ эълонлари.</p>
       ${pushStatusHtml(perm)}
     </div>
-    <div class="card"><div style="font-weight:750">📲 Телефон экранига қўшиш</div>${installHelp()}</div>
-    <div class="card"><div style="font-weight:750">🔗 Гуруҳга таклиф қилиш</div>
-      <p class="muted small" style="margin:6px 0 10px">Шу ҳаволани юборинг. Одам рўйхатдан ўтади, админ тасдиқлайди.</p>
+    <div class="card"><div class="ttl">${ic('phone')}Телефон экранига қўшиш</div>${installHelp()}</div>
+    <div class="card"><div class="ttl">${ic('link')}Гуруҳга таклиф қилиш</div>
+      <p class="muted small" style="margin:8px 0 12px">Шу ҳаволани юборинг. Одам рўйхатдан ўтади, админ тасдиқлайди.</p>
       <div class="row"><input readonly value="${esc(location.origin + location.pathname)}" id="shareUrl" style="font-size:13px"><button class="btn sm" id="copyUrl">Нусха</button></div>
     </div>
-    <button class="btn sec" id="sPin">🔑 PIN кодни ўзгартириш</button>
+    <button class="btn sec" id="sPin">${ic('key')}PIN кодни ўзгартириш</button>
     <div style="height:10px"></div>
-    <button class="btn danger" id="sOut">Чиқиш</button>
+    <button class="btn danger" id="sOut">${ic('logout')}Чиқиш</button>
     <div style="height:10px"></div>
     <button class="btn sec" data-close>Ёпиш</button>
   `);
   box.addEventListener('click', async e => {
     if (e.target.closest('#btnPush2')) { close(box); enablePush(); }
-    if (e.target.closest('#copyUrl')) { try { await navigator.clipboard.writeText($('#shareUrl').value); toast('Нусха олинди ✓'); } catch(_) { $('#shareUrl').select(); } }
+    if (e.target.closest('#copyUrl')) { try { await navigator.clipboard.writeText($('#shareUrl').value); toast('Нусха олинди'); } catch(_) { $('#shareUrl').select(); } }
     if (e.target.closest('#sOut')) { close(box); logout(); }
     if (e.target.closest('#sPin')) {
       close(box);
       const r = await formBox('PIN кодни ўзгартириш', [{ k:'pin', label:'Янги PIN (4 рақам)', type:'tel', max:4, ph:'••••' }], 'Сақлаш');
       if (!r) return;
-      try { await rpc('zk_change_pin', { p_id: session.id, p_pin: session.pin, p_new: r.pin }); session.pin = r.pin; store.set('vird_session', session); toast('PIN ўзгартирилди ✓'); }
+      try { await rpc('zk_change_pin', { p_id: session.id, p_pin: session.pin, p_new: r.pin }); session.pin = r.pin; store.set('vird_session', session); toast('PIN ўзгартирилди'); }
       catch(err){ toast(err.message, true); }
     }
   });
 });
 function installHelp(){
-  if (isStandalone) return '<p class="muted small" style="margin:6px 0 0">✅ Илова экранга қўшилган.</p>';
-  if (isIOS) return `<ol class="steps"><li>Safari пастидаги <b>«Поделиться»</b> (⬆️) тугмасини босинг</li><li><b>«На экран Домой»</b> ни танланг</li><li><b>«Добавить»</b> ни босинг</li><li>Экрандаги «Кунлик вирд» белгисидан очинг</li></ol>`;
+  if (isStandalone) return '<p class="muted small" style="margin:8px 0 0">Илова экранга қўшилган.</p>';
+  if (isIOS) return `<ol class="steps"><li>Safari пастидаги <b>«Поделиться»</b> тугмасини босинг</li><li><b>«На экран Домой»</b> ни танланг</li><li><b>«Добавить»</b> ни босинг</li><li>Экрандаги «Кунлик вирд» белгисидан очинг</li></ol>`;
   return `<ol class="steps"><li>Chrome ёки Samsung Internet да <b>⋮</b> (ёки <b>☰</b>) менюни очинг</li><li><b>«Добавить на главный экран»</b> ёки <b>«Установить приложение»</b> ни танланг</li><li>Экрандаги «Кунлик вирд» белгисидан очинг</li></ol>`;
 }
 
@@ -946,22 +1011,22 @@ function installHelp(){
 function pushSupported(){ return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
 function pushOn(){ return ('Notification' in window) && Notification.permission === 'granted' && store.get('vird_push_ok') === (session && session.id); }
 function pushStatusHtml(perm){
-  if (isIOS && !isStandalone) return '<p class="small" style="color:var(--warn);margin:0">iPhone да аввал иловани экранга қўшинг (пастдаги кўрсатма), кейин уни экрандан очиб, шу ерда ёқинг.</p>';
+  if (isIOS && !isStandalone) return '<p class="small" style="color:var(--warn);margin:0;line-height:1.5">iPhone да аввал иловани экранга қўшинг (пастдаги кўрсатма), кейин уни экрандан очиб, шу ерда ёқинг.</p>';
   if (!pushSupported()) return '<p class="small" style="color:var(--warn);margin:0">Бу браузер билдиришномаларни қўллаб-қувватламайди. Chrome ёки Safari дан очинг.</p>';
-  if (pushOn()) return '<span class="chip ok">✓ Ёқилган</span> <button class="btn sec sm" id="btnPush2" style="margin-left:8px">Қайта улаш</button>';
+  if (pushOn()) return `<span class="chip ok">${ic('check')}Ёқилган</span> <button class="btn sec sm" id="btnPush2" style="margin-left:8px">Қайта улаш</button>`;
   if (perm === 'denied') return '<p class="small" style="color:var(--bad);margin:0">Билдиришномалар ўчирилган. Телефон созламаларидан бу сайтга рухсат беринг.</p>';
-  return '<button class="btn" id="btnPush2">🔔 Ёқиш</button>';
+  return `<button class="btn" id="btnPush2">${ic('bell')}Ёқиш</button>`;
 }
 function pushBanner(){
   if (!session || pushOn()) return '';
   const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
-  if (isIOS && !isStandalone) return `<div class="card" style="border-color:rgba(255,201,77,.45)"><div style="font-weight:750">🔔 Эслатмалар олиш учун иловани экранга қўшинг</div>${installHelp()}</div>`;
+  if (isIOS && !isStandalone) return `<div class="card gborder"><div class="ttl">${ic('bell')}Эслатмалар олиш учун иловани экранга қўшинг</div>${installHelp()}</div>`;
   if (!pushSupported() || perm === 'denied') return '';
-  return `<div class="card" style="border-color:rgba(255,201,77,.45)"><div style="font-weight:750">🔔 Билдиришномаларни ёқинг</div><p class="muted small" style="margin:6px 0 12px">Эслатмалар, кун якуни ва эълонлар телефонингизга келади.</p><button class="btn" id="btnPush">Ёқиш</button></div>`;
+  return `<div class="card gborder"><div class="ttl">${ic('bell')}Билдиришномаларни ёқинг</div><p class="muted small" style="margin:8px 0 14px">Эслатмалар, кун якуни ва эълонлар телефонингизга келади.</p><button class="btn" id="btnPush">Ёқиш</button></div>`;
 }
 function b64ToU8(b64){ const p = '='.repeat((4 - b64.length % 4) % 4); const s = atob((b64 + p).replace(/-/g,'+').replace(/_/g,'/')); return Uint8Array.from([...s].map(c => c.charCodeAt(0))); }
 async function enablePush(){
-  if (isIOS && !isStandalone) return toast('Аввал иловани экранга қўшинг (⚙️ Созламалар)', true);
+  if (isIOS && !isStandalone) return toast('Аввал иловани экранга қўшинг (Созламалар)', true);
   if (!pushSupported()) return toast('Бу браузерда билдиришномалар ишламайди', true);
   try {
     const perm = await Notification.requestPermission();
@@ -974,8 +1039,8 @@ async function enablePush(){
     const j = sub.toJSON();
     await rpc('zk_save_push', { p_id: session.id, p_pin: session.pin, p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth });
     store.set('vird_push_ok', session.id);
-    reg.showNotification('🔔 Билдиришномалар ёқилди', { body: 'Эслатмалар, кун якуни ва эълонлар шу ерга келади.', icon: 'icon-192.png' });
-    toast('Ёқилди ✓');
+    reg.showNotification('Билдиришномалар ёқилди', { body: 'Эслатмалар, кун якуни ва эълонлар шу ерга келади.', icon: 'icon-192.png' });
+    toast('Ёқилди');
     if (S && !S.pending && view === 'today') renderToday();
     if (S && S.pending) showPending();
   } catch(err){ toast('Хатолик: ' + (err.message || err), true); }

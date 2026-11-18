@@ -1,5 +1,5 @@
 // Service worker: push reminders + offline shell
-const CACHE = 'vird-v2';
+const CACHE = 'vird-v3';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
