@@ -4,7 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Кунлик вирд</title>
-<meta name="theme-color" content="#0b0b10">
+<meta name="theme-color" content="#0b0b10" id="metaTheme">
+<script>
+(function(){
+  var pref = 'auto'; try { pref = JSON.parse(localStorage.getItem('vird_theme')) || 'auto'; } catch(e){}
+  var mq = window.matchMedia('(prefers-color-scheme: light)');
+  window.applyTheme = function(p){
+    if (p) pref = p;
+    var t = pref === 'auto' ? (mq.matches ? 'light' : 'dark') : pref;
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.getElementById('metaTheme'); if (m) m.setAttribute('content', t === 'light' ? '#f5f5f8' : '#0b0b10');
+    return pref;
+  };
+  window.themePref = function(){ return pref; };
+  try { mq.addEventListener('change', function(){ if (pref === 'auto') window.applyTheme(); }); } catch(e){ try { mq.addListener(function(){ if (pref === 'auto') window.applyTheme(); }); } catch(_){} }
+  window.applyTheme();
+})();
+</script>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -23,17 +39,30 @@
   --grad-soft:linear-gradient(120deg,rgba(106,44,245,.18),rgba(225,48,108,.14) 60%,rgba(247,119,55,.12));
   --ok:#34d399; --bad:#fb5a7a; --warn:#fbbf24; --blue:#7aa7ff; --pink:#f472b6;
   --r:18px;
+  --nav:rgba(11,11,16,.88); --sheet:#15151d; --switch:#33333f; --checkb:#4a4a5a; --ph:#6b6b7b;
+  --tap:radial-gradient(circle at 50% 28%,#262633,#15151d 70%); --tapshadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px rgba(0,0,0,.45);
+  --chipgrad:#ffd2e4; --markon:#e98ab8; --ringbg:rgba(255,255,255,.06);
+  --glow1:rgba(166,47,216,.20); --glow2:rgba(106,44,245,.18); --toastbg:#f7f7fa; --toastfg:#14141c; color-scheme:dark;
+}
+:root[data-theme=light]{
+  --bg:#f5f5f8; --surface:#ffffff; --surface2:#f0f0f5; --line:rgba(20,20,40,.08); --line2:rgba(20,20,40,.14);
+  --text:#121218; --muted:#6e6e7e; --muted2:#45455a;
+  --ok:#0f9f6e; --bad:#e11d48; --warn:#c27c00; --blue:#2f6fe0; --pink:#d9468f;
+  --nav:rgba(255,255,255,.9); --sheet:#ffffff; --switch:#d6d6e0; --checkb:#c4c4d0; --ph:#9a9aa8;
+  --tap:radial-gradient(circle at 50% 28%,#ffffff,#f1f1f6 70%); --tapshadow:inset 0 1px 0 #fff,0 14px 30px rgba(60,40,120,.14);
+  --chipgrad:#b0306a; --markon:#c13584; --ringbg:rgba(20,20,40,.07);
+  --glow1:rgba(166,47,216,.10); --glow2:rgba(106,44,245,.08); --toastbg:#14141c; --toastfg:#f7f7fa; color-scheme:light;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
-body{min-height:100vh;min-height:100dvh;background:radial-gradient(90% 45% at 85% -8%,rgba(166,47,216,.20),transparent 60%),radial-gradient(70% 35% at 0% 0%,rgba(106,44,245,.18),transparent 60%),var(--bg) fixed}
+body{min-height:100vh;min-height:100dvh;background:radial-gradient(90% 45% at 85% -8%,var(--glow1),transparent 60%),radial-gradient(70% 35% at 0% 0%,var(--glow2),transparent 60%),var(--bg) fixed}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;letter-spacing:inherit}
 input,select,textarea{font:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--line2);border-radius:12px;padding:13px 14px;width:100%;outline:none;letter-spacing:inherit}
 textarea{min-height:110px;resize:vertical}
 select option{color:#111}
-input::placeholder,textarea::placeholder{color:#6b6b7b}
+input::placeholder,textarea::placeholder{color:var(--ph)}
 input:focus,select:focus,textarea:focus{border-color:#a62fd8;box-shadow:0 0 0 3px rgba(166,47,216,.2)}
-input[type=date]{min-height:48px;color-scheme:dark}
+input[type=date]{min-height:48px}
 svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-4px}
 .hidden{display:none!important}
 .wrap{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 18px calc(env(safe-area-inset-bottom) + 100px)}
@@ -60,7 +89,7 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .chip.warn{background:rgba(251,191,36,.1);color:var(--warn);border-color:rgba(251,191,36,.22)}
 .chip.blue{background:rgba(122,167,255,.1);color:var(--blue);border-color:rgba(122,167,255,.22)}
 .chip.pink{background:rgba(244,114,182,.1);color:var(--pink);border-color:rgba(244,114,182,.22)}
-.chip.grad{background:var(--grad-soft);color:#ffd2e4;border-color:rgba(225,48,108,.3)}
+.chip.grad{background:var(--grad-soft);color:var(--chipgrad);border-color:rgba(225,48,108,.3)}
 .gborder{border:1.5px solid transparent!important;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box!important}
 
 /* login */
@@ -71,7 +100,7 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .names button small{display:block;font-size:11px;color:var(--warn);font-weight:500;margin-top:3px}
 .names button:active{background:var(--surface2)}
 .pin-dots{display:flex;gap:18px;justify-content:center;margin:26px 0}
-.pin-dots i{width:14px;height:14px;border-radius:50%;border:1.5px solid #6b6b7b;display:block}
+.pin-dots i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ph);display:block}
 .pin-dots i.on{background:var(--grad);border-color:transparent}
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
@@ -87,9 +116,9 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .iconbtn{width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--muted2)}
 .countdown{margin-top:16px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);color:var(--muted2);border-radius:14px;padding:12px 14px;font-size:14px}
 .countdown b{font-variant-numeric:tabular-nums;color:var(--text);font-weight:700}
-.countdown.urgent{border-color:rgba(251,90,122,.35);color:#ffb3c3}
-.countdown.urgent b{color:#ffd0da}
-.countdown.okk{border-color:rgba(52,211,153,.3);color:#a7f3d0}
+.countdown.urgent{border-color:rgba(251,90,122,.35);color:var(--bad)}
+.countdown.urgent b{color:var(--bad)}
+.countdown.okk{border-color:rgba(52,211,153,.3);color:var(--ok)}
 .banner{border-radius:16px;padding:14px 16px;margin-top:10px;font-size:14px;line-height:1.5;background:var(--surface);border:1px solid var(--line)}
 .banner .bt{display:flex;align-items:center;gap:8px;font-weight:700}
 .banner.ann{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
@@ -99,7 +128,7 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .task .ic{width:46px;height:46px;border-radius:13px;background:var(--surface2);display:grid;place-items:center;flex:none;color:var(--muted2)}
 .task .ic svg.i{width:22px;height:22px}
 .t1{font-weight:700;font-size:16px}
-.check{width:30px;height:30px;border-radius:50%;border:1.5px solid #4a4a5a;display:grid;place-items:center;flex:none;transition:.2s;color:#fff}
+.check{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--checkb);display:grid;place-items:center;flex:none;transition:.2s;color:#fff}
 .check svg.i{width:16px;height:16px;stroke-width:3;opacity:0}
 .task.done{border:1.5px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box}
 .task.done .ic{background:var(--grad);color:#fff}
@@ -111,12 +140,12 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .zic{width:40px;height:40px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;color:var(--muted2);flex:none}
 .ring{position:relative;width:244px;height:244px;margin:10px auto 10px;border-radius:50%;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .ring svg.r{position:absolute;inset:0;transform:rotate(-90deg)}
-.ring .tap{position:absolute;inset:20px;border-radius:50%;background:radial-gradient(circle at 50% 28%,#262633,#15151d 70%);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px rgba(0,0,0,.45);transition:transform .06s}
+.ring .tap{position:absolute;inset:20px;border-radius:50%;background:var(--tap);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--tapshadow);transition:transform .06s}
 .ring .tap.press{transform:scale(.96)}
 .ring .num{font-size:58px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.04em}
 .ring .of{color:var(--muted);font-size:14px;margin-top:6px}
 .ring .hint{font-size:11px;margin-top:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-.ring.full .tap{background:var(--grad);border-color:transparent}
+.ring.full .tap{background:var(--grad);border-color:transparent;color:#fff}
 .ring.full .of{color:rgba(255,255,255,.8)}
 .zrow{display:flex;gap:8px;justify-content:center}
 .sync{font-size:12px;color:var(--muted);margin-top:8px;min-height:16px}
@@ -142,7 +171,7 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .av.ring2 span{width:100%;height:100%;border-radius:50%;background:var(--surface);display:grid;place-items:center}
 .marks{display:flex;gap:6px;align-items:center;margin-top:3px;color:var(--muted)}
 .marks svg.i{width:15px;height:15px;opacity:.3}
-.marks svg.i.on{opacity:1;color:#e98ab8}
+.marks svg.i.on{opacity:1;color:var(--markon)}
 .marks span{font-size:12px}
 .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
 .nm svg.i{width:14px;height:14px;color:var(--warn)}
@@ -168,7 +197,7 @@ h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-tra
 .sec-title h2{margin:0}
 
 /* nav */
-nav{position:fixed;left:0;right:0;bottom:0;background:rgba(11,11,16,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:10}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:10}
 nav .in{display:flex;max-width:560px;width:100%}
 nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--muted);padding:6px 0;font-weight:600;position:relative}
 nav button svg.i{width:23px;height:23px}
@@ -178,7 +207,7 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad)
 
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:50;animation:fade .15s}
-.sheet{background:#15151d;width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom) + 20px);max-height:90vh;overflow:auto;animation:up .2s;border-top:1px solid var(--line2)}
+.sheet{background:var(--sheet);width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom) + 20px);max-height:90vh;overflow:auto;animation:up .2s;border-top:1px solid var(--line2)}
 .sheet h3{margin:0 0 16px;font-size:18px;font-weight:700}
 .sheet .card{background:var(--surface2)}
 @keyframes fade{from{opacity:0}}
@@ -186,12 +215,12 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad)
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
 .toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}
-.sw{width:50px;height:30px;border-radius:15px;background:#33333f;position:relative;transition:.2s;flex:none;cursor:pointer}
+.sw{width:50px;height:30px;border-radius:15px;background:var(--switch);position:relative;transition:.2s;flex:none;cursor:pointer}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
 .sw.on{background:var(--grad)}
 .sw.on::after{left:23px}
 .btns{display:flex;gap:10px;margin-top:18px}
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);background:#f7f7fa;color:#14141c;padding:11px 16px;border-radius:12px;font-weight:600;font-size:14px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:90vw;text-align:center;animation:fade .2s}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);background:var(--toastbg);color:var(--toastfg);padding:11px 16px;border-radius:12px;font-weight:600;font-size:14px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:90vw;text-align:center;animation:fade .2s}
 .toast.err{background:#ffe4ea;color:#7a1430}
 .celebrate{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
 .celebrate i{position:absolute;top:-20px;width:8px;height:12px;border-radius:2px;animation:fall 2.4s linear forwards}
@@ -202,9 +231,13 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad)
 .kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .kv div{background:var(--surface2);border-radius:12px;padding:11px 12px;font-size:12px;color:var(--muted)}
 .kv b{display:block;color:var(--text);font-size:17px;margin-top:3px;font-weight:700}
-.pend-ic{width:64px;height:64px;border-radius:50%;margin:4px auto 10px;display:grid;place-items:center;background:var(--grad-soft);color:#f0a6c8}
+.pend-ic{width:64px;height:64px;border-radius:50%;margin:4px auto 10px;display:grid;place-items:center;background:var(--grad-soft);color:var(--pink)}
 .pend-ic svg.i{width:30px;height:30px}
 .ttl{display:flex;align-items:center;gap:8px;font-weight:700}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin-top:12px}
+.seg button{padding:9px 6px;border-radius:9px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button svg.i{width:16px;height:16px}
+.seg button.on{background:var(--grad);color:#fff}
 </style>
 </head>
 <body>
@@ -326,6 +359,9 @@ const IC = {
   pen:'<path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
   crown:'<path d="m2 6 4 11h12l4-11-6 5-4-7-4 7-6-5zM6 21h12"/>',
   hourglass:'<path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+  moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  auto:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>',
   chevL:'<path d="m15 18-6-6 6-6"/>', chevR:'<path d="m9 18 6-6-6-6"/>'
 };
 const ic = (n, cls='') => `<svg class="i ${cls}" viewBox="0 0 24 24">${IC[n]||''}</svg>`;
@@ -554,7 +590,7 @@ function renderToday(){
       <div class="row between"><div class="row" style="gap:10px;text-align:left"><div class="zic">${ic('zikr')}</div><div><div class="t1">Зикр</div><div class="muted small">${num(G)} марта</div></div></div>
       <span class="chip" id="zChip"></span></div>
       <div class="ring" id="ring">
-        <svg class="r" viewBox="0 0 244 244"><circle cx="122" cy="122" r="113" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/>
+        <svg class="r" viewBox="0 0 244 244"><circle cx="122" cy="122" r="113" fill="none" stroke="var(--ringbg)" stroke-width="8"/>
         <circle id="arc" cx="122" cy="122" r="113" fill="none" stroke="url(#zg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="710" stroke-dashoffset="710"/>
         <defs><linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b2ff7"/><stop offset=".55" stop-color="#e1306c"/><stop offset="1" stop-color="#f77737"/></linearGradient></defs></svg>
         <div class="tap" id="tap"><div class="num" id="zNum">${z}</div><div class="of">/ ${num(G)}</div><div class="hint gtext" id="zHint">Босинг</div></div>
@@ -770,7 +806,7 @@ function renderFines(){
     <div class="sec-title"><h2>Садақа тарихи</h2>${admin ? `<button class="btn sm" id="addSadaqa">${ic('heart')}Жамғармадан садақа бердик</button>` : ''}</div>
     <div class="card list">
       ${S.sadaqa.length ? S.sadaqa.map(s => `
-        <div class="item"><div class="av" style="color:#f0a6c8">${ic('heart')}</div><div class="grow"><div class="nm">${money(s.amount)}</div><div class="small muted">${fmtD(s.day)}${s.note ? ' · ' + esc(s.note) : ''}</div></div>
+        <div class="item"><div class="av" style="color:var(--pink)">${ic('heart')}</div><div class="grow"><div class="nm">${money(s.amount)}</div><div class="small muted">${fmtD(s.day)}${s.note ? ' · ' + esc(s.note) : ''}</div></div>
         ${admin ? `<button class="btn sec icon" data-delsad="${s.id}">${ic('x')}</button>` : ''}</div>`).join('')
         : '<div class="empty">Ҳали садақа берилмаган</div>'}
     </div>
@@ -973,6 +1009,13 @@ $('#btnSettings').addEventListener('click', () => {
     <h3>Созламалар</h3>
     <div class="card row"><div class="av ring2"><span>${esc(initials(S.me.name))}</span></div><div><div style="font-weight:700;font-size:16px">${esc(S.me.name)}</div><div class="muted small">${S.me.is_admin?'Админ':'Аъзо'}</div></div></div>
     <div class="card">
+      <div class="ttl">${ic('sun')}Кўриниш</div>
+      <div class="seg" id="themeSeg">
+        ${[['light','sun','Ёруғ'],['dark','moon','Қоронғи'],['auto','auto','Автоматик']].map(([k,i,t]) => `<button data-theme-set="${k}" class="${themePref()===k?'on':''}">${ic(i)}${t}</button>`).join('')}
+      </div>
+      <p class="muted small" style="margin:10px 0 0">Автоматик — телефон созламасига қараб ўзгаради.</p>
+    </div>
+    <div class="card">
       <div class="ttl">${ic('bell')}Билдиришномалар</div>
       <p class="muted small" style="margin:8px 0 12px;line-height:1.5">21:00 ва 23:00 да эслатма (агар бажармаган бўлсангиз), 00:00 да кун якуни ва админ эълонлари.</p>
       ${pushStatusHtml(perm)}
@@ -989,6 +1032,8 @@ $('#btnSettings').addEventListener('click', () => {
     <button class="btn sec" data-close>Ёпиш</button>
   `);
   box.addEventListener('click', async e => {
+    const th = e.target.closest('[data-theme-set]');
+    if (th) { applyTheme(th.dataset.themeSet); store.set('vird_theme', th.dataset.themeSet); box.querySelectorAll('[data-theme-set]').forEach(b => b.classList.toggle('on', b === th)); return; }
     if (e.target.closest('#btnPush2')) { close(box); enablePush(); }
     if (e.target.closest('#copyUrl')) { try { await navigator.clipboard.writeText($('#shareUrl').value); toast('Нусха олинди'); } catch(_) { $('#shareUrl').select(); } }
     if (e.target.closest('#sOut')) { close(box); logout(); }
