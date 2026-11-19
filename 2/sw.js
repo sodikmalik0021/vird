@@ -1,5 +1,5 @@
 // Service worker: push reminders + offline shell
-const CACHE = 'vird2-v1';
+const CACHE = 'vird2-v2';
 const SHELL = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {

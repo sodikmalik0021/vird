@@ -1,5 +1,5 @@
 // Service worker: push reminders + offline shell
-const CACHE = 'vird-v8';
+const CACHE = 'vird-v9';
 const SHELL = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
@@ -15,6 +15,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+  if (!url.pathname.startsWith(new URL('./', self.registration.scope).pathname) || /\/vird\/2\//.test(url.pathname)) return;
   e.respondWith(
     fetch(e.request).then(r => {
       const copy = r.clone();
