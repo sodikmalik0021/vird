@@ -30,7 +30,7 @@
 <meta name="apple-mobile-web-app-title" content="Кунлик вирд">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0b10; --surface:#14141c; --surface2:#1c1c27; --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
@@ -234,6 +234,15 @@ nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad)
 .pend-ic{width:64px;height:64px;border-radius:50%;margin:4px auto 10px;display:grid;place-items:center;background:var(--grad-soft);color:var(--pink)}
 .pend-ic svg.i{width:30px;height:30px}
 .ttl{display:flex;align-items:center;gap:8px;font-weight:700}
+.juz{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:12px}
+.juz button{aspect-ratio:1.25;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-weight:700;font-size:14px;color:var(--muted2)}
+.juz button.on{background:var(--grad);color:#fff;border-color:transparent}
+.name-card{text-align:center;padding:20px 16px}
+.name-ar{font-size:38px;line-height:1.5;font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Geeza Pro","Traditional Arabic",serif;direction:rtl}
+.name-tr{font-weight:800;font-size:18px;margin-top:2px}
+.names99 .item{align-items:flex-start}
+.names99 .n{width:30px;flex:none;color:var(--muted);font-weight:700;font-size:13px;padding-top:4px}
+.names99 .ar{font-size:24px;font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Geeza Pro",serif;direction:rtl;flex:none;line-height:1.4}
 .medals{display:inline-flex;gap:4px;align-items:center;margin-left:2px}
 .medal{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:1px 6px 1px 3px;border-radius:999px}
 .medal svg.i{width:13px;height:13px;stroke-width:2}
@@ -352,6 +361,7 @@ const SB_URL = 'https://pdzflfmjtawmfbdxqozu.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkemZsZm1qdGF3bWZiZHhxb3p1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MDIyNTQsImV4cCI6MjExMDM3ODI1NH0.hz16H_Sr9vCoTd4W9jc0D5I6TwD69lskvSbmW6310vU';
 const TZ_OFFSET = 6 * 3600 * 1000; // Asia/Bishkek, UTC+6
 const KHATM_PAGES = 604;
+const NAMES = [[1, "الرَّحْمَنُ", "Ар-Роҳман", "Ўта Меҳрибон"], [2, "الرَّحِيمُ", "Ар-Роҳийм", "Ўта Раҳмли"], [3, "الْمَلِكُ", "Ал-Малик", "Подшоҳ, барча нарсанинг эгаси"], [4, "الْقُدُّوسُ", "Ал-Қуддус", "Пок, ҳар қандай нуқсондан холи"], [5, "السَّلَامُ", "Ас-Салом", "Тинчлик ва саломатлик берувчи"], [6, "الْمُؤْمِنُ", "Ал-Муъмин", "Омонлик берувчи"], [7, "الْمُهَيْمِنُ", "Ал-Муҳаймин", "Кузатиб, ҳимоя қилиб турувчи"], [8, "الْعَزِيزُ", "Ал-Азиз", "Қудратли, ғолиб"], [9, "الْجَبَّارُ", "Ал-Жаббор", "Хоҳлаганини қилувчи, тузатувчи"], [10, "الْمُتَكَبِّرُ", "Ал-Мутакаббир", "Улуғлик соҳиби"], [11, "الْخَالِقُ", "Ал-Холиқ", "Яратувчи"], [12, "الْبَارِئُ", "Ал-Бориъ", "Йўқдан бор қилувчи"], [13, "الْمُصَوِّرُ", "Ал-Мусаввир", "Шакл берувчи"], [14, "الْغَفَّارُ", "Ал-Ғоффор", "Гуноҳларни кўп кечирувчи"], [15, "الْقَهَّارُ", "Ал-Қаҳҳор", "Ҳамма нарсага ғолиб"], [16, "الْوَهَّابُ", "Ал-Ваҳҳоб", "Беминнат ҳадя қилувчи"], [17, "الرَّزَّاقُ", "Ар-Раззоқ", "Ризқ берувчи"], [18, "الْفَتَّاحُ", "Ал-Фаттоҳ", "Барча эшикларни очувчи"], [19, "الْعَلِيمُ", "Ал-Алийм", "Ҳамма нарсани билувчи"], [20, "الْقَابِضُ", "Ал-Қобиз", "Торайтирувчи"], [21, "الْبَاسِطُ", "Ал-Босит", "Кенгайтирувчи"], [22, "الْخَافِضُ", "Ал-Хофиз", "Пасайтирувчи"], [23, "الرَّافِعُ", "Ар-Рофиъ", "Юксалтирувчи"], [24, "الْمُعِزُّ", "Ал-Муъиз", "Азиз қилувчи"], [25, "الْمُذِلُّ", "Ал-Музилл", "Хор қилувчи"], [26, "السَّمِيعُ", "Ас-Самийъ", "Ҳамма нарсани эшитувчи"], [27, "الْبَصِيرُ", "Ал-Басийр", "Ҳамма нарсани кўрувчи"], [28, "الْحَكَمُ", "Ал-Ҳакам", "Ҳукм қилувчи"], [29, "الْعَدْلُ", "Ал-Адл", "Адолатли"], [30, "اللَّطِيفُ", "Ал-Латийф", "Лутфли, нозик ишларни билувчи"], [31, "الْخَبِيرُ", "Ал-Хобийр", "Ҳар нарсадан хабардор"], [32, "الْحَلِيمُ", "Ал-Ҳалийм", "Ҳалим, жазони шошилтирмовчи"], [33, "الْعَظِيمُ", "Ал-Азийм", "Буюк"], [34, "الْغَفُورُ", "Ал-Ғофур", "Кечирувчи"], [35, "الشَّكُورُ", "Аш-Шакур", "Оз амалга кўп мукофот берувчи"], [36, "الْعَلِيُّ", "Ал-Алий", "Олий"], [37, "الْكَبِيرُ", "Ал-Кабийр", "Улуғ"], [38, "الْحَفِيظُ", "Ал-Ҳафийз", "Сақловчи"], [39, "الْمُقِيتُ", "Ал-Муқийт", "Озиқ берувчи"], [40, "الْحَسِيبُ", "Ал-Ҳасийб", "Ҳисоб олувчи, кифоя қилувчи"], [41, "الْجَلِيلُ", "Ал-Жалийл", "Улуғвор"], [42, "الْكَرِيمُ", "Ал-Карийм", "Карамли, сахий"], [43, "الرَّقِيبُ", "Ар-Роқийб", "Назорат қилувчи"], [44, "الْمُجِيبُ", "Ал-Мужийб", "Дуоларни ижобат қилувчи"], [45, "الْوَاسِعُ", "Ал-Восиъ", "Раҳмати ва илми кенг"], [46, "الْحَكِيمُ", "Ал-Ҳакийм", "Ҳикматли"], [47, "الْوَدُودُ", "Ал-Вадуд", "Бандаларини яхши кўрувчи"], [48, "الْمَجِيدُ", "Ал-Мажийд", "Шарафли"], [49, "الْبَاعِثُ", "Ал-Боъис", "Қайта тирилтирувчи"], [50, "الشَّهِيدُ", "Аш-Шаҳийд", "Гувоҳ"], [51, "الْحَقُّ", "Ал-Ҳақ", "Ҳақ"], [52, "الْوَكِيلُ", "Ал-Вакийл", "Ишониб топширилувчи"], [53, "الْقَوِيُّ", "Ал-Қавий", "Кучли"], [54, "الْمَتِينُ", "Ал-Матийн", "Мустаҳкам"], [55, "الْوَلِيُّ", "Ал-Валий", "Дўст, ёрдамчи"], [56, "الْحَمِيدُ", "Ал-Ҳамийд", "Мақтовга лойиқ"], [57, "الْمُحْصِي", "Ал-Муҳсий", "Ҳамма нарсани ҳисоблаб турувчи"], [58, "الْمُبْدِئُ", "Ал-Мубдиъ", "Аввал бошдан яратувчи"], [59, "الْمُعِيدُ", "Ал-Муъийд", "Қайта яратувчи"], [60, "الْمُحْيِي", "Ал-Муҳйий", "Ҳаёт берувчи"], [61, "الْمُمِيتُ", "Ал-Мумийт", "Жон олувчи"], [62, "الْحَيُّ", "Ал-Ҳайй", "Тирик"], [63, "الْقَيُّومُ", "Ал-Қайюм", "Ўзи қоим, ҳаммани қоим қилувчи"], [64, "الْوَاجِدُ", "Ал-Вожид", "Хоҳлаганини топувчи, бой"], [65, "الْمَاجِدُ", "Ал-Можид", "Улуғ шарафли"], [66, "الْوَاحِدُ", "Ал-Воҳид", "Ягона"], [67, "الْأَحَدُ", "Ал-Аҳад", "Бир, шериги йўқ"], [68, "الصَّمَدُ", "Ас-Самад", "Беҳожат, ҳамма Унга муҳтож"], [69, "الْقَادِرُ", "Ал-Қодир", "Қодир"], [70, "الْمُقْتَدِرُ", "Ал-Муқтадир", "Ўта қудратли"], [71, "الْمُقَدِّمُ", "Ал-Муқаддим", "Олдинга сурувчи"], [72, "الْمُؤَخِّرُ", "Ал-Муаххир", "Орқага сурувчи"], [73, "الْأَوَّلُ", "Ал-Аввал", "Аввал, ибтидоси йўқ"], [74, "الْآخِرُ", "Ал-Охир", "Охир, интиҳоси йўқ"], [75, "الظَّاهِرُ", "Аз-Зоҳир", "Аломатлари очиқ"], [76, "الْبَاطِنُ", "Ал-Ботин", "Зоти кўзга кўринмас"], [77, "الْوَالِي", "Ал-Волий", "Бошқарувчи"], [78, "الْمُتَعَالِي", "Ал-Мутаъолий", "Ҳар нарсадан олий"], [79, "الْبَرُّ", "Ал-Барр", "Яхшилик қилувчи"], [80, "التَّوَّابُ", "Ат-Таввоб", "Тавбаларни қабул қилувчи"], [81, "الْمُنْتَقِمُ", "Ал-Мунтақим", "Жазоловчи"], [82, "الْعَفُوُّ", "Ал-Афувв", "Афв этувчи"], [83, "الرَّؤُوفُ", "Ар-Рауф", "Шафқатли"], [84, "مَالِكُ الْمُلْكِ", "Моликул-мулк", "Мулкнинг эгаси"], [85, "ذُو الْجَلَالِ وَالْإِكْرَامِ", "Зул-жалоли вал-икром", "Улуғлик ва икром эгаси"], [86, "الْمُقْسِطُ", "Ал-Муқсит", "Адолат билан ҳукм қилувчи"], [87, "الْجَامِعُ", "Ал-Жомиъ", "Жамловчи"], [88, "الْغَنِيُّ", "Ал-Ғаний", "Бой, беҳожат"], [89, "الْمُغْنِي", "Ал-Муғний", "Бой қилувчи"], [90, "الْمَانِعُ", "Ал-Мониъ", "Тўсувчи"], [91, "الضَّارُّ", "Аз-Зорр", "Ҳикмати билан зарар етказувчи"], [92, "النَّافِعُ", "Ан-Нофиъ", "Фойда берувчи"], [93, "النُّورُ", "Ан-Нур", "Нур"], [94, "الْهَادِي", "Ал-Ҳодий", "Ҳидоят қилувчи"], [95, "الْبَدِيعُ", "Ал-Бадийъ", "Тенгсиз қилиб яратувчи"], [96, "الْبَاقِي", "Ал-Боқий", "Абадий боқий"], [97, "الْوَارِثُ", "Ал-Ворис", "Ҳамма нарсанинг вориси"], [98, "الرَّشِيدُ", "Ар-Рошид", "Тўғри йўлга бошловчи"], [99, "الصَّبُورُ", "Ас-Сабур", "Сабрли"]];
 
 const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const MONTHS_G = ['январ','феврал','март','апрел','май','июн','июл','август','сентябр','октябр','ноябр','декабр'];
@@ -628,7 +638,8 @@ function renderToday(){
         ${m.book ? `<button class="pages-edit" data-editpages>${ic('pen')}Бугун ${m.book_pages_read || R.book_pages} бет ўқидим</button>` : ''}</div><div class="check">${ic('check')}</div>
     </div>
     <div class="card task ${m.quran?'done':''}" data-task="quran">
-      <div class="ic">${ic('quran')}</div><div class="grow"><div class="t1">Қуръон</div><div class="muted small">${R.quran_pages} бет ўқиш</div></div><div class="check">${ic('check')}</div>
+      <div class="ic">${ic('quran')}</div><div class="grow"><div class="t1">Қуръон</div><div class="muted small">Камида ${R.quran_pages} бет</div>
+        ${m.quran ? `<button class="pages-edit" data-editq>${ic('pen')}Бугун ${m.quran_pages_read || R.quran_pages} бет ўқидим</button>` : ''}</div><div class="check">${ic('check')}</div>
     </div>
     <div class="card zikr">
       <div class="row between"><div class="row" style="gap:10px;text-align:left"><div class="zic">${ic('zikr')}</div><div><div class="t1">Зикр</div><div class="muted small">${num(G)} марта</div></div></div>
@@ -666,9 +677,16 @@ function renderToday(){
         <div>Китобдан ўқилган<b>${num(m.book_pages_total||0)} бет</b></div>
         <div>Қуръондан ўқилган<b>${num(qp)} бет</b></div>
       </div>
-      <div class="row between small" style="margin-top:12px"><span class="muted">Қуръон хатми</span><span><b>${Math.floor(qp/KHATM_PAGES)}</b> <span class="muted">· кейингисигача ${KHATM_PAGES - qp % KHATM_PAGES} бет</span></span></div>
-      <div class="bar"><i style="width:${(qp % KHATM_PAGES)/KHATM_PAGES*100}%"></i></div>
     </div>
+    <div class="card">
+      <div class="row between"><div><div class="muted small">Қуръон пораларим</div><div style="font-weight:800;font-size:20px;margin-top:2px">${(m.juz||[]).length} / 30 пора</div></div>
+        <span class="chip grad">${ic('quran')}Хатм: ${m.khatm_count||0}</span></div>
+      <div class="bar"><i style="width:${(m.juz||[]).length/30*100}%"></i></div>
+      <div class="juz" id="juzGrid">${Array.from({length:30},(_,i)=>i+1).map(n => `<button data-juz="${n}" class="${(m.juz||[]).includes(n)?'on':''}">${n}</button>`).join('')}</div>
+      <p class="muted small" style="margin:10px 0 0">Ўқиб тугатган порангизни босинг. 30 тўлса — хатм ҳисобланади.</p>
+      ${(m.juz||[]).length >= 30 ? `<button class="btn" style="margin-top:12px" id="khatmDone">${ic('check')}Хатмни якунлаш</button>` : ''}
+    </div>
+    ${namesCard()}
     ${pushBanner()}
   `;
   tickCountdown(); drawRing(); renderStrip();
@@ -694,12 +712,18 @@ function renderStrip(){
   el.innerHTML = html;
 }
 $('#v-today').addEventListener('click', async e => {
-  if (e.target.closest('[data-editpages]')) { e.stopPropagation(); const n = await askPages(); if (n) saveTasks({ book: true, pages: n }); return; }
+  if (e.target.closest('[data-editpages]')) { e.stopPropagation(); const n = await askPages('book'); if (n) saveTasks({ book: true, pages: n }); return; }
+  if (e.target.closest('[data-editq]')) { e.stopPropagation(); const n = await askPages('quran'); if (n) saveTasks({ quran: true, qpages: n }); return; }
+  const jb = e.target.closest('[data-juz]');
+  if (jb) return toggleJuz(+jb.dataset.juz);
+  if (e.target.closest('#khatmDone')) return finishKhatm();
+  if (e.target.closest('#allNames')) return showAllNames();
   if (e.target.closest('[data-payself]')) return paySelf();
   const t = e.target.closest('.task');
   if (t){
     const m = me(); const key = t.dataset.task;
-    if (key === 'book' && !m.book){ const n = await askPages(); if (!n) return; return saveTasks({ book: true, pages: n }); }
+    if (key === 'book' && !m.book){ const n = await askPages('book'); if (!n) return; return saveTasks({ book: true, pages: n }); }
+    if (key === 'quran' && !m.quran){ const n = await askPages('quran'); if (!n) return; return saveTasks({ quran: true, qpages: n }); }
     return saveTasks({ [key]: !m[key] });
   }
   if (e.target.closest('#zMinus')) return addZikr(-1);
@@ -714,24 +738,62 @@ $('#v-today').addEventListener('click', async e => {
     catch(err){ toast(err.message, true); }
   }
 });
-async function askPages(){
-  const R = S.rules; const m = me();
-  const r = await formBox('Бугун китобдан нечта бет ўқидингиз?', [{ k:'pages', label:`Камида ${R.book_pages} бет`, type:'number', val: m.book_pages_read || R.book_pages }], 'Сақлаш');
+async function askPages(kind){
+  const R = S.rules; const m = me(); const isQ = kind === 'quran';
+  const min = isQ ? R.quran_pages : R.book_pages; const max = isQ ? 604 : 2000;
+  const r = await formBox(isQ ? 'Бугун Қуръондан нечта бет ўқидингиз?' : 'Бугун китобдан нечта бет ўқидингиз?',
+    [{ k:'pages', label:`Камида ${min} бет`, type:'number', val: (isQ ? m.quran_pages_read : m.book_pages_read) || min }], 'Сақлаш');
   if (!r) return null;
   const n = parseInt(r.pages, 10);
-  if (!(n >= R.book_pages)) { toast(`Камида ${R.book_pages} бет бўлиши керак`, true); return null; }
-  if (n > 2000) { toast('Жуда катта сон', true); return null; }
+  if (!(n >= min)) { toast(`Камида ${min} бет бўлиши керак`, true); return null; }
+  if (n > max) { toast('Жуда катта сон', true); return null; }
   return n;
 }
 async function saveTasks(ch){
-  const m = me(); const was = isDoneToday(); const old = { book: m.book, quran: m.quran, book_pages_read: m.book_pages_read };
-  if ('book' in ch) m.book = ch.book; if ('quran' in ch) m.quran = ch.quran; if (ch.pages) m.book_pages_read = ch.pages;
-  if (!m.book) m.book_pages_read = null;
+  const m = me(); const was = isDoneToday(); const old = { book: m.book, quran: m.quran, book_pages_read: m.book_pages_read, quran_pages_read: m.quran_pages_read };
+  if ('book' in ch) m.book = ch.book; if ('quran' in ch) m.quran = ch.quran;
+  if (ch.pages) m.book_pages_read = ch.pages; if (ch.qpages) m.quran_pages_read = ch.qpages;
+  if (!m.book) m.book_pages_read = null; if (!m.quran) m.quran_pages_read = null;
   vibrate(15); renderToday();
   try {
-    await rpc('zk_set_today2', { p_id: session.id, p_pin: session.pin, p_book: m.book, p_quran: m.quran, p_book_pages: m.book ? (m.book_pages_read || S.rules.book_pages) : null });
+    await rpc('zk_set_today3', { p_id: session.id, p_pin: session.pin, p_book: m.book, p_quran: m.quran,
+      p_book_pages: m.book ? (m.book_pages_read || S.rules.book_pages) : null, p_quran_pages: m.quran ? (m.quran_pages_read || S.rules.quran_pages) : null });
     if (!was && isDoneToday()) celebrate();
   } catch(err){ Object.assign(m, old); renderToday(); toast(err.message, true); }
+}
+async function toggleJuz(n){
+  const m = me(); m.juz = m.juz || []; const on = !m.juz.includes(n);
+  m.juz = on ? m.juz.concat(n).sort((a,b)=>a-b) : m.juz.filter(x => x !== n);
+  vibrate(10); renderToday();
+  try { await rpc('zk_juz_toggle', { p_id: session.id, p_pin: session.pin, p_juz: n, p_done: on }); if (on && m.juz.length === 30) toast('Машааллоҳ! 30 пора тўлди — «Хатмни якунлаш»ни босинг'); }
+  catch(err){ toast(err.message, true); await loadState(); renderToday(); }
+}
+async function finishKhatm(){
+  if (!await confirmBox('Хатмни якунлайсизми?', 'Хатмлар сони 1 тага ошади ва поралар янгидан бошланади.')) return;
+  try { const n = await rpc('zk_khatm_complete', { p_id: session.id, p_pin: session.pin }); celebrate(); toast(`Аллоҳ қабул қилсин! Хатмлар: ${n}`); await loadState(); renderToday(); }
+  catch(err){ toast(err.message, true); }
+}
+function nameOfDay(){ const d = Math.floor(parseD(S.today).getTime() / 86400000); return NAMES[((d % 99) + 99) % 99]; }
+function namesCard(){
+  const x = nameOfDay();
+  return `<h2>Аллоҳнинг гўзал исмлари</h2>
+    <div class="card name-card">
+      <div class="muted small">Бугунги исм · ${x[0]}/99</div>
+      <div class="name-ar">${x[1]}</div>
+      <div class="name-tr gtext">${esc(x[2])}</div>
+      <div class="muted" style="margin-top:4px">${esc(x[3])}</div>
+      <button class="btn sec" style="margin-top:14px" id="allNames">99 исмнинг барчаси</button>
+    </div>`;
+}
+function showAllNames(){
+  const box = modal(`<h3>Аллоҳнинг 99 исми</h3>
+    <input id="nmSearch" placeholder="Қидириш…" style="margin-bottom:10px">
+    <div class="list names99" id="nmList"></div>
+    <div style="height:12px"></div><button class="btn sec" data-close>Ёпиш</button>`);
+  const draw = q => { q = (q||'').toLowerCase();
+    box.querySelector('#nmList').innerHTML = NAMES.filter(x => !q || (x[2]+' '+x[3]).toLowerCase().includes(q) || String(x[0]) === q)
+      .map(x => `<div class="item"><div class="n">${x[0]}</div><div class="grow"><div style="font-weight:700">${esc(x[2])}</div><div class="muted small">${esc(x[3])}</div></div><div class="ar">${x[1]}</div></div>`).join('') || '<div class="empty">Топилмади</div>'; };
+  draw(''); box.querySelector('#nmSearch').addEventListener('input', e => draw(e.target.value));
 }
 function myDebt(){ const m = me(); return (m.fines_total||0) - (m.fines_paid||0); }
 async function paySelf(){
@@ -801,7 +863,8 @@ function celebrate(){
 // ---------- GROUP ----------
 function marks(m, G){
   const bp = m.book ? (m.book_pages_read || m.book_read || (S && S.rules ? S.rules.book_pages : 0)) : 0;
-  return `<div class="marks">${ic('book', m.book?'on':'')}${ic('quran', m.quran?'on':'')}${ic('zikr', m.zikr>=G?'on':'')}<span>${m.zikr}/${num(G)}${bp ? ' · китоб ' + bp + ' бет' : ''}</span></div>`;
+  const qp = m.quran ? (m.quran_pages_read || m.quran_read || (S && S.rules ? S.rules.quran_pages : 0)) : 0;
+  return `<div class="marks">${ic('book', m.book?'on':'')}${ic('quran', m.quran?'on':'')}${ic('zikr', m.zikr>=G?'on':'')}<span>${m.zikr}/${num(G)}${bp ? ' · китоб ' + bp : ''}${qp ? ' · Қуръон ' + qp : ''}</span></div>`;
 }
 function renderGroup(){
   const list = S.members; const G = goal();
@@ -809,17 +872,8 @@ function renderGroup(){
   const rating = [...list].sort((a,b) => b.m_done - a.m_done || a.m_missed - b.m_missed || b.streak - a.streak);
   const ms = parseD(S.month); const isCur = S.month.slice(0,7) === S.today.slice(0,7);
   const best = [...list].sort((a,b) => b.streak - a.streak)[0];
-  const qTotal = list.reduce((a,m) => a + (m.quran_pages_total||0), 0);
-  const bTotal = list.reduce((a,m) => a + (m.book_pages_total||0), 0);
   const anns = S.announcements || [];
   $('#v-group').innerHTML = `
-    <div class="card hero" style="margin-top:16px">
-      <div class="muted small">Гуруҳ бўйича Қуръон хатми</div>
-      <div class="row between" style="margin-top:6px"><div style="font-size:34px;font-weight:800;letter-spacing:-.03em">${Math.floor(qTotal/KHATM_PAGES)} хатм</div><div style="text-align:right"><div style="font-weight:700">${num(qTotal)} бет</div><div class="muted small">ўқилди</div></div></div>
-      <div class="bar"><i style="width:${(qTotal % KHATM_PAGES)/KHATM_PAGES*100}%"></i></div>
-      <div class="muted small" style="margin-top:8px">Кейинги хатмгача ${KHATM_PAGES - qTotal % KHATM_PAGES} бет · Китоблардан жами ${num(bTotal)} бет</div>
-    </div>
-
     <h2>Бугун · ${doneN} / ${list.length} бажарди</h2>
     <div class="card list">
       ${list.map(m => `
@@ -845,10 +899,19 @@ function renderGroup(){
           <div class="rank ${i<3 && m.m_done>0 ? 'gtext' : ''}">${i+1}</div>
           <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}${medalsHtml(m)}</span><span class="small muted" style="display:inline-flex;align-items:center;gap:4px">${ic('flame')}${m.streak}</span></div>
             <div class="bar"><i style="width:${pct}%"></i></div>
-            <div class="small muted" style="margin-top:6px">Бажарилди ${m.m_done} · Жарима ${m.m_missed} · Узрли ${m.m_excused} · Китоб ${num(m.m_book_pages||0)} бет</div></div>
+            <div class="small muted" style="margin-top:6px">Бажарилди ${m.m_done} · Жарима ${m.m_missed} · Узрли ${m.m_excused} · Китоб ${num(m.m_book_pages||0)} · Қуръон ${num(m.m_quran_pages||0)} бет</div></div>
         </div>`; }).join('')}
     </div>
     <p class="muted small">Бугунги кун 00:00 дан кейин ҳисобланади.</p>
+
+    <h2>Қуръон · ҳар ким алоҳида</h2>
+    <div class="card list">
+      ${[...list].sort((a,b) => (b.khatm_count||0) - (a.khatm_count||0) || (b.juz||[]).length - (a.juz||[]).length).map(m => `
+        <div class="item"><div class="av">${esc(initials(m.name))}</div>
+          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}</span><span class="small"><b>${m.khatm_count||0}</b> <span class="muted">хатм</span></span></div>
+            <div class="bar"><i style="width:${(m.juz||[]).length/30*100}%"></i></div>
+            <div class="small muted" style="margin-top:6px">${(m.juz||[]).length}/30 пора · жами ${num(m.quran_pages_total||0)} бет</div></div></div>`).join('')}
+    </div>
 
     <h2>Эълонлар</h2>
     <div class="card">${anns.length ? anns.map(a => `<div class="ann-item"><div class="row between"><b class="small" style="display:inline-flex;align-items:center;gap:6px">${ic('megaphone')}${esc(a.author || 'Админ')}</b><span class="small muted">${ago(a.created_at)}</span></div><p>${esc(a.text)}</p></div>`).join('') : '<div class="empty">Ҳали эълон йўқ</div>'}</div>
