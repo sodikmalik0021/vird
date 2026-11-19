@@ -427,11 +427,22 @@ function toast(msg, err){
   document.body.appendChild(t); setTimeout(() => t.remove(), 2800);
 }
 async function rpc(fn, args, opts){
-  const r = await fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {
-    method: 'POST',
-    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify(args || {}), keepalive: !!(opts && opts.keepalive)
-  });
+  let r, tries = 0;
+  while (true) {
+    const ctrl = new AbortController(); const tm = setTimeout(() => ctrl.abort(), 15000);
+    try {
+      r = await fetch(`${SB_URL}/rest/v1/rpc/${fn}`, {
+        method: 'POST',
+        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(args || {}), keepalive: !!(opts && opts.keepalive), signal: (opts && opts.keepalive) ? undefined : ctrl.signal
+      });
+      clearTimeout(tm); break;
+    } catch (e) {
+      clearTimeout(tm);
+      if (++tries >= 3) { const er = new Error('Интернет секин ёки йўқ. Қайта уриниб кўринг.'); er.code = 'NETWORK'; throw er; }
+      await new Promise(res => setTimeout(res, 1200 * tries));
+    }
+  }
   const txt = await r.text(); let j = null; try { j = txt ? JSON.parse(txt) : null; } catch(_) {}
   if (!r.ok) { const m = (j && j.message) || 'ERROR'; const e = new Error(ERR[m] || 'Хатолик. Интернетни текширинг.'); e.code = m; throw e; }
   return j;
@@ -541,11 +552,12 @@ $('#pending').addEventListener('click', e => { if (e.target.closest('#pPushBtn')
 
 // ================== APP ==================
 async function startApp(){
+  $('#boot').textContent = 'Юкланмоқда…';
   show('boot');
   try { await loadState(); }
   catch(e){
     if (e.code === 'BAD_PIN' || e.code === 'NO_USER'){ logout(); return; }
-    $('#boot').textContent = 'Интернет йўқ. Саҳифани янгиланг.'; return;
+    $('#boot').innerHTML = '<div style="text-align:center;padding:0 24px"><div style="font-weight:700;font-size:17px">Уланиб бўлмади</div><p class="muted">Интернет секин ёки йўқ.</p><button class="btn" onclick="startApp()" style="max-width:260px">Қайта уриниш</button></div>'; return;
   }
   if (S.pending) return showPending();
   show('app');
@@ -877,7 +889,7 @@ function renderGroup(){
     <h2>Бугун · ${doneN} / ${list.length} бажарди</h2>
     <div class="card list">
       ${list.map(m => `
-        <div class="item">
+        <div class="item" ${S.me.is_admin ? `data-admmember="${m.id}" style="cursor:pointer"` : ''}>
           <div class="av ${m.done_today?'ok':''}">${m.done_today?ic('check'):esc(initials(m.name))}</div>
           <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}${medalsHtml(m)}${m.id===S.me.id?' <span class="muted small" style="font-weight:500">(сиз)</span>':''}</div>
             ${marks(m, G)}
@@ -918,6 +930,8 @@ function renderGroup(){
   `;
 }
 $('#v-group').addEventListener('click', async e => {
+  const am = e.target.closest('[data-admmember]');
+  if (am && S.me.is_admin){ adm.member = +am.dataset.admmember; adm.days = []; view = 'admin'; render(); loadAdminDays(); setTimeout(() => { const el = $('#admMember'); el && el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 150); return; }
   const p = e.target.closest('#mPrev'), n = e.target.closest('#mNext');
   if (!p && !n) return; if (n && n.disabled) return;
   const d = parseD(S.month); d.setUTCMonth(d.getUTCMonth() + (p ? -1 : 1));
@@ -997,7 +1011,20 @@ function renderAdmin(){
   const R = S.rules; const pend = S.pending_members || [];
   const upcoming = (S.holidays || []).filter(h => h.day >= S.today);
   const past = (S.holidays || []).filter(h => h.day < S.today).slice(-5).reverse();
+  const rm = S.recent_missed || [];
   $('#v-admin').innerHTML = `
+    <h2>Охирги 3 кун жарималари</h2>
+    <div class="card list">
+      ${rm.length ? rm.map(x => `<div class="item">
+        <div class="av">${esc(initials(x.name))}</div>
+        <div class="grow"><div class="nm">${esc(x.name)}</div><div class="small muted">${fmtLong(x.day)} · ${x.paid ? 'жарима тўланган' : 'жарима ' + num(x.fine) + ' сом'}</div>${marks(x, x.zikr_goal)}</div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+          <button class="btn sm" data-fixdone="${x.member_id}" data-day="${x.day}" data-z="${x.zikr}" data-g="${x.zikr_goal}" data-name="${esc(x.name)}">Бажарган</button>
+          <button class="btn sec sm" data-fixex="${x.member_id}" data-day="${x.day}" data-name="${esc(x.name)}">Узрли</button>
+        </div></div>`).join('') : '<div class="empty">Охирги 3 кунда жарима йўқ</div>'}
+    </div>
+    <p class="muted small" style="line-height:1.5">Агар кимдир вазифани бажарган, лекин дастур очилмай белги қўя олмаган бўлса — «Бажарган»ни босинг, жарима бекор бўлади. Бошқа кунлар учун пастдаги «Кунларни текшириш»дан фойдаланинг.</p>
+
     ${pend.length ? `
     <h2>Янги сўровлар · ${pend.length}</h2>
     <div class="card list gborder">
@@ -1081,6 +1108,17 @@ async function admCall(fn, args, okMsg){
   catch(err){ toast(err.message, true); return false; }
 }
 $('#v-admin').addEventListener('click', async e => {
+  const fd = e.target.closest('[data-fixdone]');
+  if (fd){
+    if (!await confirmBox(`${fd.dataset.name} · ${fmtLong(fd.dataset.day)}`, 'Китоб, Қуръон ва зикр бажарилган деб белгиланади. Жарима бекор бўлади.')) return;
+    return admCall('zk_admin_set_day', { p_member: +fd.dataset.fixdone, p_day: fd.dataset.day, p_book: true, p_quran: true, p_zikr: Math.max(+fd.dataset.z, +fd.dataset.g), p_excused: false }, 'Белгиланди, жарима бекор қилинди');
+  }
+  const fx = e.target.closest('[data-fixex]');
+  if (fx){
+    if (!await confirmBox(`${fx.dataset.name} · ${fmtLong(fx.dataset.day)}`, 'Узрли кун деб белгиланади. Жарима бекор бўлади.')) return;
+    const d = (S.recent_missed||[]).find(x => x.member_id === +fx.dataset.fixex && x.day === fx.dataset.day) || {};
+    return admCall('zk_admin_set_day', { p_member: +fx.dataset.fixex, p_day: fx.dataset.day, p_book: !!d.book, p_quran: !!d.quran, p_zikr: d.zikr || 0, p_excused: true }, 'Узрли кун белгиланди');
+  }
   const ok = e.target.closest('[data-ok]');
   if (ok) return admCall('zk_admin_approve', { p_member: +ok.dataset.ok, p_ok: true }, 'Тасдиқланди');
   const rej = e.target.closest('[data-rej]');
