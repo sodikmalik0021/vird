@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="uz-Cyrl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Кунлик вирд</title>
+<meta name="theme-color" content="#0b0b10" id="metaTheme">
+<script>
+(function(){
+  var pref = 'auto'; try { pref = JSON.parse(localStorage.getItem('g2_vird_theme')) || 'auto'; } catch(e){}
+  var mq = window.matchMedia('(prefers-color-scheme: light)');
+  window.applyTheme = function(p){
+    if (p) pref = p;
+    var t = pref === 'auto' ? (mq.matches ? 'light' : 'dark') : pref;
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.getElementById('metaTheme'); if (m) m.setAttribute('content', t === 'light' ? '#f5f5f8' : '#0b0b10');
+    return pref;
+  };
+  window.themePref = function(){ return pref; };
+  try { mq.addEventListener('change', function(){ if (pref === 'auto') window.applyTheme(); }); } catch(e){ try { mq.addListener(function(){ if (pref === 'auto') window.applyTheme(); }); } catch(_){} }
+  window.applyTheme();
+})();
+</script>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Кунлик вирд">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b10; --surface:#14141c; --surface2:#1c1c27; --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
+  --text:#f7f7fa; --muted:#8e8e9e; --muted2:#b4b4c2;
+  --grad:linear-gradient(120deg,#6a2cf5 0%,#a62fd8 35%,#e1306c 70%,#f77737 100%);
+  --grad-soft:linear-gradient(120deg,rgba(106,44,245,.18),rgba(225,48,108,.14) 60%,rgba(247,119,55,.12));
+  --ok:#34d399; --bad:#fb5a7a; --warn:#fbbf24; --blue:#7aa7ff; --pink:#f472b6;
+  --r:18px;
+  --nav:rgba(11,11,16,.88); --sheet:#15151d; --switch:#33333f; --checkb:#4a4a5a; --ph:#6b6b7b;
+  --tap:radial-gradient(circle at 50% 28%,#262633,#15151d 70%); --tapshadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px rgba(0,0,0,.45);
+  --chipgrad:#ffd2e4; --markon:#e98ab8; --ringbg:rgba(255,255,255,.06);
+  --glow1:rgba(166,47,216,.20); --glow2:rgba(106,44,245,.18); --toastbg:#f7f7fa; --toastfg:#14141c; color-scheme:dark;
+}
+:root[data-theme=light]{
+  --bg:#f5f5f8; --surface:#ffffff; --surface2:#f0f0f5; --line:rgba(20,20,40,.08); --line2:rgba(20,20,40,.14);
+  --text:#121218; --muted:#6e6e7e; --muted2:#45455a;
+  --ok:#0f9f6e; --bad:#e11d48; --warn:#c27c00; --blue:#2f6fe0; --pink:#d9468f;
+  --nav:rgba(255,255,255,.9); --sheet:#ffffff; --switch:#d6d6e0; --checkb:#c4c4d0; --ph:#9a9aa8;
+  --tap:radial-gradient(circle at 50% 28%,#ffffff,#f1f1f6 70%); --tapshadow:inset 0 1px 0 #fff,0 14px 30px rgba(60,40,120,.14);
+  --chipgrad:#b0306a; --markon:#c13584; --ringbg:rgba(20,20,40,.07);
+  --glow1:rgba(166,47,216,.10); --glow2:rgba(106,44,245,.08); --toastbg:#14141c; --toastfg:#f7f7fa; color-scheme:light;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;min-height:100dvh;background:radial-gradient(90% 45% at 85% -8%,var(--glow1),transparent 60%),radial-gradient(70% 35% at 0% 0%,var(--glow2),transparent 60%),var(--bg) fixed}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;letter-spacing:inherit}
+input,select,textarea{font:inherit;color:var(--text);background:var(--surface2);border:1px solid var(--line2);border-radius:12px;padding:13px 14px;width:100%;outline:none;letter-spacing:inherit}
+textarea{min-height:110px;resize:vertical}
+select option{color:#111}
+input::placeholder,textarea::placeholder{color:var(--ph)}
+input:focus,select:focus,textarea:focus{border-color:#a62fd8;box-shadow:0 0 0 3px rgba(166,47,216,.2)}
+input[type=date]{min-height:48px}
+svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-4px}
+.hidden{display:none!important}
+.wrap{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 18px calc(env(safe-area-inset-bottom) + 100px)}
+h1{font-size:26px;font-weight:800;margin:2px 0 0;line-height:1.15;letter-spacing:-.03em}
+h2{font-size:13px;font-weight:700;margin:28px 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.gtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:10px}
+.row{display:flex;align-items:center;gap:12px}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--grad);color:#fff;font-weight:700;border-radius:14px;padding:14px 18px;width:100%;font-size:15px;box-shadow:0 8px 24px rgba(193,53,132,.28)}
+.btn.sec{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:none;border:1px solid var(--line2)}
+.btn.danger{background:rgba(251,90,122,.1);color:var(--bad);box-shadow:none;border:1px solid rgba(251,90,122,.25)}
+.btn.sm{width:auto;padding:8px 13px;font-size:13px;border-radius:10px;box-shadow:none}
+.btn.icon{width:36px;height:36px;padding:0;border-radius:10px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--surface2);color:var(--muted2);white-space:nowrap;border:1px solid var(--line)}
+.chip svg.i{width:13px;height:13px;vertical-align:-2px}
+.chip.ok{background:rgba(52,211,153,.1);color:var(--ok);border-color:rgba(52,211,153,.2)}
+.chip.bad{background:rgba(251,90,122,.1);color:var(--bad);border-color:rgba(251,90,122,.22)}
+.chip.warn{background:rgba(251,191,36,.1);color:var(--warn);border-color:rgba(251,191,36,.22)}
+.chip.blue{background:rgba(122,167,255,.1);color:var(--blue);border-color:rgba(122,167,255,.22)}
+.chip.pink{background:rgba(244,114,182,.1);color:var(--pink);border-color:rgba(244,114,182,.22)}
+.chip.grad{background:var(--grad-soft);color:var(--chipgrad);border-color:rgba(225,48,108,.3)}
+.gborder{border:1.5px solid transparent!important;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box!important}
+
+/* login */
+.logo{width:84px;height:84px;border-radius:22px;display:block;margin:34px auto 16px;box-shadow:0 18px 40px rgba(166,47,216,.35)}
+.center{text-align:center}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.names button{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 10px;font-weight:600;font-size:15px}
+.names button small{display:block;font-size:11px;color:var(--warn);font-weight:500;margin-top:3px}
+.names button:active{background:var(--surface2)}
+.pin-dots{display:flex;gap:18px;justify-content:center;margin:26px 0}
+.pin-dots i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ph);display:block}
+.pin-dots i.on{background:var(--grad);border-color:transparent}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pad{display:grid;grid-template-columns:repeat(3,74px);gap:16px;justify-content:center}
+.pad button{height:74px;border-radius:50%;background:var(--surface);font-size:26px;font-weight:500;border:1px solid var(--line)}
+.pad button:active{background:var(--surface2)}
+.pad button.txt{font-size:13px;background:none;border:0;color:var(--muted)}
+.divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;margin:22px 0 14px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* header */
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.iconbtn{width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--muted2)}
+.countdown{margin-top:16px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);color:var(--muted2);border-radius:14px;padding:12px 14px;font-size:14px}
+.countdown b{font-variant-numeric:tabular-nums;color:var(--text);font-weight:700}
+.countdown.urgent{border-color:rgba(251,90,122,.35);color:var(--bad)}
+.countdown.urgent b{color:var(--bad)}
+.countdown.okk{border-color:rgba(52,211,153,.3);color:var(--ok)}
+.banner{border-radius:16px;padding:14px 16px;margin-top:10px;font-size:14px;line-height:1.5;background:var(--surface);border:1px solid var(--line)}
+.banner .bt{display:flex;align-items:center;gap:8px;font-weight:700}
+.banner.ann{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
+
+/* tasks */
+.task{display:flex;align-items:center;gap:14px;padding:15px 16px;cursor:pointer;user-select:none;transition:background .2s,border-color .2s}
+.task .ic{width:46px;height:46px;border-radius:13px;background:var(--surface2);display:grid;place-items:center;flex:none;color:var(--muted2)}
+.task .ic svg.i{width:22px;height:22px}
+.t1{font-weight:700;font-size:16px}
+.check{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--checkb);display:grid;place-items:center;flex:none;transition:.2s;color:#fff}
+.check svg.i{width:16px;height:16px;stroke-width:3;opacity:0}
+.task.done{border:1.5px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box}
+.task.done .ic{background:var(--grad);color:#fff}
+.task.done .check{background:var(--grad);border-color:transparent}
+.task.done .check svg.i{opacity:1}
+
+/* zikr */
+.zikr{text-align:center;padding:18px 16px 16px}
+.zic{width:40px;height:40px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;color:var(--muted2);flex:none}
+.ring{position:relative;width:244px;height:244px;margin:10px auto 10px;border-radius:50%;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.ring svg.r{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring .tap{position:absolute;inset:20px;border-radius:50%;background:var(--tap);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--tapshadow);transition:transform .06s}
+.ring .tap.press{transform:scale(.96)}
+.ring .num{font-size:58px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.04em}
+.ring .of{color:var(--muted);font-size:14px;margin-top:6px}
+.ring .hint{font-size:11px;margin-top:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.ring.full .tap{background:var(--grad);border-color:transparent;color:#fff}
+.ring.full .of{color:rgba(255,255,255,.8)}
+.zrow{display:flex;gap:8px;justify-content:center}
+.sync{font-size:12px;color:var(--muted);margin-top:8px;min-height:16px}
+
+/* strip */
+.strip{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:12px}
+.strip i{aspect-ratio:1;border-radius:5px;background:var(--surface2);display:block}
+.strip i.done{background:var(--grad)}
+.strip i.missed{background:var(--bad)}
+.strip i.excused{background:var(--blue)}
+.strip i.holiday{background:var(--pink)}
+.strip i.today{box-shadow:0 0 0 1.5px var(--text) inset}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:0;background:var(--c)}
+
+/* lists */
+.list .item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.list .item:first-child{padding-top:2px}
+.list .item:last-child{border-bottom:0;padding-bottom:2px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-weight:700;flex:none;color:var(--muted2);font-size:15px}
+.av.ok{background:var(--grad);color:#fff}
+.av.ring2{padding:2px;background:var(--grad)}
+.av.ring2 span{width:100%;height:100%;border-radius:50%;background:var(--surface);display:grid;place-items:center}
+.marks{display:flex;gap:6px;align-items:center;margin-top:3px;color:var(--muted)}
+.marks svg.i{width:15px;height:15px;opacity:.3}
+.marks svg.i.on{opacity:1;color:var(--markon)}
+.marks span{font-size:12px}
+.nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
+.nm svg.i{width:14px;height:14px;color:var(--warn)}
+.rank{width:26px;text-align:center;color:var(--muted);font-weight:800;flex:none;font-size:15px}
+.bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden;margin-top:7px}
+.bar i{display:block;height:100%;background:var(--grad);border-radius:3px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat .v{font-size:21px;font-weight:800;margin-top:6px;letter-spacing:-.02em}
+.stat.big{grid-column:1/-1;background:var(--grad);border:0;padding:18px}
+.stat.big .muted{color:rgba(255,255,255,.8)}
+.stat.big .v{font-size:34px;color:#fff}
+.hero{background:var(--grad);border:0;color:#fff;padding:18px}
+.hero .muted{color:rgba(255,255,255,.8)}
+.hero .bar{background:rgba(0,0,0,.22)}
+.hero .bar i{background:#fff}
+.monthsw{display:flex;align-items:center;justify-content:space-between;margin:28px 0 12px}
+.monthsw h2{margin:0}
+.ann-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.ann-item:last-child{border-bottom:0}
+.ann-item p{margin:6px 0 0;white-space:pre-wrap;line-height:1.5;color:var(--muted2)}
+.sec-title{display:flex;align-items:center;justify-content:space-between;margin:28px 0 12px;gap:10px}
+.sec-title h2{margin:0}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:10}
+nav .in{display:flex;max-width:560px;width:100%}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--muted);padding:6px 0;font-weight:600;position:relative}
+nav button svg.i{width:23px;height:23px}
+nav button.on{color:var(--text)}
+nav button.on svg.i{stroke:url(#navgrad)}
+nav .badge{position:absolute;top:0;right:calc(50% - 22px);background:var(--grad);color:#fff;font-size:10px;font-weight:800;border-radius:9px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 5px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:50;animation:fade .15s}
+.sheet{background:var(--sheet);width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom) + 20px);max-height:90vh;overflow:auto;animation:up .2s;border-top:1px solid var(--line2)}
+.sheet h3{margin:0 0 16px;font-size:18px;font-weight:700}
+.sheet .card{background:var(--surface2)}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(40px);opacity:.5}}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:500}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}
+.sw{width:50px;height:30px;border-radius:15px;background:var(--switch);position:relative;transition:.2s;flex:none;cursor:pointer}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--grad)}
+.sw.on::after{left:23px}
+.btns{display:flex;gap:10px;margin-top:18px}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);background:var(--toastbg);color:var(--toastfg);padding:11px 16px;border-radius:12px;font-weight:600;font-size:14px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:90vw;text-align:center;animation:fade .2s}
+.toast.err{background:#ffe4ea;color:#7a1430}
+.celebrate{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.celebrate i{position:absolute;top:-20px;width:8px;height:12px;border-radius:2px;animation:fall 2.4s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.empty{text-align:center;color:var(--muted);padding:16px 0;font-size:14px}
+.steps{margin:8px 0 0;padding-left:20px;color:var(--muted2);font-size:14px;line-height:1.7}
+.loading{display:grid;place-items:center;min-height:70vh;color:var(--muted)}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.kv div{background:var(--surface2);border-radius:12px;padding:11px 12px;font-size:12px;color:var(--muted)}
+.kv b{display:block;color:var(--text);font-size:17px;margin-top:3px;font-weight:700}
+.pend-ic{width:64px;height:64px;border-radius:50%;margin:4px auto 10px;display:grid;place-items:center;background:var(--grad-soft);color:var(--pink)}
+.pend-ic svg.i{width:30px;height:30px}
+.ttl{display:flex;align-items:center;gap:8px;font-weight:700}
+.juz{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:12px}
+.juz button{aspect-ratio:1.25;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-weight:700;font-size:14px;color:var(--muted2)}
+.juz button.on{background:var(--grad);color:#fff;border-color:transparent}
+.name-card{text-align:center;padding:20px 16px}
+.name-ar{font-size:38px;line-height:1.5;font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Geeza Pro","Traditional Arabic",serif;direction:rtl}
+.name-tr{font-weight:800;font-size:18px;margin-top:2px}
+.names99 .item{align-items:flex-start}
+.names99 .n{width:30px;flex:none;color:var(--muted);font-weight:700;font-size:13px;padding-top:4px}
+.names99 .ar{font-size:24px;font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Geeza Pro",serif;direction:rtl;flex:none;line-height:1.4}
+.medals{display:inline-flex;gap:4px;align-items:center;margin-left:2px}
+.medal{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:1px 6px 1px 3px;border-radius:999px}
+.medal svg.i{width:13px;height:13px;stroke-width:2}
+.medal.w{background:rgba(160,170,190,.16);color:#b8c0d0}
+.medal.m{background:rgba(251,191,36,.16);color:#f5b400}
+:root[data-theme=light] .medal.w{color:#5d6678;background:rgba(93,102,120,.12)}
+:root[data-theme=light] .medal.m{color:#a86b00}
+.mtile{background:var(--surface2);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+.mtile .mi{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+.mtile .mi svg.i{width:24px;height:24px}
+.mtile.w .mi{background:linear-gradient(135deg,#e6e9f0,#9aa3b5);color:#3a4150}
+.mtile.m .mi{background:linear-gradient(135deg,#ffe08a,#f2a900);color:#5a3a00}
+.mtile b{font-size:20px;display:block}
+.pages-edit{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line2);color:var(--text)}
+.pages-edit svg.i{width:12px;height:12px}
+/* chat */
+#v-chat{padding-bottom:70px}
+.msgs{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.msg{max-width:82%;padding:9px 12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);align-self:flex-start;line-height:1.4;word-wrap:break-word;white-space:pre-wrap}
+.msg .who{font-size:12px;font-weight:700;margin-bottom:2px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.msg .tm{font-size:10px;color:var(--muted);margin-top:3px;text-align:right}
+.msg.me{align-self:flex-end;background:var(--grad);color:#fff;border:0;border-bottom-right-radius:6px}
+.msg.me .tm{color:rgba(255,255,255,.75)}
+.msg:not(.me){border-bottom-left-radius:6px}
+.dayhdr{align-self:center;font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 10px;border-radius:999px;margin:8px 0 2px}
+.chatbar{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 68px);z-index:9;display:flex;justify-content:center;padding:8px 12px;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line)}
+.chatbar .in2{display:flex;gap:8px;max-width:560px;width:100%;align-items:flex-end}
+.chatbar textarea{min-height:44px;max-height:120px;height:44px;padding:11px 14px;border-radius:22px;resize:none}
+.chatbar button{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;flex:none}
+nav .dot{position:absolute;top:2px;right:calc(50% - 16px);width:9px;height:9px;border-radius:50%;background:#e1306c;box-shadow:0 0 0 2px var(--bg)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin-top:12px}
+.seg button{padding:9px 6px;border-radius:9px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button svg.i{width:16px;height:16px}
+.seg button.on{background:var(--grad);color:#fff}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="navgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b2ff7"/><stop offset=".55" stop-color="#e1306c"/><stop offset="1" stop-color="#f77737"/></linearGradient></defs></svg>
+
+<!-- LOGIN / REGISTER -->
+<div id="login" class="wrap hidden">
+  <img class="logo" src="icon-192.png" alt="">
+  <h1 class="center">Кунлик вирд</h1>
+  <p class="muted center" style="margin:6px 0 0">Китоб · Қуръон · Зикр</p>
+
+  <div id="pickName">
+    <div id="namesBox">
+      <h2 class="center">Исмингизни танланг</h2>
+      <div class="names" id="names"><div class="empty" style="grid-column:1/-1">Юкланмоқда…</div></div>
+      <div class="divider">ёки</div>
+    </div>
+    <div id="firstNote" class="card hidden" style="margin-top:26px;text-align:center;line-height:1.5">Гуруҳда ҳали ҳеч ким йўқ.<br><b>Биринчи рўйхатдан ўтган киши админ бўлади.</b></div>
+    <button class="btn" id="btnReg"></button>
+  </div>
+
+  <div id="pickPin" class="hidden">
+    <h2 class="center" id="pinTitle" style="text-transform:none;letter-spacing:0;font-size:20px;color:var(--text)"></h2>
+    <p class="muted small center" style="margin:0">PIN кодни киритинг</p>
+    <div class="pin-dots" id="dots"><i></i><i></i><i></i><i></i></div>
+    <div class="pad" id="pad"></div>
+  </div>
+
+  <div id="regForm" class="hidden">
+    <h2 class="center">Рўйхатдан ўтиш</h2>
+    <div class="card">
+      <div class="field"><label>Исмингиз</label><input id="rName" maxlength="40" placeholder="Масалан: Абдулазиз" autocomplete="off"></div>
+      <div class="field"><label>PIN код ўйлаб топинг (4 рақам)</label><input id="rPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••"></div>
+      <div class="field"><label>PIN ни қайта киритинг</label><input id="rPin2" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••"></div>
+      <p class="muted small" style="margin:4px 0 16px">PIN кодни эсда сақланг — ҳар сафар кириш учун керак бўлади.</p>
+      <button class="btn" id="rGo">Рўйхатдан ўтиш</button>
+      <div style="height:10px"></div>
+      <button class="btn sec" id="rBack">Орқага</button>
+    </div>
+  </div>
+</div>
+
+<!-- PENDING -->
+<div id="pending" class="wrap hidden">
+  <img class="logo" src="icon-192.png" alt="">
+  <h1 class="center" id="pendName"></h1>
+  <div class="card" style="margin-top:20px;text-align:center;padding:22px 18px">
+    <div class="pend-ic" id="pendIc"></div>
+    <div style="font-weight:700;font-size:17px">Админ тасдиқлашини кутинг</div>
+    <p class="muted" style="margin:8px 0 0;line-height:1.5">Сўровингиз админга юборилди. Тасдиқлангандан кейин шу ердан кирасиз.</p>
+  </div>
+  <button class="btn" id="pRefresh"></button>
+  <div style="height:10px"></div>
+  <div id="pPush"></div>
+  <button class="btn sec" id="pOut">Чиқиш</button>
+</div>
+
+<!-- APP -->
+<div id="app" class="wrap hidden">
+  <div class="top">
+    <div class="grow">
+      <div class="muted small" id="hDate"></div>
+      <h1 id="hTitle"></h1>
+    </div>
+    <button class="iconbtn" id="btnSettings" aria-label="Созламалар"></button>
+  </div>
+  <section id="v-today"></section>
+  <section id="v-group" class="hidden"></section>
+  <section id="v-chat" class="hidden"></section>
+  <section id="v-fines" class="hidden"></section>
+  <section id="v-admin" class="hidden"></section>
+</div>
+
+<div class="chatbar hidden" id="chatbar"><div class="in2"><textarea id="chatIn" rows="1" maxlength="1000" placeholder="Хабар ёзинг…"></textarea><button id="chatSend" aria-label="Юбориш"></button></div></div>
+<nav id="nav" class="hidden"><div class="in" id="navIn"></div></nav>
+
+<div id="boot" class="loading">Юкланмоқда…</div>
+
+<script>
+// ================== CONFIG ==================
+const SB_URL = 'https://pdzflfmjtawmfbdxqozu.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkemZsZm1qdGF3bWZiZHhxb3p1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ4MDIyNTQsImV4cCI6MjExMDM3ODI1NH0.hz16H_Sr9vCoTd4W9jc0D5I6TwD69lskvSbmW6310vU';
+const TZ_OFFSET = 6 * 3600 * 1000; // Asia/Bishkek, UTC+6
+const KHATM_PAGES = 604;
+const NAMES = [[1, "الرَّحْمَنُ", "Ар-Роҳман", "Ўта Меҳрибон"], [2, "الرَّحِيمُ", "Ар-Роҳийм", "Ўта Раҳмли"], [3, "الْمَلِكُ", "Ал-Малик", "Подшоҳ, барча нарсанинг эгаси"], [4, "الْقُدُّوسُ", "Ал-Қуддус", "Пок, ҳар қандай нуқсондан холи"], [5, "السَّلَامُ", "Ас-Салом", "Тинчлик ва саломатлик берувчи"], [6, "الْمُؤْمِنُ", "Ал-Муъмин", "Омонлик берувчи"], [7, "الْمُهَيْمِنُ", "Ал-Муҳаймин", "Кузатиб, ҳимоя қилиб турувчи"], [8, "الْعَزِيزُ", "Ал-Азиз", "Қудратли, ғолиб"], [9, "الْجَبَّارُ", "Ал-Жаббор", "Хоҳлаганини қилувчи, тузатувчи"], [10, "الْمُتَكَبِّرُ", "Ал-Мутакаббир", "Улуғлик соҳиби"], [11, "الْخَالِقُ", "Ал-Холиқ", "Яратувчи"], [12, "الْبَارِئُ", "Ал-Бориъ", "Йўқдан бор қилувчи"], [13, "الْمُصَوِّرُ", "Ал-Мусаввир", "Шакл берувчи"], [14, "الْغَفَّارُ", "Ал-Ғоффор", "Гуноҳларни кўп кечирувчи"], [15, "الْقَهَّارُ", "Ал-Қаҳҳор", "Ҳамма нарсага ғолиб"], [16, "الْوَهَّابُ", "Ал-Ваҳҳоб", "Беминнат ҳадя қилувчи"], [17, "الرَّزَّاقُ", "Ар-Раззоқ", "Ризқ берувчи"], [18, "الْفَتَّاحُ", "Ал-Фаттоҳ", "Барча эшикларни очувчи"], [19, "الْعَلِيمُ", "Ал-Алийм", "Ҳамма нарсани билувчи"], [20, "الْقَابِضُ", "Ал-Қобиз", "Торайтирувчи"], [21, "الْبَاسِطُ", "Ал-Босит", "Кенгайтирувчи"], [22, "الْخَافِضُ", "Ал-Хофиз", "Пасайтирувчи"], [23, "الرَّافِعُ", "Ар-Рофиъ", "Юксалтирувчи"], [24, "الْمُعِزُّ", "Ал-Муъиз", "Азиз қилувчи"], [25, "الْمُذِلُّ", "Ал-Музилл", "Хор қилувчи"], [26, "السَّمِيعُ", "Ас-Самийъ", "Ҳамма нарсани эшитувчи"], [27, "الْبَصِيرُ", "Ал-Басийр", "Ҳамма нарсани кўрувчи"], [28, "الْحَكَمُ", "Ал-Ҳакам", "Ҳукм қилувчи"], [29, "الْعَدْلُ", "Ал-Адл", "Адолатли"], [30, "اللَّطِيفُ", "Ал-Латийф", "Лутфли, нозик ишларни билувчи"], [31, "الْخَبِيرُ", "Ал-Хобийр", "Ҳар нарсадан хабардор"], [32, "الْحَلِيمُ", "Ал-Ҳалийм", "Ҳалим, жазони шошилтирмовчи"], [33, "الْعَظِيمُ", "Ал-Азийм", "Буюк"], [34, "الْغَفُورُ", "Ал-Ғофур", "Кечирувчи"], [35, "الشَّكُورُ", "Аш-Шакур", "Оз амалга кўп мукофот берувчи"], [36, "الْعَلِيُّ", "Ал-Алий", "Олий"], [37, "الْكَبِيرُ", "Ал-Кабийр", "Улуғ"], [38, "الْحَفِيظُ", "Ал-Ҳафийз", "Сақловчи"], [39, "الْمُقِيتُ", "Ал-Муқийт", "Озиқ берувчи"], [40, "الْحَسِيبُ", "Ал-Ҳасийб", "Ҳисоб олувчи, кифоя қилувчи"], [41, "الْجَلِيلُ", "Ал-Жалийл", "Улуғвор"], [42, "الْكَرِيمُ", "Ал-Карийм", "Карамли, сахий"], [43, "الرَّقِيبُ", "Ар-Роқийб", "Назорат қилувчи"], [44, "الْمُجِيبُ", "Ал-Мужийб", "Дуоларни ижобат қилувчи"], [45, "الْوَاسِعُ", "Ал-Восиъ", "Раҳмати ва илми кенг"], [46, "الْحَكِيمُ", "Ал-Ҳакийм", "Ҳикматли"], [47, "الْوَدُودُ", "Ал-Вадуд", "Бандаларини яхши кўрувчи"], [48, "الْمَجِيدُ", "Ал-Мажийд", "Шарафли"], [49, "الْبَاعِثُ", "Ал-Боъис", "Қайта тирилтирувчи"], [50, "الشَّهِيدُ", "Аш-Шаҳийд", "Гувоҳ"], [51, "الْحَقُّ", "Ал-Ҳақ", "Ҳақ"], [52, "الْوَكِيلُ", "Ал-Вакийл", "Ишониб топширилувчи"], [53, "الْقَوِيُّ", "Ал-Қавий", "Кучли"], [54, "الْمَتِينُ", "Ал-Матийн", "Мустаҳкам"], [55, "الْوَلِيُّ", "Ал-Валий", "Дўст, ёрдамчи"], [56, "الْحَمِيدُ", "Ал-Ҳамийд", "Мақтовга лойиқ"], [57, "الْمُحْصِي", "Ал-Муҳсий", "Ҳамма нарсани ҳисоблаб турувчи"], [58, "الْمُبْدِئُ", "Ал-Мубдиъ", "Аввал бошдан яратувчи"], [59, "الْمُعِيدُ", "Ал-Муъийд", "Қайта яратувчи"], [60, "الْمُحْيِي", "Ал-Муҳйий", "Ҳаёт берувчи"], [61, "الْمُمِيتُ", "Ал-Мумийт", "Жон олувчи"], [62, "الْحَيُّ", "Ал-Ҳайй", "Тирик"], [63, "الْقَيُّومُ", "Ал-Қайюм", "Ўзи қоим, ҳаммани қоим қилувчи"], [64, "الْوَاجِدُ", "Ал-Вожид", "Хоҳлаганини топувчи, бой"], [65, "الْمَاجِدُ", "Ал-Можид", "Улуғ шарафли"], [66, "الْوَاحِدُ", "Ал-Воҳид", "Ягона"], [67, "الْأَحَدُ", "Ал-Аҳад", "Бир, шериги йўқ"], [68, "الصَّمَدُ", "Ас-Самад", "Беҳожат, ҳамма Унга муҳтож"], [69, "الْقَادِرُ", "Ал-Қодир", "Қодир"], [70, "الْمُقْتَدِرُ", "Ал-Муқтадир", "Ўта қудратли"], [71, "الْمُقَدِّمُ", "Ал-Муқаддим", "Олдинга сурувчи"], [72, "الْمُؤَخِّرُ", "Ал-Муаххир", "Орқага сурувчи"], [73, "الْأَوَّلُ", "Ал-Аввал", "Аввал, ибтидоси йўқ"], [74, "الْآخِرُ", "Ал-Охир", "Охир, интиҳоси йўқ"], [75, "الظَّاهِرُ", "Аз-Зоҳир", "Аломатлари очиқ"], [76, "الْبَاطِنُ", "Ал-Ботин", "Зоти кўзга кўринмас"], [77, "الْوَالِي", "Ал-Волий", "Бошқарувчи"], [78, "الْمُتَعَالِي", "Ал-Мутаъолий", "Ҳар нарсадан олий"], [79, "الْبَرُّ", "Ал-Барр", "Яхшилик қилувчи"], [80, "التَّوَّابُ", "Ат-Таввоб", "Тавбаларни қабул қилувчи"], [81, "الْمُنْتَقِمُ", "Ал-Мунтақим", "Жазоловчи"], [82, "الْعَفُوُّ", "Ал-Афувв", "Афв этувчи"], [83, "الرَّؤُوفُ", "Ар-Рауф", "Шафқатли"], [84, "مَالِكُ الْمُلْكِ", "Моликул-мулк", "Мулкнинг эгаси"], [85, "ذُو الْجَلَالِ وَالْإِكْرَامِ", "Зул-жалоли вал-икром", "Улуғлик ва икром эгаси"], [86, "الْمُقْسِطُ", "Ал-Муқсит", "Адолат билан ҳукм қилувчи"], [87, "الْجَامِعُ", "Ал-Жомиъ", "Жамловчи"], [88, "الْغَنِيُّ", "Ал-Ғаний", "Бой, беҳожат"], [89, "الْمُغْنِي", "Ал-Муғний", "Бой қилувчи"], [90, "الْمَانِعُ", "Ал-Мониъ", "Тўсувчи"], [91, "الضَّارُّ", "Аз-Зорр", "Ҳикмати билан зарар етказувчи"], [92, "النَّافِعُ", "Ан-Нофиъ", "Фойда берувчи"], [93, "النُّورُ", "Ан-Нур", "Нур"], [94, "الْهَادِي", "Ал-Ҳодий", "Ҳидоят қилувчи"], [95, "الْبَدِيعُ", "Ал-Бадийъ", "Тенгсиз қилиб яратувчи"], [96, "الْبَاقِي", "Ал-Боқий", "Абадий боқий"], [97, "الْوَارِثُ", "Ал-Ворис", "Ҳамма нарсанинг вориси"], [98, "الرَّشِيدُ", "Ар-Рошид", "Тўғри йўлга бошловчи"], [99, "الصَّبُورُ", "Ас-Сабур", "Сабрли"]];
+
+const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const MONTHS_G = ['январ','феврал','март','апрел','май','июн','июл','август','сентябр','октябр','ноябр','декабр'];
+const WDAYS = ['Якшанба','Душанба','Сешанба','Чоршанба','Пайшанба','Жума','Шанба'];
+const ERR = {
+  BAD_PIN: 'PIN код нотўғри', NO_USER: 'Фойдаланувчи топилмади', NOT_ADMIN: 'Фақат админ учун',
+  PIN_FORMAT: 'PIN 4 та рақамдан иборат бўлиши керак', NAME: 'Исмни тўлиқ киритинг (камида 2 ҳарф)', FUTURE: 'Келажак кунни ўзгартириб бўлмайди',
+  SELF: 'Ўзингизни админликдан ёки гуруҳдан чиқариб бўлмайди', BAD_VALUE: 'Нотўғри қиймат', NAME_TAKEN: 'Бу исм банд. Бошқа исм ёзинг (масалан, фамилия билан)',
+  PENDING: 'Админ ҳали тасдиқламаган', TOO_MANY: 'Кутаётган сўровлар жуда кўп', EMPTY: 'Матн бўш'
+};
+
+// ================== ICONS (line) ==================
+const IC = {
+  book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+  quran:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+  zikr:'<circle cx="12" cy="11" r="7" stroke-dasharray="0.01 3.65" stroke-width="3.2"/><path d="M12 18v4M10.5 22h3"/>',
+  today:'<rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 15.5 2 2 4-4"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  wallet:'<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  settings:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
+  flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+  gift:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+  key:'<circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/>',
+  logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+  userPlus:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+  medical:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  phone:'<rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/>',
+  refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>',
+  pen:'<path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  crown:'<path d="m2 6 4 11h12l4-11-6 5-4-7-4 7-6-5zM6 21h12"/>',
+  hourglass:'<path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+  moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  auto:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>',
+  medal:'<path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2M13 12l5.88-9.8M8 7h8"/><circle cx="12" cy="17" r="5"/>',
+  chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  coins:'<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/>',
+  chevL:'<path d="m15 18-6-6 6-6"/>', chevR:'<path d="m9 18 6-6-6-6"/>'
+};
+const ic = (n, cls='') => `<svg class="i ${cls}" viewBox="0 0 24 24">${IC[n]||''}</svg>`;
+
+// ================== HELPERS ==================
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = n => (Number(n)||0).toLocaleString('ru-RU').replace(/[ ,]/g,' ');
+const money = n => num(n) + ' сом';
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem('g2_' + k)); } catch(_) { return null; } },
+  set(k,v){ try { localStorage.setItem('g2_' + k, JSON.stringify(v)); } catch(_) {} },
+  del(k){ try { localStorage.removeItem('g2_' + k); } catch(_) {} }
+};
+function toast(msg, err){
+  const t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2800);
+}
+async function rpc(fn, args, opts){
+  let r, tries = 0;
+  while (true) {
+    const ctrl = new AbortController(); const tm = setTimeout(() => ctrl.abort(), 15000);
+    try {
+      r = await fetch(`${SB_URL}/rest/v1/rpc/${fn.replace(/^zk_/, 'zk2_')}`, {
+        method: 'POST',
+        headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(args || {}), keepalive: !!(opts && opts.keepalive), signal: (opts && opts.keepalive) ? undefined : ctrl.signal
+      });
+      clearTimeout(tm); break;
+    } catch (e) {
+      clearTimeout(tm);
+      if (++tries >= 3) { const er = new Error('Интернет секин ёки йўқ. Қайта уриниб кўринг.'); er.code = 'NETWORK'; throw er; }
+      await new Promise(res => setTimeout(res, 1200 * tries));
+    }
+  }
+  const txt = await r.text(); let j = null; try { j = txt ? JSON.parse(txt) : null; } catch(_) {}
+  if (!r.ok) { const m = (j && j.message) || 'ERROR'; const e = new Error(ERR[m] || 'Хатолик. Интернетни текширинг.'); e.code = m; throw e; }
+  return j;
+}
+function parseD(s){ const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d)); }
+function fmtD(s){ const d = parseD(s); return `${d.getUTCDate()} ${MONTHS_G[d.getUTCMonth()]}`; }
+function fmtLong(s){ const d = parseD(s); return `${WDAYS[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS_G[d.getUTCMonth()]}`; }
+function addDays(s, n){ const d = parseD(s); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+function initials(n){ return (n||'?').trim().slice(0,1).toUpperCase(); }
+function vibrate(ms){ try { navigator.vibrate && navigator.vibrate(ms); } catch(_) {} }
+function ago(ts){
+  const d = (Date.now() - new Date(ts).getTime())/60000;
+  if (d < 1) return 'ҳозир'; if (d < 60) return Math.floor(d) + ' дақиқа олдин';
+  if (d < 1440) return Math.floor(d/60) + ' соат олдин';
+  const x = new Date(new Date(ts).getTime() + TZ_OFFSET).toISOString().slice(0,10); return fmtD(x);
+}
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+// static icons
+$('#btnReg').innerHTML = ic('userPlus') + 'Рўйхатдан ўтиш';
+$('#pRefresh').innerHTML = ic('refresh') + 'Текшириш';
+$('#pendIc').innerHTML = ic('hourglass');
+$('#btnSettings').innerHTML = ic('settings');
+$('#navIn').innerHTML = [
+  ['today','today','Бугун'],['group','users','Гуруҳ'],['chat','chat','Чат'],['fines','wallet','Жамғарма'],['admin','shield','Админ']
+].map(([v,i,t]) => `<button data-v="${v}" ${v==='admin'?'id="navAdmin" class="hidden"':''}>${ic(i)}${t}${v==='admin'?'<span class="badge hidden" id="admBadge"></span>':''}${v==='chat'?'<span class="dot hidden" id="chatDot"></span>':''}</button>`).join('');
+$('#chatSend').innerHTML = ic('send');
+
+// ================== STATE ==================
+let session = store.get('vird_session'); // {id, pin, name}
+let S = null, clockSkew = 0, view = ['chat','group','fines','admin'].includes(location.hash.slice(1)) ? location.hash.slice(1) : 'today', month = null;
+let zk = { server: 0, pending: 0, timer: null, inflight: false };
+let myDays = [];
+const goal = () => (S && S.rules ? S.rules.zikr_goal : 1000);
+
+function show(id){
+  ['login','pending','app','boot'].forEach(x => $('#'+x).classList.toggle('hidden', x !== id));
+  $('#nav').classList.toggle('hidden', id !== 'app');
+  $('#chatbar').classList.toggle('hidden', !(id === 'app' && view === 'chat'));
+}
+
+// ================== LOGIN ==================
+async function showLogin(){
+  show('login'); setLoginStep('pickName');
+  try {
+    const list = await rpc('zk_members_list');
+    const none = !list.length;
+    $('#namesBox').classList.toggle('hidden', none);
+    $('#firstNote').classList.toggle('hidden', !none);
+    $('#names').innerHTML = list.map(m => `<button data-id="${m.id}" data-name="${esc(m.name)}">${esc(m.name)}${m.approved ? '' : '<small>кутилмоқда</small>'}</button>`).join('');
+  } catch(e){ $('#names').innerHTML = `<div class="empty" style="grid-column:1/-1">Интернет йўқ. Қайта уриниб кўринг.</div>`; }
+}
+function setLoginStep(id){ ['pickName','pickPin','regForm'].forEach(x => $('#'+x).classList.toggle('hidden', x !== id)); }
+let pinFor = null, pinBuf = '';
+$('#names').addEventListener('click', e => {
+  const b = e.target.closest('button[data-id]'); if (!b) return;
+  pinFor = { id: +b.dataset.id, name: b.dataset.name }; pinBuf = '';
+  $('#pinTitle').textContent = pinFor.name; drawDots(); setLoginStep('pickPin');
+});
+$('#pad').innerHTML = [1,2,3,4,5,6,7,8,9].map(n=>`<button data-k="${n}">${n}</button>`).join('') +
+  '<button class="txt" data-k="back">Орқага</button><button data-k="0">0</button><button class="txt" data-k="del">Ўчириш</button>';
+function drawDots(){ [...$('#dots').children].forEach((d,i) => d.classList.toggle('on', i < pinBuf.length)); }
+function shake(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); vibrate([60,40,60]); }
+$('#pad').addEventListener('click', async e => {
+  const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k;
+  if (k === 'back'){ setLoginStep('pickName'); return; }
+  if (k === 'del'){ pinBuf = pinBuf.slice(0,-1); drawDots(); return; }
+  if (pinBuf.length >= 4) return;
+  pinBuf += k; drawDots(); vibrate(8);
+  if (pinBuf.length === 4){
+    try {
+      const me = await rpc('zk_login', { p_id: pinFor.id, p_pin: pinBuf });
+      session = { id: me.id, pin: pinBuf, name: me.name }; store.set('vird_session', session);
+      startApp();
+    } catch(err){ shake($('#dots')); toast(err.message, true); pinBuf = ''; setTimeout(drawDots, 300); }
+  }
+});
+$('#btnReg').addEventListener('click', () => { setLoginStep('regForm'); setTimeout(() => $('#rName').focus(), 50); });
+$('#rBack').addEventListener('click', () => setLoginStep('pickName'));
+$('#rGo').addEventListener('click', async () => {
+  const name = $('#rName').value.trim(), pin = $('#rPin').value.trim(), pin2 = $('#rPin2').value.trim();
+  if (name.length < 2) return toast(ERR.NAME, true);
+  if (!/^\d{4}$/.test(pin)) return toast(ERR.PIN_FORMAT, true);
+  if (pin !== pin2) return toast('PIN кодлар бир хил эмас', true);
+  const b = $('#rGo'); b.disabled = true;
+  try {
+    const me = await rpc('zk_register', { p_name: name, p_pin: pin });
+    session = { id: me.id, pin, name: me.name }; store.set('vird_session', session);
+    $('#rName').value = $('#rPin').value = $('#rPin2').value = '';
+    toast(me.is_admin ? 'Хуш келибсиз! Сиз гуруҳ админисиз' : 'Сўров юборилди');
+    startApp();
+  } catch(err){ toast(err.message, true); }
+  finally { b.disabled = false; }
+});
+
+// ================== PENDING ==================
+function showPending(){
+  show('pending');
+  $('#pendName').textContent = session.name;
+  $('#pPush').innerHTML = pushSupported() && !(isIOS && !isStandalone) && Notification.permission !== 'granted'
+    ? `<button class="btn sec" id="pPushBtn">${ic('bell')}Билдиришномаларни ёқиш</button><div style="height:10px"></div>` : '';
+}
+$('#pRefresh').addEventListener('click', () => startApp());
+$('#pOut').addEventListener('click', () => logout());
+$('#pending').addEventListener('click', e => { if (e.target.closest('#pPushBtn')) enablePush(); });
+
+// ================== APP ==================
+async function startApp(){
+  $('#boot').textContent = 'Юкланмоқда…';
+  show('boot');
+  try { await loadState(); }
+  catch(e){
+    if (e.code === 'BAD_PIN' || e.code === 'NO_USER'){ logout(); return; }
+    $('#boot').innerHTML = '<div style="text-align:center;padding:0 24px"><div style="font-weight:700;font-size:17px">Уланиб бўлмади</div><p class="muted">Интернет секин ёки йўқ.</p><button class="btn" onclick="startApp()" style="max-width:260px">Қайта уриниш</button></div>'; return;
+  }
+  if (S.pending) return showPending();
+  show('app');
+  $('#navAdmin').classList.toggle('hidden', !S.me.is_admin);
+  render();
+  loadMyDays();
+}
+function logout(){
+  flushZikr(true);
+  store.del('vird_session'); session = null; S = null; month = null; view = 'today';
+  zk = { server:0, pending:0, timer:null, inflight:false };
+  chat = { msgs: [], last: 0, timer: null, loading: false }; clearInterval(chat.timer);
+  showLogin();
+}
+async function loadState(){
+  const t0 = Date.now();
+  S = await rpc('zk_state', { p_id: session.id, p_pin: session.pin, p_month: month });
+  clockSkew = new Date(S.now).getTime() - (t0 + Date.now())/2;
+  if (S.pending) return;
+  if (!month) month = S.month;
+  session.name = S.me.name; store.set('vird_session', session);
+  const m = S.members.find(x => x.id === S.me.id);
+  if (m && !zk.inflight) zk.server = m.zikr;
+}
+async function loadMyDays(){
+  try {
+    myDays = await rpc('zk_history', { p_id: session.id, p_pin: session.pin, p_member: session.id, p_from: addDays(S.today, -13), p_to: S.today });
+    if (view === 'today') renderStrip();
+  } catch(_) {}
+}
+async function refresh(){
+  try {
+    await flushZikr(); await loadState();
+    if (S.pending) return showPending();
+    if ($('#app').classList.contains('hidden')) show('app');
+    $('#navAdmin').classList.toggle('hidden', !S.me.is_admin);
+    if (!document.querySelector('.modal')) { if (view === 'chat') { updateChatDot(); } else render(); }
+    loadMyDays();
+  } catch(_) {}
+}
+function me(){ return S.members.find(m => m.id === S.me.id) || { book:false, quran:false, zikr:0, excused:false, streak:0 }; }
+
+function render(){
+  $('#hDate').textContent = fmtLong(S.today);
+  $('#hTitle').textContent = 'Ассалому алайкум, ' + S.me.name.split(' ')[0];
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === view));
+  const pend = (S.pending_members || []).length;
+  $('#admBadge').textContent = pend; $('#admBadge').classList.toggle('hidden', !pend);
+  if (view === 'admin' && !S.me.is_admin) view = 'today';
+  ['today','group','chat','fines','admin'].forEach(v => $('#v-'+v).classList.toggle('hidden', v !== view));
+  $('#chatbar').classList.toggle('hidden', view !== 'chat');
+  updateChatDot();
+  ({ today: renderToday, group: renderGroup, chat: renderChat, fines: renderFines, admin: renderAdmin })[view]();
+}
+$('#nav').addEventListener('click', e => {
+  const b = e.target.closest('button[data-v]'); if (!b) return;
+  view = b.dataset.v; render(); if (view !== 'chat') window.scrollTo(0,0);
+  if (view === 'admin') loadAdminDays();
+  try { history.replaceState(null, '', view === 'today' ? location.pathname : '#' + view); } catch(_) {}
+});
+
+// ---------- countdown ----------
+function msToMidnight(){ const now = Date.now() + clockSkew + TZ_OFFSET; return 86400000 - (now % 86400000); }
+function isDoneToday(){ const m = me(); return !!S.holiday_today || m.excused || (m.book && m.quran && zk.server + zk.pending >= goal()); }
+function tickCountdown(){
+  const el = $('#cd'); if (!el || !S || S.pending) return;
+  const ms = msToMidnight(); const h = Math.floor(ms/3600000), mi = Math.floor(ms%3600000/60000), s = Math.floor(ms%60000/1000);
+  const done = isDoneToday();
+  el.className = 'countdown' + (done ? ' okk' : ms < 3*3600000 ? ' urgent' : '');
+  el.innerHTML = done ? `${ic('check')}<span>Бугунги вазифалар бажарилди. Аллоҳ қабул қилсин!</span>`
+    : `${ic('clock')}<span>00:00 гача <b>${h} соат ${String(mi).padStart(2,'0')} дақиқа ${String(s).padStart(2,'0')}</b></span>`;
+  if (ms < 1500) setTimeout(refresh, 3000);
+}
+setInterval(tickCountdown, 1000);
+
+// ---------- TODAY ----------
+function renderToday(){
+  const m = me(); const z = zk.server + zk.pending; const R = S.rules; const G = goal();
+  const lastAnn = (S.announcements || [])[0];
+  const showAnn = lastAnn && (Date.now() - new Date(lastAnn.created_at).getTime() < 3*86400000) && store.get('vird_ann_seen') !== lastAnn.id;
+  const qp = m.quran_pages_total || 0;
+  $('#v-today').innerHTML = `
+    <div class="countdown" id="cd"></div>
+    ${S.holiday_today ? `<div class="banner"><div class="bt" style="color:var(--pink)">${ic('gift')}${esc(S.holiday_today)}</div><div class="muted" style="margin-top:4px">Бугун байрам куни — ҳеч кимга жарима йўқ. Хоҳласангиз, вазифаларни бажаришингиз мумкин.</div></div>` : ''}
+    ${m.excused && !S.holiday_today ? `<div class="banner"><div class="bt" style="color:var(--blue)">${ic('medical')}Узрли кун</div><div class="muted" style="margin-top:4px">Бугун сиз учун узрли кун белгиланган. Жарима йўқ.</div></div>` : ''}
+    ${showAnn ? `<div class="banner ann"><div class="row between"><div class="bt">${ic('megaphone')}Эълон${lastAnn.author ? ' · ' + esc(lastAnn.author) : ''}</div><button class="muted" id="annHide">${ic('x')}</button></div><div style="margin-top:6px;white-space:pre-wrap;color:var(--muted2)">${esc(lastAnn.text)}</div></div>` : ''}
+    <h2>Бугунги вазифалар</h2>
+    <div class="card task ${m.book?'done':''}" data-task="book">
+      <div class="ic">${ic('book')}</div><div class="grow"><div class="t1">Китоб</div><div class="muted small">Камида ${R.book_pages} бет${S.me.book_title ? ' · ' + esc(S.me.book_title) : ''}</div>
+        ${m.book ? `<button class="pages-edit" data-editpages>${ic('pen')}Бугун ${m.book_pages_read || R.book_pages} бет ўқидим</button>` : ''}</div><div class="check">${ic('check')}</div>
+    </div>
+    <div class="card task ${m.quran?'done':''}" data-task="quran">
+      <div class="ic">${ic('quran')}</div><div class="grow"><div class="t1">Қуръон</div><div class="muted small">Камида ${R.quran_pages} бет</div>
+        ${m.quran ? `<button class="pages-edit" data-editq>${ic('pen')}Бугун ${m.quran_pages_read || R.quran_pages} бет ўқидим</button>` : ''}</div><div class="check">${ic('check')}</div>
+    </div>
+    <div class="card zikr">
+      <div class="row between"><div class="row" style="gap:10px;text-align:left"><div class="zic">${ic('zikr')}</div><div><div class="t1">Зикр</div><div class="muted small">${num(G)} марта</div></div></div>
+      <span class="chip" id="zChip"></span></div>
+      <div class="ring" id="ring">
+        <svg class="r" viewBox="0 0 244 244"><circle cx="122" cy="122" r="113" fill="none" stroke="var(--ringbg)" stroke-width="8"/>
+        <circle id="arc" cx="122" cy="122" r="113" fill="none" stroke="url(#zg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="710" stroke-dashoffset="710"/>
+        <defs><linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b2ff7"/><stop offset=".55" stop-color="#e1306c"/><stop offset="1" stop-color="#f77737"/></linearGradient></defs></svg>
+        <div class="tap" id="tap"><div class="num" id="zNum">${z}</div><div class="of">/ ${num(G)}</div><div class="hint gtext" id="zHint">Босинг</div></div>
+      </div>
+      <div class="zrow"><button class="btn sec sm" id="zMinus">−1</button><button class="btn sec sm" id="zPlus10">+10</button><button class="btn sec sm" id="zPlus100">+100</button></div>
+      <div class="sync" id="zSync"></div>
+    </div>
+
+    ${myDebt() > 0 ? `<div class="card row" style="margin-top:12px;border-color:rgba(251,90,122,.3)"><div class="grow"><div class="muted small">Сизнинг жаримангиз</div><div style="font-weight:800;font-size:20px;color:var(--bad)">${money(myDebt())}</div></div><button class="btn sm" data-payself>${ic('coins')}Тўладим</button></div>` : ''}
+    <h2>Менинг натижаларим</h2>
+    <div class="card">
+      <div class="row between"><span class="muted small">Охирги 14 кун · бугун чапда</span><span class="chip grad">${ic('flame')}${m.streak||0} кун кетма-кет</span></div>
+      <div class="strip" id="strip"></div>
+      <div class="legend"><span style="--c:#c13584">Бажарилди</span><span style="--c:var(--bad)">Жарима</span><span style="--c:var(--blue)">Узрли</span><span style="--c:var(--pink)">Байрам</span></div>
+    </div>
+    <div class="card">
+      <div class="muted small" style="margin-bottom:10px">Медалларим</div>
+      <div class="kv" style="margin-top:0">
+        <div class="mtile w"><div class="mi">${ic('medal')}</div><div><b>${(m.medals||{}).weeks||0}</b>Ҳафта медали</div></div>
+        <div class="mtile m"><div class="mi">${ic('medal')}</div><div><b>${(m.medals||{}).months||0}</b>Ой медали</div></div>
+      </div>
+      <p class="muted small" style="margin:10px 0 0;line-height:1.5">Ҳафта (душанба–якшанба) ёки ой давомида бирорта ҳам кун қолдирмасангиз медаль оласиз. Узрли ва байрам кунлари ҳам ҳисобланади.</p>
+    </div>
+    <div class="card">
+      <div class="row between"><div class="grow"><div class="muted small">Ҳозир ўқиётган китобим</div>
+        <div style="font-weight:700;font-size:16px;margin-top:4px">${S.me.book_title ? esc(S.me.book_title) : '<span class="muted">Ёзилмаган</span>'}</div></div>
+        <button class="btn sec sm" id="editBook">${ic('pen')}${S.me.book_title ? 'Ўзгартириш' : 'Қўшиш'}</button></div>
+      <div class="kv">
+        <div>Китобдан ўқилган<b>${num(m.book_pages_total||0)} бет</b></div>
+        <div>Қуръондан ўқилган<b>${num(qp)} бет</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row between"><div><div class="muted small">Қуръон пораларим</div><div style="font-weight:800;font-size:20px;margin-top:2px">${(m.juz||[]).length} / 30 пора</div></div>
+        <span class="chip grad">${ic('quran')}Хатм: ${m.khatm_count||0}</span></div>
+      <div class="bar"><i style="width:${(m.juz||[]).length/30*100}%"></i></div>
+      <div class="juz" id="juzGrid">${Array.from({length:30},(_,i)=>i+1).map(n => `<button data-juz="${n}" class="${(m.juz||[]).includes(n)?'on':''}">${n}</button>`).join('')}</div>
+      <p class="muted small" style="margin:10px 0 0">Ўқиб тугатган порангизни босинг. 30 тўлса — хатм ҳисобланади.</p>
+      ${(m.juz||[]).length >= 30 ? `<button class="btn" style="margin-top:12px" id="khatmDone">${ic('check')}Хатмни якунлаш</button>` : ''}
+    </div>
+    ${namesCard()}
+    ${pushBanner()}
+  `;
+  tickCountdown(); drawRing(); renderStrip();
+}
+function drawRing(){
+  const z = zk.server + zk.pending; const arc = $('#arc'); if (!arc) return; const G = goal();
+  arc.style.strokeDashoffset = 710 * (1 - Math.min(1, z / G));
+  $('#zNum').textContent = z;
+  $('#ring').classList.toggle('full', z >= G);
+  $('#zHint').className = 'hint' + (z >= G ? '' : ' gtext'); $('#zHint').textContent = z >= G ? 'Бажарилди' : 'Босинг';
+  const c = $('#zChip'); c.className = 'chip ' + (z>=G?'ok':''); c.innerHTML = z>=G ? ic('check') + 'Бажарилди' : num(G-z)+' қолди';
+  $('#zSync').textContent = zk.pending ? 'Сақланмоқда…' : '';
+}
+function renderStrip(){
+  const el = $('#strip'); if (!el) return;
+  const map = {}; myDays.forEach(d => map[d.day] = d);
+  let html = '';
+  for (let i = 0; i <= 13; i++){            // today first (left), older days to the right
+    const day = addDays(S.today, -i); const d = map[day]; let cls = d ? d.status : 'none';
+    if (day === S.today) cls = (S.holiday_today ? 'holiday' : me().excused ? 'excused' : isDoneToday() ? 'done' : '') + ' today';
+    html += `<i class="${cls}" title="${fmtD(day)}"></i>`;
+  }
+  el.innerHTML = html;
+}
+$('#v-today').addEventListener('click', async e => {
+  if (e.target.closest('[data-editpages]')) { e.stopPropagation(); const n = await askPages('book'); if (n) saveTasks({ book: true, pages: n }); return; }
+  if (e.target.closest('[data-editq]')) { e.stopPropagation(); const n = await askPages('quran'); if (n) saveTasks({ quran: true, qpages: n }); return; }
+  const jb = e.target.closest('[data-juz]');
+  if (jb) return toggleJuz(+jb.dataset.juz);
+  if (e.target.closest('#khatmDone')) return finishKhatm();
+  if (e.target.closest('#allNames')) return showAllNames();
+  if (e.target.closest('[data-payself]')) return paySelf();
+  const t = e.target.closest('.task');
+  if (t){
+    const m = me(); const key = t.dataset.task;
+    if (key === 'book' && !m.book){ const n = await askPages('book'); if (!n) return; return saveTasks({ book: true, pages: n }); }
+    if (key === 'quran' && !m.quran){ const n = await askPages('quran'); if (!n) return; return saveTasks({ quran: true, qpages: n }); }
+    return saveTasks({ [key]: !m[key] });
+  }
+  if (e.target.closest('#zMinus')) return addZikr(-1);
+  if (e.target.closest('#zPlus10')) return addZikr(10);
+  if (e.target.closest('#zPlus100')) return addZikr(100);
+  if (e.target.closest('#btnPush')) return enablePush();
+  if (e.target.closest('#annHide')) { store.set('vird_ann_seen', S.announcements[0].id); renderToday(); return; }
+  if (e.target.closest('#editBook')){
+    const r = await formBox('Қайси китобни ўқияпсиз?', [{ k:'title', label:'Китоб номи', val: S.me.book_title || '', ph:'Масалан: Саодат асри қиссалари' }], 'Сақлаш');
+    if (!r) return;
+    try { await rpc('zk_set_book', { p_id: session.id, p_pin: session.pin, p_title: r.title }); S.me.book_title = r.title || null; renderToday(); toast('Сақланди'); }
+    catch(err){ toast(err.message, true); }
+  }
+});
+async function askPages(kind){
+  const R = S.rules; const m = me(); const isQ = kind === 'quran';
+  const min = isQ ? R.quran_pages : R.book_pages; const max = isQ ? 604 : 2000;
+  const r = await formBox(isQ ? 'Бугун Қуръондан нечта бет ўқидингиз?' : 'Бугун китобдан нечта бет ўқидингиз?',
+    [{ k:'pages', label:`Камида ${min} бет`, type:'number', val: (isQ ? m.quran_pages_read : m.book_pages_read) || min }], 'Сақлаш');
+  if (!r) return null;
+  const n = parseInt(r.pages, 10);
+  if (!(n >= min)) { toast(`Камида ${min} бет бўлиши керак`, true); return null; }
+  if (n > max) { toast('Жуда катта сон', true); return null; }
+  return n;
+}
+async function saveTasks(ch){
+  const m = me(); const was = isDoneToday(); const old = { book: m.book, quran: m.quran, book_pages_read: m.book_pages_read, quran_pages_read: m.quran_pages_read };
+  if ('book' in ch) m.book = ch.book; if ('quran' in ch) m.quran = ch.quran;
+  if (ch.pages) m.book_pages_read = ch.pages; if (ch.qpages) m.quran_pages_read = ch.qpages;
+  if (!m.book) m.book_pages_read = null; if (!m.quran) m.quran_pages_read = null;
+  vibrate(15); renderToday();
+  try {
+    await rpc('zk_set_today3', { p_id: session.id, p_pin: session.pin, p_book: m.book, p_quran: m.quran,
+      p_book_pages: m.book ? (m.book_pages_read || S.rules.book_pages) : null, p_quran_pages: m.quran ? (m.quran_pages_read || S.rules.quran_pages) : null });
+    if (!was && isDoneToday()) celebrate();
+  } catch(err){ Object.assign(m, old); renderToday(); toast(err.message, true); }
+}
+async function toggleJuz(n){
+  const m = me(); m.juz = m.juz || []; const on = !m.juz.includes(n);
+  m.juz = on ? m.juz.concat(n).sort((a,b)=>a-b) : m.juz.filter(x => x !== n);
+  vibrate(10); renderToday();
+  try { await rpc('zk_juz_toggle', { p_id: session.id, p_pin: session.pin, p_juz: n, p_done: on }); if (on && m.juz.length === 30) toast('Машааллоҳ! 30 пора тўлди — «Хатмни якунлаш»ни босинг'); }
+  catch(err){ toast(err.message, true); await loadState(); renderToday(); }
+}
+async function finishKhatm(){
+  if (!await confirmBox('Хатмни якунлайсизми?', 'Хатмлар сони 1 тага ошади ва поралар янгидан бошланади.')) return;
+  try { const n = await rpc('zk_khatm_complete', { p_id: session.id, p_pin: session.pin }); celebrate(); toast(`Аллоҳ қабул қилсин! Хатмлар: ${n}`); await loadState(); renderToday(); }
+  catch(err){ toast(err.message, true); }
+}
+function nameOfDay(){ const d = Math.floor(parseD(S.today).getTime() / 86400000); return NAMES[((d % 99) + 99) % 99]; }
+function namesCard(){
+  const x = nameOfDay();
+  return `<h2>Аллоҳнинг гўзал исмлари</h2>
+    <div class="card name-card">
+      <div class="muted small">Бугунги исм · ${x[0]}/99</div>
+      <div class="name-ar">${x[1]}</div>
+      <div class="name-tr gtext">${esc(x[2])}</div>
+      <div class="muted" style="margin-top:4px">${esc(x[3])}</div>
+      <button class="btn sec" style="margin-top:14px" id="allNames">99 исмнинг барчаси</button>
+    </div>`;
+}
+function showAllNames(){
+  const box = modal(`<h3>Аллоҳнинг 99 исми</h3>
+    <input id="nmSearch" placeholder="Қидириш…" style="margin-bottom:10px">
+    <div class="list names99" id="nmList"></div>
+    <div style="height:12px"></div><button class="btn sec" data-close>Ёпиш</button>`);
+  const draw = q => { q = (q||'').toLowerCase();
+    box.querySelector('#nmList').innerHTML = NAMES.filter(x => !q || (x[2]+' '+x[3]).toLowerCase().includes(q) || String(x[0]) === q)
+      .map(x => `<div class="item"><div class="n">${x[0]}</div><div class="grow"><div style="font-weight:700">${esc(x[2])}</div><div class="muted small">${esc(x[3])}</div></div><div class="ar">${x[1]}</div></div>`).join('') || '<div class="empty">Топилмади</div>'; };
+  draw(''); box.querySelector('#nmSearch').addEventListener('input', e => draw(e.target.value));
+}
+function myDebt(){ const m = me(); return (m.fines_total||0) - (m.fines_paid||0); }
+async function paySelf(){
+  const d = myDebt(); if (d <= 0) return;
+  if (!await confirmBox(`${money(d)} жаримани тўладингизми?`, 'Тўланган деб белгиланади ва жамғармага қўшилади.')) return;
+  try { await rpc('zk_pay_self', { p_id: session.id, p_pin: session.pin }); toast('Раҳмат! Тўланди деб белгиланди'); await loadState(); render(); }
+  catch(err){ toast(err.message, true); }
+}
+function medalsHtml(m){
+  const md = m.medals || {}; let h = '';
+  if (md.months) h += `<span class="medal m" title="Ой медали">${ic('medal')}${md.months}</span>`;
+  if (md.weeks) h += `<span class="medal w" title="Ҳафта медали">${ic('medal')}${md.weeks}</span>`;
+  return h ? `<span class="medals">${h}</span>` : '';
+}
+document.addEventListener('pointerdown', e => {
+  const tap = e.target.closest('#tap'); if (!tap) return;
+  e.preventDefault(); tap.classList.add('press'); addZikr(1);
+}, { passive: false });
+document.addEventListener('pointerup', () => { const t = $('#tap'); t && t.classList.remove('press'); });
+document.addEventListener('pointercancel', () => { const t = $('#tap'); t && t.classList.remove('press'); });
+
+function addZikr(n){
+  const before = zk.server + zk.pending; const G = goal();
+  if (before + n < 0) return;
+  const was = isDoneToday();
+  zk.pending += n; vibrate(n === 1 ? 10 : 20);
+  const after = zk.server + zk.pending;
+  if (before < G && after >= G){ vibrate([80,60,80]); toast(`Машааллоҳ! ${num(G)} зикр бажарилди`); }
+  else if (after % 100 === 0 && after < G && n === 1) vibrate(40);
+  drawRing(); tickCountdown(); renderStrip();
+  if (!was && isDoneToday()) celebrate();
+  clearTimeout(zk.timer); zk.timer = setTimeout(flushZikr, 900);
+}
+async function flushZikr(keepalive){
+  if (!zk.pending || zk.inflight || !session) return;
+  const send = Math.max(-5000, Math.min(5000, zk.pending));
+  zk.inflight = true;
+  try {
+    const v = await rpc('zk_add_zikr', { p_id: session.id, p_pin: session.pin, p_add: send }, { keepalive });
+    zk.pending -= send; zk.server = v; if (S && S.members) me().zikr = v;
+  } catch(err){
+    if (!keepalive && $('#zSync')) $('#zSync').textContent = 'Интернет йўқ — кейинроқ сақланади';
+  } finally {
+    zk.inflight = false; drawRing();
+    if (zk.pending) { clearTimeout(zk.timer); zk.timer = setTimeout(flushZikr, 3000); }
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') flushZikr(true);
+  else if (session && S) refresh();
+});
+window.addEventListener('pagehide', () => flushZikr(true));
+
+function celebrate(){
+  const box = document.createElement('div'); box.className = 'celebrate';
+  const colors = ['#7b2ff7','#a62fd8','#e1306c','#f77737','#fcaf45','#ffffff'];
+  for (let i = 0; i < 80; i++){
+    const p = document.createElement('i');
+    p.style.left = Math.random()*100 + 'vw'; p.style.background = colors[i % colors.length];
+    p.style.animationDelay = (Math.random()*0.6) + 's'; p.style.animationDuration = (1.8 + Math.random()*1.4) + 's';
+    box.appendChild(p);
+  }
+  document.body.appendChild(box); setTimeout(() => box.remove(), 4000);
+  toast('Бугунги барча вазифалар бажарилди');
+}
+
+// ---------- GROUP ----------
+function marks(m, G){
+  const bp = m.book ? (m.book_pages_read || m.book_read || (S && S.rules ? S.rules.book_pages : 0)) : 0;
+  const qp = m.quran ? (m.quran_pages_read || m.quran_read || (S && S.rules ? S.rules.quran_pages : 0)) : 0;
+  return `<div class="marks">${ic('book', m.book?'on':'')}${ic('quran', m.quran?'on':'')}${ic('zikr', m.zikr>=G?'on':'')}<span>${m.zikr}/${num(G)}${bp ? ' · китоб ' + bp : ''}${qp ? ' · Қуръон ' + qp : ''}</span></div>`;
+}
+function renderGroup(){
+  const list = S.members; const G = goal();
+  const doneN = list.filter(m => m.done_today).length;
+  const rating = [...list].sort((a,b) => b.m_done - a.m_done || a.m_missed - b.m_missed || b.streak - a.streak);
+  const ms = parseD(S.month); const isCur = S.month.slice(0,7) === S.today.slice(0,7);
+  const best = [...list].sort((a,b) => b.streak - a.streak)[0];
+  const anns = S.announcements || [];
+  $('#v-group').innerHTML = `
+    <h2>Бугун · ${doneN} / ${list.length} бажарди</h2>
+    <div class="card list">
+      ${list.map(m => `
+        <div class="item" ${S.me.is_admin ? `data-admmember="${m.id}" style="cursor:pointer"` : ''}>
+          <div class="av ${m.done_today?'ok':''}">${m.done_today?ic('check'):esc(initials(m.name))}</div>
+          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}${medalsHtml(m)}${m.id===S.me.id?' <span class="muted small" style="font-weight:500">(сиз)</span>':''}</div>
+            ${marks(m, G)}
+            ${m.book_title ? `<div class="small muted" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.book_title)}</div>` : ''}</div>
+          ${S.holiday_today ? '<span class="chip pink">Байрам</span>' : m.excused ? '<span class="chip blue">Узрли</span>' : m.done_today ? '<span class="chip ok">Бажарди</span>' : '<span class="chip">Кутилмоқда</span>'}
+        </div>`).join('')}
+    </div>
+    ${best && best.streak > 0 ? `<div class="card row"><div class="av" style="background:var(--grad);color:#fff">${ic('flame')}</div><div class="grow"><div class="muted small">Энг узун серия</div><div style="font-weight:700">${esc(best.name)} — ${best.streak} кун кетма-кет</div></div></div>` : ''}
+
+    <div class="monthsw">
+      <button class="iconbtn" id="mPrev">${ic('chevL')}</button>
+      <h2>${MONTHS[ms.getUTCMonth()]} ${ms.getUTCFullYear()} · рейтинг</h2>
+      <button class="iconbtn" id="mNext" ${isCur?'disabled style="opacity:.3"':''}>${ic('chevR')}</button>
+    </div>
+    <div class="card list">
+      ${rating.map((m,i) => {
+        const total = m.m_done + m.m_missed + m.m_excused; const pct = total ? Math.round(m.m_done / total * 100) : 0;
+        return `<div class="item">
+          <div class="rank ${i<3 && m.m_done>0 ? 'gtext' : ''}">${i+1}</div>
+          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}${medalsHtml(m)}</span><span class="small muted" style="display:inline-flex;align-items:center;gap:4px">${ic('flame')}${m.streak}</span></div>
+            <div class="bar"><i style="width:${pct}%"></i></div>
+            <div class="small muted" style="margin-top:6px">Бажарилди ${m.m_done} · Жарима ${m.m_missed} · Узрли ${m.m_excused} · Китоб ${num(m.m_book_pages||0)} · Қуръон ${num(m.m_quran_pages||0)} бет</div></div>
+        </div>`; }).join('')}
+    </div>
+    <p class="muted small">Бугунги кун 00:00 дан кейин ҳисобланади.</p>
+
+    <h2>Қуръон · ҳар ким алоҳида</h2>
+    <div class="card list">
+      ${[...list].sort((a,b) => (b.khatm_count||0) - (a.khatm_count||0) || (b.juz||[]).length - (a.juz||[]).length).map(m => `
+        <div class="item"><div class="av">${esc(initials(m.name))}</div>
+          <div class="grow"><div class="row between"><span class="nm">${esc(m.name)}</span><span class="small"><b>${m.khatm_count||0}</b> <span class="muted">хатм</span></span></div>
+            <div class="bar"><i style="width:${(m.juz||[]).length/30*100}%"></i></div>
+            <div class="small muted" style="margin-top:6px">${(m.juz||[]).length}/30 пора · жами ${num(m.quran_pages_total||0)} бет</div></div></div>`).join('')}
+    </div>
+
+    <h2>Эълонлар</h2>
+    <div class="card">${anns.length ? anns.map(a => `<div class="ann-item"><div class="row between"><b class="small" style="display:inline-flex;align-items:center;gap:6px">${ic('megaphone')}${esc(a.author || 'Админ')}</b><span class="small muted">${ago(a.created_at)}</span></div><p>${esc(a.text)}</p></div>`).join('') : '<div class="empty">Ҳали эълон йўқ</div>'}</div>
+  `;
+}
+$('#v-group').addEventListener('click', async e => {
+  const am = e.target.closest('[data-admmember]');
+  if (am && S.me.is_admin){ adm.member = +am.dataset.admmember; adm.days = []; view = 'admin'; render(); loadAdminDays(); setTimeout(() => { const el = $('#admMember'); el && el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 150); return; }
+  const p = e.target.closest('#mPrev'), n = e.target.closest('#mNext');
+  if (!p && !n) return; if (n && n.disabled) return;
+  const d = parseD(S.month); d.setUTCMonth(d.getUTCMonth() + (p ? -1 : 1));
+  month = d.toISOString().slice(0,10);
+  try { await loadState(); renderGroup(); } catch(err){ toast(err.message, true); }
+});
+
+// ---------- FINES / POT ----------
+function renderFines(){
+  const list = S.members;
+  const total = list.reduce((a,m) => a + m.fines_total, 0);
+  const paid = list.reduce((a,m) => a + m.fines_paid, 0);
+  const balance = paid - S.sadaqa_total; const admin = S.me.is_admin;
+  const debtors = [...list].sort((a,b) => (b.fines_total-b.fines_paid) - (a.fines_total-a.fines_paid));
+  $('#v-fines').innerHTML = `
+    <h2>Жарималар жамғармаси</h2>
+    <div class="stats">
+      <div class="stat big"><div class="muted small">Жамғармада ҳозир</div><div class="v">${money(balance)}</div><div class="muted small" style="margin-top:4px">Йиғилган жарималардан садақа қилинади</div></div>
+      <div class="stat"><div class="muted small">Тўланган жарималар</div><div class="v" style="color:var(--ok)">${money(paid)}</div></div>
+      <div class="stat"><div class="muted small">Ҳали тўланмаган</div><div class="v" style="color:var(--bad)">${money(total - paid)}</div></div>
+      <div class="stat"><div class="muted small">Жами жарималар</div><div class="v">${money(total)}</div></div>
+      <div class="stat"><div class="muted small">Садақага берилган</div><div class="v gtext">${money(S.sadaqa_total)}</div></div>
+    </div>
+    <p class="muted small" style="line-height:1.5">Жаримангизни тўлаганингиздан кейин «Тўладим» тугмасини босинг. Қоида: кун давомида (00:00 гача) 3 вазифадан бирортаси бажарилмаса — ${money(S.rules.fine)} жарима. Жарималар жамғармада йиғилади ва вақти-вақти билан садақа қилинади.</p>
+    <h2>Ким қанча қарз</h2>
+    <div class="card list">
+      ${debtors.map(m => { const d = m.fines_total - m.fines_paid; return `
+        <div class="item">
+          <div class="av">${esc(initials(m.name))}</div>
+          <div class="grow"><div class="nm">${esc(m.name)}</div><div class="small muted">Жами ${money(m.fines_total)} · Тўланган ${money(m.fines_paid)}</div></div>
+          ${d > 0 ? `<div style="text-align:right"><span class="chip bad">${money(d)}</span>${m.id === S.me.id ? `<div style="margin-top:6px"><button class="btn sm" data-payself>Тўладим</button></div>` : admin ? `<div style="margin-top:6px"><button class="btn sec sm" data-payall="${m.id}" data-name="${esc(m.name)}" data-sum="${d}">Тўланди</button></div>` : ''}</div>`
+                  : '<span class="chip ok">Қарзи йўқ</span>'}
+        </div>`; }).join('')}
+    </div>
+    <div class="sec-title"><h2>Садақа тарихи</h2>${admin ? `<button class="btn sm" id="addSadaqa">${ic('heart')}Жамғармадан садақа бердик</button>` : ''}</div>
+    <div class="card list">
+      ${S.sadaqa.length ? S.sadaqa.map(s => `
+        <div class="item"><div class="av" style="color:var(--pink)">${ic('heart')}</div><div class="grow"><div class="nm">${money(s.amount)}</div><div class="small muted">${fmtD(s.day)}${s.note ? ' · ' + esc(s.note) : ''}</div></div>
+        ${admin ? `<button class="btn sec icon" data-delsad="${s.id}">${ic('x')}</button>` : ''}</div>`).join('')
+        : '<div class="empty">Ҳали садақа берилмаган</div>'}
+    </div>
+  `;
+}
+$('#v-fines').addEventListener('click', async e => {
+  if (e.target.closest('[data-payself]')) return paySelf();
+  const pa = e.target.closest('[data-payall]');
+  if (pa){
+    if (!await confirmBox(`${pa.dataset.name} ${money(pa.dataset.sum)} тўладими?`, 'Барча қарзи тўланган деб белгиланади.')) return;
+    try { await rpc('zk_admin_pay_all', { p_id: session.id, p_pin: session.pin, p_member: +pa.dataset.payall }); toast('Белгиланди'); await loadState(); renderFines(); }
+    catch(err){ toast(err.message, true); }
+    return;
+  }
+  if (e.target.closest('#addSadaqa')){
+    const r = await formBox('Жамғармадан садақа бердик', [
+      { k:'amount', label:'Сумма (сом)', type:'number', ph:'Масалан: 500' },
+      { k:'note', label:'Кимга / изоҳ (ихтиёрий)', ph:'Масалан: Масжидга' }
+    ], 'Сақлаш');
+    if (!r) return;
+    const amount = parseInt(r.amount, 10); if (!(amount > 0)) return toast('Суммани киритинг', true);
+    try { await rpc('zk_admin_add_sadaqa', { p_id: session.id, p_pin: session.pin, p_amount: amount, p_note: r.note || null }); toast('Сақланди'); await loadState(); renderFines(); }
+    catch(err){ toast(err.message, true); }
+    return;
+  }
+  const ds = e.target.closest('[data-delsad]');
+  if (ds){
+    if (!await confirmBox('Бу ёзувни ўчирасизми?')) return;
+    try { await rpc('zk_admin_del_sadaqa', { p_id: session.id, p_pin: session.pin, p_sid: +ds.dataset.delsad }); await loadState(); renderFines(); }
+    catch(err){ toast(err.message, true); }
+  }
+});
+
+// ---------- ADMIN ----------
+let adm = { member: null, days: [] };
+function renderAdmin(){
+  if (!S.me.is_admin){ $('#v-admin').innerHTML = ''; return; }
+  if (!adm.member || !S.members.find(m => m.id === adm.member)) adm.member = S.members[0] && S.members[0].id;
+  const R = S.rules; const pend = S.pending_members || [];
+  const upcoming = (S.holidays || []).filter(h => h.day >= S.today);
+  const past = (S.holidays || []).filter(h => h.day < S.today).slice(-5).reverse();
+  const rm = S.recent_missed || [];
+  $('#v-admin').innerHTML = `
+    <h2>Охирги 3 кун жарималари</h2>
+    <div class="card list">
+      ${rm.length ? rm.map(x => `<div class="item">
+        <div class="av">${esc(initials(x.name))}</div>
+        <div class="grow"><div class="nm">${esc(x.name)}</div><div class="small muted">${fmtLong(x.day)} · ${x.paid ? 'жарима тўланган' : 'жарима ' + num(x.fine) + ' сом'}</div>${marks(x, x.zikr_goal)}</div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+          <button class="btn sm" data-fixdone="${x.member_id}" data-day="${x.day}" data-z="${x.zikr}" data-g="${x.zikr_goal}" data-name="${esc(x.name)}">Бажарган</button>
+          <button class="btn sec sm" data-fixex="${x.member_id}" data-day="${x.day}" data-name="${esc(x.name)}">Узрли</button>
+        </div></div>`).join('') : '<div class="empty">Охирги 3 кунда жарима йўқ</div>'}
+    </div>
+    <p class="muted small" style="line-height:1.5">Агар кимдир вазифани бажарган, лекин дастур очилмай белги қўя олмаган бўлса — «Бажарган»ни босинг, жарима бекор бўлади. Бошқа кунлар учун пастдаги «Кунларни текшириш»дан фойдаланинг.</p>
+
+    ${pend.length ? `
+    <h2>Янги сўровлар · ${pend.length}</h2>
+    <div class="card list gborder">
+      ${pend.map(p => `<div class="item"><div class="av">${esc(initials(p.name))}</div>
+        <div class="grow"><div class="nm">${esc(p.name)}</div><div class="small muted">${ago(p.created_at)}</div></div>
+        <button class="btn sec icon" data-rej="${p.id}" data-name="${esc(p.name)}">${ic('x')}</button><button class="btn sm" data-ok="${p.id}">Тасдиқлаш</button></div>`).join('')}
+    </div>` : ''}
+
+    <h2>Эълон юбориш</h2>
+    <div class="card">
+      <textarea id="annText" maxlength="1000" placeholder="Гуруҳга хабар ёзинг… Ҳаммага билдиришнома боради."></textarea>
+      <div style="height:10px"></div>
+      <button class="btn" id="annSend">${ic('megaphone')}Юбориш</button>
+      ${(S.announcements||[]).length ? `<div class="list" style="margin-top:14px">${S.announcements.slice(0,5).map(a => `<div class="item"><div class="grow small"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(a.text)}</div><div class="muted">${ago(a.created_at)}</div></div><button class="btn sec icon" data-delann="${a.id}">${ic('x')}</button></div>`).join('')}</div>` : ''}
+    </div>
+
+    <div class="sec-title"><h2>Қоидалар</h2><button class="btn sec sm" id="editRules">${ic('pen')}Ўзгартириш</button></div>
+    <div class="card">
+      <div class="kv" style="margin-top:0">
+        <div>Жарима<b>${money(R.fine)}</b></div>
+        <div>Зикр<b>${num(R.zikr_goal)} марта</b></div>
+        <div>Китоб<b>${R.book_pages} бет</b></div>
+        <div>Қуръон<b>${R.quran_pages} бет</b></div>
+      </div>
+      <p class="muted small" style="margin:12px 0 0">Ўзгаришлар бугундан бошлаб амал қилади. Ўтган кунлар эски қоида бўйича қолади.</p>
+    </div>
+
+    <div class="sec-title"><h2>Байрам кунлари</h2><button class="btn sec sm" id="addHol">${ic('gift')}Қўшиш</button></div>
+    <div class="card list">
+      ${upcoming.length || past.length ? [...upcoming, ...past].map(h => `<div class="item"><div class="av" style="color:var(--pink)">${ic('gift')}</div>
+        <div class="grow"><div class="nm">${esc(h.title)}</div><div class="small muted">${fmtLong(h.day)}${h.day < S.today ? ' · ўтган' : h.day === S.today ? ' · бугун' : ''}</div></div>
+        <button class="btn sec icon" data-delhol="${h.day}">${ic('x')}</button></div>`).join('') : '<div class="empty">Байрам кунлари белгиланмаган</div>'}
+    </div>
+    <p class="muted small">Байрам кунида ҳеч кимга жарима ёзилмайди ва эслатма келмайди.</p>
+
+    <h2>Аъзолар · ${S.members.length}</h2>
+    <div class="card list">
+      ${S.members.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(m => `
+        <div class="item"><div class="av">${esc(initials(m.name))}</div>
+          <div class="grow"><div class="nm">${esc(m.name)}${m.is_admin?ic('crown'):''}</div><div class="small muted">${m.is_admin ? 'Админ' : 'Аъзо'}</div></div>
+          <button class="btn sec sm" data-edit="${m.id}">Таҳрир</button></div>`).join('')}
+    </div>
+    <p class="muted small">Янги аъзо қўшиш учун унга шу сайт ҳаволасини юборинг — у ўзи рўйхатдан ўтади, сиз тасдиқлайсиз.</p>
+
+    <h2>Кунларни текшириш ва тузатиш</h2>
+    <div class="field"><select id="admMember">${S.members.map(m => `<option value="${m.id}" ${m.id===adm.member?'selected':''}>${esc(m.name)}</option>`).join('')}</select></div>
+    <div class="card list" id="admDays"><div class="empty">Юкланмоқда…</div></div>
+    <p class="muted small">Кунни босинг: вазифаларни тузатиш, «узрли кун» қилиш ёки жаримани «тўланди» деб белгилаш мумкин.</p>
+  `;
+  drawAdminDays();
+}
+async function loadAdminDays(){
+  if (!S || !S.me.is_admin || !adm.member) return;
+  try {
+    adm.days = await rpc('zk_history', { p_id: session.id, p_pin: session.pin, p_member: adm.member, p_from: addDays(S.today, -45), p_to: S.today });
+    drawAdminDays();
+  } catch(err){ toast(err.message, true); }
+}
+function statusChip(d){
+  if (d.status === 'done') return '<span class="chip ok">Бажарилди</span>';
+  if (d.status === 'excused') return '<span class="chip blue">Узрли</span>';
+  if (d.status === 'holiday') return '<span class="chip pink">Байрам</span>';
+  if (d.status === 'today') return '<span class="chip">Бугун</span>';
+  if (d.status === 'missed') return d.paid ? `<span class="chip warn">Жарима · тўланган</span>` : `<span class="chip bad">Жарима · ${num(d.fine)}</span>`;
+  return '<span class="chip">—</span>';
+}
+function drawAdminDays(){
+  const el = $('#admDays'); if (!el) return;
+  const days = adm.days.filter(d => d.status !== 'none' && d.status !== 'future');
+  el.innerHTML = days.length ? days.map(d => `
+    <div class="item" data-day="${d.day}" style="cursor:pointer">
+      <div class="grow"><div class="nm">${fmtLong(d.day)}</div>${marks(d, d.zikr_goal)}</div>
+      ${statusChip(d)}
+    </div>`).join('') : '<div class="empty">Ҳали маълумот йўқ</div>';
+}
+$('#v-admin').addEventListener('change', e => {
+  if (e.target.id === 'admMember'){ adm.member = +e.target.value; adm.days = []; $('#admDays').innerHTML = '<div class="empty">Юкланмоқда…</div>'; loadAdminDays(); }
+});
+async function admCall(fn, args, okMsg){
+  try { await rpc(fn, Object.assign({ p_id: session.id, p_pin: session.pin }, args)); if (okMsg) toast(okMsg); await loadState(); render(); loadAdminDays(); return true; }
+  catch(err){ toast(err.message, true); return false; }
+}
+$('#v-admin').addEventListener('click', async e => {
+  const fd = e.target.closest('[data-fixdone]');
+  if (fd){
+    if (!await confirmBox(`${fd.dataset.name} · ${fmtLong(fd.dataset.day)}`, 'Китоб, Қуръон ва зикр бажарилган деб белгиланади. Жарима бекор бўлади.')) return;
+    return admCall('zk_admin_set_day', { p_member: +fd.dataset.fixdone, p_day: fd.dataset.day, p_book: true, p_quran: true, p_zikr: Math.max(+fd.dataset.z, +fd.dataset.g), p_excused: false }, 'Белгиланди, жарима бекор қилинди');
+  }
+  const fx = e.target.closest('[data-fixex]');
+  if (fx){
+    if (!await confirmBox(`${fx.dataset.name} · ${fmtLong(fx.dataset.day)}`, 'Узрли кун деб белгиланади. Жарима бекор бўлади.')) return;
+    const d = (S.recent_missed||[]).find(x => x.member_id === +fx.dataset.fixex && x.day === fx.dataset.day) || {};
+    return admCall('zk_admin_set_day', { p_member: +fx.dataset.fixex, p_day: fx.dataset.day, p_book: !!d.book, p_quran: !!d.quran, p_zikr: d.zikr || 0, p_excused: true }, 'Узрли кун белгиланди');
+  }
+  const ok = e.target.closest('[data-ok]');
+  if (ok) return admCall('zk_admin_approve', { p_member: +ok.dataset.ok, p_ok: true }, 'Тасдиқланди');
+  const rej = e.target.closest('[data-rej]');
+  if (rej){ if (await confirmBox(`${rej.dataset.name} сўрови рад этилсинми?`)) admCall('zk_admin_approve', { p_member: +rej.dataset.rej, p_ok: false }, 'Рад этилди'); return; }
+
+  if (e.target.closest('#annSend')){
+    const text = $('#annText').value.trim(); if (!text) return toast('Матн ёзинг', true);
+    if (await admCall('zk_admin_announce', { p_text: text }, 'Эълон юборилди')) { const t = $('#annText'); if (t) t.value = ''; }
+    return;
+  }
+  const da = e.target.closest('[data-delann]');
+  if (da){ if (await confirmBox('Эълонни ўчирасизми?')) admCall('zk_admin_del_announce', { p_aid: +da.dataset.delann }); return; }
+
+  if (e.target.closest('#editRules')){
+    const R = S.rules;
+    const r = await formBox('Қоидаларни ўзгартириш', [
+      { k:'fine', label:'Жарима (сом)', type:'number', val: R.fine },
+      { k:'zikr', label:'Зикр сони', type:'number', val: R.zikr_goal },
+      { k:'book', label:'Китоб (бет)', type:'number', val: R.book_pages },
+      { k:'quran', label:'Қуръон (бет)', type:'number', val: R.quran_pages }
+    ], 'Сақлаш');
+    if (!r) return;
+    const v = { p_fine: parseInt(r.fine,10), p_zikr: parseInt(r.zikr,10), p_book: parseInt(r.book,10), p_quran: parseInt(r.quran,10) };
+    if (Object.values(v).some(x => isNaN(x))) return toast('Барча майдонларни тўлдиринг', true);
+    admCall('zk_admin_set_rules', v, 'Қоидалар сақланди'); return;
+  }
+  if (e.target.closest('#addHol')){
+    const r = await formBox('Байрам куни', [
+      { k:'day', label:'Сана', type:'date', val: S.today },
+      { k:'title', label:'Номи', ph:'Масалан: Рамазон ҳайити' }
+    ], 'Қўшиш');
+    if (!r || !r.day) return;
+    admCall('zk_admin_holiday', { p_day: r.day, p_title: r.title, p_add: true }, 'Қўшилди'); return;
+  }
+  const dh = e.target.closest('[data-delhol]');
+  if (dh){ if (await confirmBox('Байрам кунини ўчирасизми?')) admCall('zk_admin_holiday', { p_day: dh.dataset.delhol, p_title: null, p_add: false }); return; }
+
+  const ed = e.target.closest('[data-edit]');
+  if (ed){
+    const m = S.members.find(x => x.id === +ed.dataset.edit);
+    const r = await formBox('Таҳрирлаш: ' + m.name, [
+      { k:'name', label:'Исм', val: m.name },
+      { k:'pin', label:'Янги PIN (ўзгартирмаслик учун бўш қолдиринг)', type:'tel', max:4, ph:'••••' },
+      { k:'admin', label:'Админ ҳуқуқи', type:'switch', val: m.is_admin },
+      { k:'remove', label:'Гуруҳдан чиқариш', type:'switch', val: false }
+    ], 'Сақлаш');
+    if (!r) return;
+    if (r.pin && !/^\d{4}$/.test(r.pin)) return toast(ERR.PIN_FORMAT, true);
+    if (r.remove && !await confirmBox(`${m.name} гуруҳдан чиқарилсинми?`, 'Унинг тарихи сақланиб қолади.')) return;
+    admCall('zk_admin_update_member', { p_member: m.id, p_name: r.name, p_new_pin: r.pin || null, p_admin: !!r.admin, p_active: !r.remove }, r.pin ? `Сақланди. Янги PIN: ${r.pin}` : 'Сақланди');
+    return;
+  }
+  const dd = e.target.closest('[data-day]');
+  if (dd){
+    const d = adm.days.find(x => x.day === dd.dataset.day); const m = S.members.find(x => x.id === adm.member);
+    const r = await formBox(`${m.name} · ${fmtLong(d.day)}`, [
+      { k:'book', label:`Китоб — ${d.book_pages} бет`, type:'switch', val: d.book },
+      { k:'quran', label:`Қуръон — ${d.quran_pages} бет`, type:'switch', val: d.quran },
+      { k:'zikr', label:`Зикр сони (керак: ${num(d.zikr_goal)})`, type:'number', val: d.zikr },
+      { k:'excused', label:'Узрли кун (жарима йўқ)', type:'switch', val: d.excused },
+      ...(d.day !== S.today && d.status === 'missed' ? [{ k:'paid', label:'Жарима тўланган', type:'switch', val: d.paid }] : [])
+    ], 'Сақлаш');
+    if (!r) return;
+    try {
+      await rpc('zk_admin_set_day', { p_id: session.id, p_pin: session.pin, p_member: m.id, p_day: d.day, p_book: !!r.book, p_quran: !!r.quran, p_zikr: parseInt(r.zikr,10) || 0, p_excused: !!r.excused });
+      if ('paid' in r && !!r.paid !== d.paid) await rpc('zk_admin_set_paid', { p_id: session.id, p_pin: session.pin, p_member: m.id, p_day: d.day, p_paid: !!r.paid });
+      toast('Сақланди'); await loadState(); if (m.id === S.me.id) zk.server = me().zikr; await loadAdminDays();
+    } catch(err){ toast(err.message, true); }
+  }
+});
+
+// ---------- CHAT ----------
+let chat = { msgs: [], last: 0, timer: null, loading: false };
+function seenId(){ return store.get('vird_chat_seen_' + session.id) || 0; }
+function updateChatDot(){
+  if (!S || S.pending) return;
+  if (view === 'chat' && S.chat_last_id) store.set('vird_chat_seen_' + session.id, Math.max(seenId(), S.chat_last_id, chat.last));
+  const unread = S.chat_last_id > seenId() && S.chat_last_from !== S.me.id;
+  $('#chatDot').classList.toggle('hidden', !unread);
+}
+function fmtTime(ts){ const d = new Date(new Date(ts).getTime() + TZ_OFFSET); return d.toISOString().slice(11,16); }
+function msgDay(ts){ return new Date(new Date(ts).getTime() + TZ_OFFSET).toISOString().slice(0,10); }
+function renderChat(){
+  const el = $('#v-chat');
+  if (!el.querySelector('.msgs')) el.innerHTML = `<h2>Гуруҳ чати</h2><div class="msgs" id="msgs"><div class="empty">Юкланмоқда…</div></div>`;
+  drawMsgs(true); loadChat(); clearInterval(chat.timer); chat.timer = setInterval(() => { if (view === 'chat' && document.visibilityState === 'visible') loadChat(); }, 4000);
+}
+async function loadChat(){
+  if (chat.loading || !session) return; chat.loading = true;
+  try {
+    const list = await rpc('zk_chat_list', { p_id: session.id, p_pin: session.pin, p_after: chat.last });
+    if (list.length) { chat.msgs = chat.msgs.concat(list).slice(-300); chat.last = list[list.length-1].id; drawMsgs(true); }
+    else if (!chat.msgs.length) drawMsgs(false);
+    store.set('vird_chat_seen_' + session.id, Math.max(seenId(), chat.last)); if (S) { S.chat_last_id = Math.max(S.chat_last_id||0, chat.last); } updateChatDot();
+  } catch(_) {} finally { chat.loading = false; }
+}
+function drawMsgs(scroll){
+  const el = $('#msgs'); if (!el) return;
+  if (!chat.msgs.length) { el.innerHTML = '<div class="empty">Ҳали хабар йўқ. Биринчи бўлиб ёзинг!</div>'; return; }
+  const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 160;
+  let html = '', lastDay = '';
+  for (const m of chat.msgs){
+    const dday = msgDay(m.created_at);
+    if (dday !== lastDay){ html += `<div class="dayhdr">${dday === S.today ? 'Бугун' : fmtLong(dday)}</div>`; lastDay = dday; }
+    const mine = m.member_id === S.me.id;
+    html += `<div class="msg ${mine?'me':''}" data-mid="${m.id}" data-mine="${mine?1:0}">${mine ? '' : `<div class="who">${esc(m.name)}</div>`}${esc(m.text)}<div class="tm">${fmtTime(m.created_at)}</div></div>`;
+  }
+  el.innerHTML = html;
+  if (scroll && (nearBottom || !chat.scrolled)) { window.scrollTo(0, document.body.scrollHeight); chat.scrolled = true; }
+}
+async function sendChat(){
+  const t = $('#chatIn'); const text = t.value.trim(); if (!text) return;
+  t.value = ''; t.style.height = '44px'; $('#chatSend').disabled = true;
+  try { await rpc('zk_chat_send', { p_id: session.id, p_pin: session.pin, p_text: text }); await loadChat(); window.scrollTo(0, document.body.scrollHeight); }
+  catch(err){ t.value = text; toast(err.message, true); }
+  finally { $('#chatSend').disabled = false; }
+}
+$('#chatSend').addEventListener('click', sendChat);
+$('#chatIn').addEventListener('input', e => { const t = e.target; t.style.height = '44px'; t.style.height = Math.min(120, t.scrollHeight) + 'px'; });
+$('#v-chat').addEventListener('click', async e => {
+  const b = e.target.closest('.msg'); if (!b) return;
+  const mine = b.dataset.mine === '1';
+  if (!mine && !S.me.is_admin) return;
+  if (!await confirmBox('Хабарни ўчирасизми?')) return;
+  try { await rpc('zk_chat_delete', { p_id: session.id, p_pin: session.pin, p_cid: +b.dataset.mid }); chat.msgs = chat.msgs.filter(x => x.id !== +b.dataset.mid); drawMsgs(false); }
+  catch(err){ toast(err.message, true); }
+});
+
+// ---------- SETTINGS ----------
+$('#btnSettings').addEventListener('click', () => {
+  const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
+  const box = modal(`
+    <h3>Созламалар</h3>
+    <div class="card row"><div class="av ring2"><span>${esc(initials(S.me.name))}</span></div><div><div style="font-weight:700;font-size:16px;display:flex;align-items:center;gap:4px">${esc(S.me.name)}${medalsHtml(me())}</div><div class="muted small">${S.me.is_admin?'Админ':'Аъзо'}</div></div></div>
+    <div class="card">
+      <div class="ttl">${ic('sun')}Кўриниш</div>
+      <div class="seg" id="themeSeg">
+        ${[['light','sun','Ёруғ'],['dark','moon','Қоронғи'],['auto','auto','Автоматик']].map(([k,i,t]) => `<button data-theme-set="${k}" class="${themePref()===k?'on':''}">${ic(i)}${t}</button>`).join('')}
+      </div>
+      <p class="muted small" style="margin:10px 0 0">Автоматик — телефон созламасига қараб ўзгаради.</p>
+    </div>
+    <div class="card">
+      <div class="ttl">${ic('bell')}Билдиришномалар</div>
+      <p class="muted small" style="margin:8px 0 12px;line-height:1.5">21:00 ва 23:00 да эслатма (агар бажармаган бўлсангиз), 00:00 да кун якуни, жума куни ҳафта якуни, чат хабарлари ва эълонлар.</p>
+      ${pushStatusHtml(perm)}
+    </div>
+    <div class="card"><div class="ttl">${ic('phone')}Телефон экранига қўшиш</div>${installHelp()}</div>
+    <div class="card"><div class="ttl">${ic('link')}Гуруҳга таклиф қилиш</div>
+      <p class="muted small" style="margin:8px 0 12px">Шу ҳаволани юборинг. Одам рўйхатдан ўтади, админ тасдиқлайди.</p>
+      <div class="row"><input readonly value="${esc(location.origin + location.pathname)}" id="shareUrl" style="font-size:13px"><button class="btn sm" id="copyUrl">Нусха</button></div>
+    </div>
+    <button class="btn sec" id="sPin">${ic('key')}PIN кодни ўзгартириш</button>
+    <div style="height:10px"></div>
+    <button class="btn danger" id="sOut">${ic('logout')}Чиқиш</button>
+    <div style="height:10px"></div>
+    <button class="btn sec" data-close>Ёпиш</button>
+  `);
+  box.addEventListener('click', async e => {
+    const th = e.target.closest('[data-theme-set]');
+    if (th) { applyTheme(th.dataset.themeSet); store.set('vird_theme', th.dataset.themeSet); box.querySelectorAll('[data-theme-set]').forEach(b => b.classList.toggle('on', b === th)); return; }
+    if (e.target.closest('#btnPush2')) { close(box); enablePush(); }
+    if (e.target.closest('#copyUrl')) { try { await navigator.clipboard.writeText($('#shareUrl').value); toast('Нусха олинди'); } catch(_) { $('#shareUrl').select(); } }
+    if (e.target.closest('#sOut')) { close(box); logout(); }
+    if (e.target.closest('#sPin')) {
+      close(box);
+      const r = await formBox('PIN кодни ўзгартириш', [{ k:'pin', label:'Янги PIN (4 рақам)', type:'tel', max:4, ph:'••••' }], 'Сақлаш');
+      if (!r) return;
+      try { await rpc('zk_change_pin', { p_id: session.id, p_pin: session.pin, p_new: r.pin }); session.pin = r.pin; store.set('vird_session', session); toast('PIN ўзгартирилди'); }
+      catch(err){ toast(err.message, true); }
+    }
+  });
+});
+function installHelp(){
+  if (isStandalone) return '<p class="muted small" style="margin:8px 0 0">Илова экранга қўшилган.</p>';
+  if (isIOS) return `<ol class="steps"><li>Safari пастидаги <b>«Поделиться»</b> тугмасини босинг</li><li><b>«На экран Домой»</b> ни танланг</li><li><b>«Добавить»</b> ни босинг</li><li>Экрандаги «Кунлик вирд» белгисидан очинг</li></ol>`;
+  return `<ol class="steps"><li>Chrome ёки Samsung Internet да <b>⋮</b> (ёки <b>☰</b>) менюни очинг</li><li><b>«Добавить на главный экран»</b> ёки <b>«Установить приложение»</b> ни танланг</li><li>Экрандаги «Кунлик вирд» белгисидан очинг</li></ol>`;
+}
+
+// ---------- PUSH ----------
+function pushSupported(){ return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
+function pushOn(){ return ('Notification' in window) && Notification.permission === 'granted' && store.get('vird_push_ok') === (session && session.id); }
+function pushStatusHtml(perm){
+  if (isIOS && !isStandalone) return '<p class="small" style="color:var(--warn);margin:0;line-height:1.5">iPhone да аввал иловани экранга қўшинг (пастдаги кўрсатма), кейин уни экрандан очиб, шу ерда ёқинг.</p>';
+  if (!pushSupported()) return '<p class="small" style="color:var(--warn);margin:0">Бу браузер билдиришномаларни қўллаб-қувватламайди. Chrome ёки Safari дан очинг.</p>';
+  if (pushOn()) return `<span class="chip ok">${ic('check')}Ёқилган</span> <button class="btn sec sm" id="btnPush2" style="margin-left:8px">Қайта улаш</button>`;
+  if (perm === 'denied') return '<p class="small" style="color:var(--bad);margin:0">Билдиришномалар ўчирилган. Телефон созламаларидан бу сайтга рухсат беринг.</p>';
+  return `<button class="btn" id="btnPush2">${ic('bell')}Ёқиш</button>`;
+}
+function pushBanner(){
+  if (!session || pushOn()) return '';
+  const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
+  if (isIOS && !isStandalone) return `<div class="card gborder"><div class="ttl">${ic('bell')}Эслатмалар олиш учун иловани экранга қўшинг</div>${installHelp()}</div>`;
+  if (!pushSupported() || perm === 'denied') return '';
+  return `<div class="card gborder"><div class="ttl">${ic('bell')}Билдиришномаларни ёқинг</div><p class="muted small" style="margin:8px 0 14px">Эслатмалар, кун якуни ва эълонлар телефонингизга келади.</p><button class="btn" id="btnPush">Ёқиш</button></div>`;
+}
+function b64ToU8(b64){ const p = '='.repeat((4 - b64.length % 4) % 4); const s = atob((b64 + p).replace(/-/g,'+').replace(/_/g,'/')); return Uint8Array.from([...s].map(c => c.charCodeAt(0))); }
+async function enablePush(){
+  if (isIOS && !isStandalone) return toast('Аввал иловани экранга қўшинг (Созламалар)', true);
+  if (!pushSupported()) return toast('Бу браузерда билдиришномалар ишламайди', true);
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') return toast('Рухсат берилмади', true);
+    const reg = await navigator.serviceWorker.ready;
+    const key = await rpc('zk_vapid_public');
+    let sub = await reg.pushManager.getSubscription();
+    if (sub) { try { await sub.unsubscribe(); } catch(_) {} }
+    sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToU8(key) });
+    const j = sub.toJSON();
+    await rpc('zk_save_push', { p_id: session.id, p_pin: session.pin, p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth });
+    store.set('vird_push_ok', session.id);
+    reg.showNotification('Билдиришномалар ёқилди', { body: 'Эслатмалар, кун якуни ва эълонлар шу ерга келади.', icon: 'icon-192.png' });
+    toast('Ёқилди');
+    if (S && !S.pending && view === 'today') renderToday();
+    if (S && S.pending) showPending();
+  } catch(err){ toast('Хатолик: ' + (err.message || err), true); }
+}
+
+// ---------- modal helpers ----------
+function modal(html){
+  const m = document.createElement('div'); m.className = 'modal';
+  m.innerHTML = `<div class="sheet">${html}</div>`;
+  m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) close(m); });
+  document.body.appendChild(m); return m;
+}
+function close(m){ m && m.remove(); }
+function confirmBox(title, text){
+  return new Promise(res => {
+    const m = modal(`<h3>${esc(title)}</h3>${text ? `<p class="muted">${esc(text)}</p>` : ''}<div class="btns"><button class="btn sec" data-no>Йўқ</button><button class="btn" data-yes>Ҳа</button></div>`);
+    m.addEventListener('click', e => {
+      if (e.target.closest('[data-yes]')) { close(m); res(true); }
+      else if (e.target.closest('[data-no]') || e.target === m) { close(m); res(false); }
+    });
+  });
+}
+function formBox(title, fields, okText){
+  return new Promise(res => {
+    const html = fields.map(f => f.type === 'switch'
+      ? `<div class="toggle"><span>${esc(f.label)}</span><div class="sw ${f.val?'on':''}" data-sw="${f.k}"></div></div>`
+      : `<div class="field"><label>${esc(f.label)}</label><input data-k="${f.k}" type="${f.type==='number'?'number':f.type==='tel'?'tel':f.type==='date'?'date':'text'}" ${f.type==='tel'||f.type==='number'?'inputmode="numeric"':''} ${f.max?`maxlength="${f.max}"`:''} placeholder="${esc(f.ph||'')}" value="${esc(f.val ?? '')}"></div>`).join('');
+    const m = modal(`<h3>${esc(title)}</h3>${html}<div class="btns"><button class="btn sec" data-cancel>Бекор қилиш</button><button class="btn" data-ok>${esc(okText||'OK')}</button></div>`);
+    m.addEventListener('click', e => {
+      const sw = e.target.closest('[data-sw]'); if (sw) { sw.classList.toggle('on'); return; }
+      if (e.target.closest('[data-ok]')) {
+        const out = {};
+        m.querySelectorAll('[data-k]').forEach(i => out[i.dataset.k] = i.value.trim());
+        m.querySelectorAll('[data-sw]').forEach(s => out[s.dataset.sw] = s.classList.contains('on'));
+        close(m); res(out);
+      } else if (e.target.closest('[data-cancel]') || e.target === m) { close(m); res(null); }
+    });
+  });
+}
+
+window.addEventListener('hashchange', () => {
+  const v = location.hash.slice(1);
+  if (S && !S.pending && ['today','chat','group','fines','admin'].includes(v) && v !== view) { view = v; render(); if (v === 'admin') loadAdminDays(); }
+});
+// ================== BOOT ==================
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+setInterval(() => { if (session && S && document.visibilityState === 'visible' && !zk.pending && !document.querySelector('.modal')) refresh(); }, 60000);
+session ? startApp() : showLogin();
+</script>
+</body>
+</html>
